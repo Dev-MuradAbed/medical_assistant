@@ -4,6 +4,7 @@ import '../../widgets/ButtonClick.dart';
 import '../../widgets/circleLoginAs.dart';
 import '../../widgets/textFiledWidget.dart';
 import '../../widgets/textTitleWidget.dart';
+import '../../widgets/verificationWidget.dart';
 
 class PasswordRecovery extends StatefulWidget {
   const PasswordRecovery({Key? key}) : super(key: key);
@@ -34,10 +35,15 @@ class _PasswordRecoveryState extends State<PasswordRecovery> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: const [
-                  circleLoginAs(text: '1'),
-                  circleLoginAs(text: '2'),
-                  circleLoginAs(text: '3'),
-                  circleLoginAs(text: '4'),
+                  VerificationWidget(first: true,last: false,),
+                  VerificationWidget(first: false,last: false,),
+                  VerificationWidget(first: false,last: false,),
+                  VerificationWidget(first: false,last: true,),
+
+                  // circleLoginAs(text: '1'),
+                  // circleLoginAs(text: '2'),
+                  // circleLoginAs(text: '3'),
+                  // circleLoginAs(text: '4'),
                 ],
               ),
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:medical_assistant/Screens/Auth/login_screen.dart';
 import 'package:medical_assistant/Screens/Auth/sginup_screen.dart';
 
+import 'Screens/Auth/changePassword_Screen.dart';
 import 'Screens/Auth/passwordRecovery.dart';
 void main()=>runApp(const MyApp());
 class MyApp extends StatelessWidget {
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: PasswordRecovery(),
+      home: ChangePassword_Screen(),
     );
   }
 }
