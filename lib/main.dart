@@ -1,7 +1,7 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:medical_assistant/screen/login_screen%5D.dart';
+import 'package:medical_assistant/screen/login_screen.dart';
 
 import 'screen/lunch_screen.dart';
 
