@@ -4,23 +4,23 @@ import 'package:flutter/material.dart';
 import '../them.dart';
 
 class TextInput extends StatefulWidget {
-  TextInput({
+   TextInput({
     Key? key,
     this.oreIcon ,
-    this.sufFirstIcon,
-    this.sufSecondIcon,
+    this.onChanged,
+    this.sufIcon,
     required this.label,
     required this.controller,
     this.obscureText = false,
     required this.keyboardType,
   }) : super(key: key);
   final String label;
-  IconData? oreIcon;
-  IconData? sufFirstIcon;
-  IconData? sufSecondIcon;
+  final IconData? oreIcon;
+  final IconData? sufIcon;
   final TextEditingController controller;
-  bool obscureText;
+  final bool obscureText;
   final TextInputType keyboardType;
+    VoidCallback? onChanged;
 
   @override
   State<TextInput> createState() => _TextInputState();
@@ -36,7 +36,7 @@ class _TextInputState extends State<TextInput> {
       decoration: InputDecoration(
         prefixIcon: Icon(
           widget.oreIcon,
-          color: greenClr,
+          color: greenClr.withOpacity(0.7),
           size: 24,
         ),
 
@@ -71,16 +71,13 @@ class _TextInputState extends State<TextInput> {
           borderRadius: BorderRadius.circular(25),
         ),
          suffixIcon: IconButton(
+             onPressed: widget.onChanged,
            icon: Icon(
-             widget.obscureText ? widget.sufFirstIcon : widget.sufSecondIcon,
-             color: greenClr,
-             size: 24,
+             widget.sufIcon,
+             color: const Color(0xff19A049).withOpacity(0.7),
+             size: 20,
            ),
-           onPressed: () {
-             setState(() {
-               widget.obscureText = !widget.obscureText;
-             });
-           },
+
          ),
       ),
     );
