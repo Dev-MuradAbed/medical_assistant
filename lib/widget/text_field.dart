@@ -4,22 +4,24 @@ import 'package:flutter/material.dart';
 import '../them.dart';
 
 class TextInput extends StatefulWidget {
+
+
   TextInput({
     Key? key,
     this.oreIcon ,
-    this.sufFirstIcon,
-    this.sufSecondIcon,
+    this.sufIcon,
     required this.label,
     required this.controller,
     this.obscureText = false,
     required this.keyboardType,
+    this.onpressed
   }) : super(key: key);
+   VoidCallback? onpressed;
   final String label;
-  IconData? oreIcon;
-  IconData? sufFirstIcon;
-  IconData? sufSecondIcon;
+  final IconData? oreIcon;
+  final IconData? sufIcon;
   final TextEditingController controller;
-  bool obscureText;
+ final  bool obscureText;
   final TextInputType keyboardType;
 
   @override
@@ -71,16 +73,12 @@ class _TextInputState extends State<TextInput> {
           borderRadius: BorderRadius.circular(25),
         ),
          suffixIcon: IconButton(
+           onPressed: widget.onpressed,
            icon: Icon(
-             widget.obscureText ? widget.sufFirstIcon : widget.sufSecondIcon,
+             widget.sufIcon,
              color: greenClr,
              size: 24,
            ),
-           onPressed: () {
-             setState(() {
-               widget.obscureText = !widget.obscureText;
-             });
-           },
          ),
       ),
     );

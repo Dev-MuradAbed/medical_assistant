@@ -14,7 +14,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   late TextEditingController _idController;
   late TextEditingController _passwordController;
-
+bool pass=true;
   @override
   void initState() {
     // TODO: implement initState
@@ -62,14 +62,20 @@ class _LoginScreenState extends State<LoginScreen> {
                   keyboardType: TextInputType.number,
                   oreIcon: Icons.person
               ),
+            const  SizedBox(height: 20,),
               TextInput(
                 label: 'password',
                 controller: _passwordController,
                 keyboardType: TextInputType.text,
                 oreIcon: Icons.lock,
-                obscureText: true,
-                sufFirstIcon: Icons.visibility_off,
-                sufSecondIcon: Icons.visibility,
+                obscureText: pass,
+                onpressed: (){
+                  setState(() {
+                    pass=!pass;
+                  });
+                },
+                sufIcon: pass==true?Icons.visibility_off:Icons.visibility,
+
               ),
             ],
           ),
