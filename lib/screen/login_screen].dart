@@ -46,8 +46,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       width: 100,
                       height: 30,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.white,
+                        border:Border.all(
+                          color: greenClr,
+                          width:1.5
+                        ),
+                        borderRadius: BorderRadius.circular(15),
+
                       ),
                       child: const Text(
                         'ENTER ID',
@@ -57,12 +61,16 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ),
+                    focusColor: greenClr,
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25),
-                      borderSide: const BorderSide(
-                        color: Color(0xff19A049),
+                      borderSide:const BorderSide(
+                        color:greenClr,
+                        width:1.5
                       ),
-                    )),
+                      borderRadius: BorderRadius.circular(25),
+
+                    )
+                ),
               ),
             ],
           ),
