@@ -4,23 +4,25 @@ import 'package:flutter/material.dart';
 import '../them.dart';
 
 class TextInput extends StatefulWidget {
-   TextInput({
+
+
+  TextInput({
     Key? key,
     this.oreIcon ,
-    this.onChanged,
     this.sufIcon,
     required this.label,
     required this.controller,
     this.obscureText = false,
     required this.keyboardType,
+    this.onpressed
   }) : super(key: key);
+   VoidCallback? onpressed;
   final String label;
   final IconData? oreIcon;
   final IconData? sufIcon;
   final TextEditingController controller;
-  final bool obscureText;
+ final  bool obscureText;
   final TextInputType keyboardType;
-    VoidCallback? onChanged;
 
   @override
   State<TextInput> createState() => _TextInputState();
@@ -36,7 +38,7 @@ class _TextInputState extends State<TextInput> {
       decoration: InputDecoration(
         prefixIcon: Icon(
           widget.oreIcon,
-          color: greenClr.withOpacity(0.7),
+          color: greenClr,
           size: 24,
         ),
 
@@ -71,13 +73,12 @@ class _TextInputState extends State<TextInput> {
           borderRadius: BorderRadius.circular(25),
         ),
          suffixIcon: IconButton(
-             onPressed: widget.onChanged,
+           onPressed: widget.onpressed,
            icon: Icon(
              widget.sufIcon,
-             color: const Color(0xff19A049).withOpacity(0.7),
-             size: 20,
+             color: greenClr,
+             size: 24,
            ),
-
          ),
       ),
     );

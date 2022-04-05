@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:local_auth/local_auth.dart';
+import 'package:medical_assistant/api/local_auth_api.dart';
 import 'package:medical_assistant/them.dart';
 
 import 'package:medical_assistant/widget/text_field.dart';
@@ -75,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   controller: _passwordController,
                   keyboardType: TextInputType.text,
                   oreIcon: Icons.lock,
-                  onChanged: () {
+                  onpressed: () {
                     setState(() {
                       isPassword = !isPassword;
                     });
@@ -103,7 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed:loginPer,
+                  onPressed: loginPer,
                   child: const Text(
                     'LOG IN',
                     style: TextStyle(
@@ -142,7 +144,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 const SizedBox(height: 35),
-                SvgPicture.asset('assets/images/fig.svg')
+                // buildAuthenticate(context),
+                // buildAvailability(context),
+                GestureDetector(
+                    onTap: () async {
+                      final isAuthenticated = await LocalAuthApi.authenticate();
+
+                      if (isAuthenticated) login();
+                    },
+                    child: SvgPicture.asset('assets/images/fig.svg'))
               ],
             ),
           ),
@@ -152,7 +162,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   loginPer() {
-    if(check()){
+    if (check()) {
       login();
     }
   }
@@ -163,21 +173,78 @@ class _LoginScreenState extends State<LoginScreen> {
         _passwordController.text.isNotEmpty) {
       return true;
     }
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-
-      content: const Text('Enter Valid ID and Password'),
-      backgroundColor: Colors.red,
-      behavior: SnackBarBehavior.floating,
-      duration: const Duration(seconds: 2),
-      margin: const EdgeInsets.all(30),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: const Text('Enter Valid ID and Password'),
+        backgroundColor: Colors.red,
+        behavior: SnackBarBehavior.floating,
+        duration: const Duration(seconds: 2),
+        margin: const EdgeInsets.all(30),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
       ),
-    ),);
+    );
     return false;
   }
 
   login() {
-   Navigator.pushReplacementNamed(context, '/home_screen');
+    Navigator.pushReplacementNamed(context, '/home_screen');
   }
+
+  Widget buildAvailability(BuildContext context) => buildButton(
+        text: 'Check Availability',
+        icon: Icons.event_available,
+        onClicked: () async {
+          final isAvailable = await LocalAuthApi.hasBiometrics();
+          final biometrics = await LocalAuthApi.getBiometrics();
+
+          final hasFingerprint = biometrics.contains(BiometricType.fingerprint);
+
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: Text('Availability'),
+              content: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  buildText('Biometrics', isAvailable),
+                  buildText('Fingerprint', hasFingerprint),
+                ],
+              ),
+            ),
+          );
+        },
+      );
+
+  Widget buildText(String text, bool checked) => Container(
+        margin: EdgeInsets.symmetric(vertical: 8),
+        child: Row(
+          children: [
+            checked
+                ? Icon(Icons.check, color: Colors.green, size: 24)
+                : Icon(Icons.close, color: Colors.red, size: 24),
+            const SizedBox(width: 12),
+            Text(text, style: TextStyle(fontSize: 24)),
+          ],
+        ),
+      );
+
+  Widget buildButton({
+    required String text,
+    required IconData icon,
+    required VoidCallback onClicked,
+  }) =>
+      ElevatedButton.icon(
+        style: ElevatedButton.styleFrom(
+          minimumSize: Size.fromHeight(50),
+        ),
+        icon: Icon(icon, size: 26),
+        label: Text(
+          text,
+          style: TextStyle(fontSize: 20),
+        ),
+        onPressed: onClicked,
+      );
 }

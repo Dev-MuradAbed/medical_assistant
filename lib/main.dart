@@ -1,13 +1,20 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:medical_assistant/screen/home_screen.dart';
 import 'package:medical_assistant/screen/login_screen.dart';
 
 import 'screen/lunch_screen.dart';
 
-void main(){
-  runApp(const MedicalAssist());
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+
+  runApp(MedicalAssist());
 }
 
 class MedicalAssist extends StatelessWidget {

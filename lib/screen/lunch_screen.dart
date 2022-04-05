@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:medical_assistant/api/local_auth_api.dart';
 
 import '../widget/grident_text.dart';
 
@@ -13,7 +14,7 @@ class LunchScreen extends StatefulWidget {
 class _LunchScreenState extends State<LunchScreen> {
   @override
   void initState() {
-    Future.delayed(const Duration(microseconds:1725), () {
+    Future.delayed(const Duration(seconds:3), () {
       Navigator.pushReplacementNamed(context, '/login_screen');
     });
 
@@ -55,4 +56,5 @@ class _LunchScreenState extends State<LunchScreen> {
           ),
         ));
   }
+
 }
