@@ -61,6 +61,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide(
+                        color: greenClr,
+                        width: 1.5
+                      ),
+                    ),
                     focusColor: greenClr,
                     border: OutlineInputBorder(
                       borderSide:const BorderSide(
