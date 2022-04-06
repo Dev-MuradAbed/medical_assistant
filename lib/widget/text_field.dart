@@ -8,17 +8,19 @@ class TextInput extends StatefulWidget {
 
   TextInput({
     Key? key,
-    this.oreIcon ,
+    this.widgetIcon ,
     this.sufIcon,
     required this.label,
     required this.controller,
     this.obscureText = false,
     required this.keyboardType,
-    this.onpressed
+    this.onpressed,
+    this.onTap,
   }) : super(key: key);
    VoidCallback? onpressed;
+   VoidCallback? onTap;
   final String label;
-  final IconData? oreIcon;
+  final Widget? widgetIcon;
   final IconData? sufIcon;
   final TextEditingController controller;
  final  bool obscureText;
@@ -36,11 +38,7 @@ class _TextInputState extends State<TextInput> {
       obscureText: widget.obscureText,
       controller: widget.controller,
       decoration: InputDecoration(
-        prefixIcon: Icon(
-          widget.oreIcon,
-          color: greenClr,
-          size: 24,
-        ),
+        prefixIcon: widget.widgetIcon,
 
         floatingLabelBehavior: FloatingLabelBehavior.always,
         label: Container(
@@ -81,6 +79,7 @@ class _TextInputState extends State<TextInput> {
            ),
          ),
       ),
+      onTap: widget.onTap,
     );
   }
 }

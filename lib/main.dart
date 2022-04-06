@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:medical_assistant/screen/home_screen.dart';
 import 'package:medical_assistant/screen/login_screen.dart';
-import 'package:medical_assistant/screen/sginuo_screen.dart';
+import 'package:medical_assistant/screen/sginup_screen.dart';
 
 import 'screen/lunch_screen.dart';
 
