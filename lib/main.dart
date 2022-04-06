@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:medical_assistant/screen/home_screen.dart';
 import 'package:medical_assistant/screen/login_screen.dart';
+import 'package:medical_assistant/screen/sginuo_screen.dart';
 
 import 'screen/lunch_screen.dart';
 
@@ -29,6 +30,7 @@ class MedicalAssist extends StatelessWidget {
         '/lunch_screen':(context) => const LunchScreen(),
         '/login_screen':(context) => const LoginScreen(),
         '/home_screen':(context) => const HomeScreen(),
+        '/signup_screen':(context) => const SignupScreen(),
 
       },
     );

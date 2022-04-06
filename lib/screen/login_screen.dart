@@ -5,10 +5,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:medical_assistant/api/local_auth_api.dart';
 import 'package:medical_assistant/them.dart';
-
+import 'package:medical_assistant/widget/button_widget.dart';
 import 'package:medical_assistant/widget/text_field.dart';
-
 import '../widget/choose_job.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -104,34 +104,32 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: loginPer,
-                  child: const Text(
-                    'LOG IN',
-                    style: TextStyle(
-                      fontFamily: 'Candara',
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    primary: greenClr,
-                    minimumSize: const Size(160, 50),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                  ),
-                ),
+                ButtonWidget(text: "LOG IN", onPressed: loginPer),
                 const SizedBox(height: 10),
-                const Text(
-                  'YOU DON\'T HAVE ANY ACCOUNT ? SGIN UP.',
-                  style: TextStyle(
-                    fontFamily: 'Candara',
-                    color: greenClr,
-                    fontSize: 8,
-                    fontWeight: FontWeight.bold,
-                  ),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const  Text(
+                      'YOU DON\'T HAVE ANY ACCOUNT ? ',
+                      style: TextStyle(
+                        fontFamily: 'Candara',
+                        color: greenClr,
+                        fontSize: 8,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextButton(onPressed: (){
+
+                      Navigator.pushNamed(context, '/signup_screen');
+                    }, child:const  Text('SGIN UP.',style: TextStyle(
+                      fontFamily: 'Candara',
+                      color: greenClr,
+                      fontSize: 8,
+                      fontWeight: FontWeight.bold,
+                    ),))
+
+                  ],
                 ),
                 const SizedBox(height: 20),
                 const Text(
@@ -189,6 +187,9 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   login() {
+    // FirebaseAuth.instance.signInWithEmailAndPassword(
+    //     email: 'ni@t.come',
+    //     password: 'test123');
     Navigator.pushReplacementNamed(context, '/home_screen');
   }
 
@@ -248,3 +249,4 @@ class _LoginScreenState extends State<LoginScreen> {
         onPressed: onClicked,
       );
 }
+

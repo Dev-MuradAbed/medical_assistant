@@ -45,8 +45,8 @@ class _TextInputState extends State<TextInput> {
         floatingLabelBehavior: FloatingLabelBehavior.always,
         label: Container(
           alignment: Alignment.center,
-          width: 79,
-          height: 23,
+          width: 130,
+          height: 35,
           decoration: BoxDecoration(
             border: Border.all(color: greenClr, width: 1.5),
             borderRadius: BorderRadius.circular(15),
