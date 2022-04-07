@@ -12,9 +12,7 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _Sginup_ScreenState extends State<SignupScreen> {
-
-
-   String _selectGender = 'Meal';
+  String _selectGender = 'Meal';
 
   // List of items in our dropdown menu
   List genderList = [
@@ -96,7 +94,7 @@ class _Sginup_ScreenState extends State<SignupScreen> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 20),
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -119,16 +117,6 @@ class _Sginup_ScreenState extends State<SignupScreen> {
                 keyboardType: TextInputType.none,
                 onTap: () async => _getDate(),
               ),
-              // TextFormField(
-              //   controller: birthController,
-              //   decoration: const InputDecoration(
-              //     labelText: "Date of birth",
-              //     hintText: "Ex. Insert your dob",
-              //   ),
-              //   onTap: () async {
-              //     await _getDate(context);
-              //   },
-              // ),
               const SizedBox(height: 35),
               TextInput(
                   label: 'Phone Number',
@@ -140,41 +128,40 @@ class _Sginup_ScreenState extends State<SignupScreen> {
                   controller: otherPhoneController,
                   keyboardType: TextInputType.number),
               const SizedBox(height: 35),
-              Row(
-                children: [
-                  Expanded(
-                    child: TextInput(
-                        label: 'Gender',
-                        controller: genderController,
-                        keyboardType: TextInputType.number,
-                    widgetIcon:  DropdownButton(
-                      underline: Container(height: 0),
-                      borderRadius: BorderRadius.circular(10),
-                      elevation: 4,
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                      ),
-                      icon: const Icon(
-                        Icons.keyboard_arrow_down_outlined,
-                        color: Colors.grey,
-                      ),
-                      iconSize: 30,
-                      items: genderList.map<DropdownMenuItem<String>>(
-                              (value) => DropdownMenuItem<String>(
-                              value: value.toString(),
-                              child: Text('$value'))).toList(),
-                      onChanged: (String? newvalue) {
-                        setState(() {
-                          _selectGender =(newvalue!);
-                        });
-                      },
-                    ),
-
-                    ),
+              TextInput(
+                onTap: ()async{
+                  setState(() {
+                    genderController.text = _selectGender;
+                  });
+                },
+                label: 'Gender',
+                controller: genderController,
+                keyboardType: TextInputType.text,
+                sufWidget: DropdownButton(
+                  underline: Container(height: 0),
+                  borderRadius: BorderRadius.circular(10),
+                  elevation: 4,
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
                   ),
-
-                ],
+                  icon: const Icon(
+                    Icons.keyboard_arrow_down_outlined,
+                    color: Colors.grey,
+                  ),
+                  iconSize: 30,
+                  items: genderList
+                      .map<DropdownMenuItem<String>>((value) =>
+                      DropdownMenuItem<String>(
+                          value: value.toString(),
+                          child: Text('$value')))
+                      .toList(),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      _selectGender = (newValue!);
+                    });
+                  },
+                ),
               ),
               const SizedBox(height: 35),
               TextInput(
@@ -199,7 +186,6 @@ class _Sginup_ScreenState extends State<SignupScreen> {
               const SizedBox(height: 35),
               ButtonWidget(text: "Create", onPressed: () {}),
               const SizedBox(height: 35),
-
             ],
           ),
         ),

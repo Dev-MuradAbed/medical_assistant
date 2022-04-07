@@ -91,9 +91,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     });
                   },
                   obscureText: isPassword,
-                  sufIcon: isPassword == true
-                      ? Icons.visibility_off
-                      : Icons.visibility,
+                  sufWidget: isPassword == true
+                      ? const Icon(Icons.visibility_off)
+                      : const Icon(Icons.visibility),
                 ),
                 const SizedBox(height: 10),
                 const Padding(
@@ -216,7 +216,7 @@ class _LoginScreenState extends State<LoginScreen> {
           showDialog(
             context: context,
             builder: (context) => AlertDialog(
-              title: Text('Availability'),
+              title: const Text('Availability'),
               content: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
@@ -231,14 +231,14 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
   Widget buildText(String text, bool checked) => Container(
-        margin: EdgeInsets.symmetric(vertical: 8),
+        margin: const EdgeInsets.symmetric(vertical: 8),
         child: Row(
           children: [
             checked
-                ? Icon(Icons.check, color: Colors.green, size: 24)
-                : Icon(Icons.close, color: Colors.red, size: 24),
+                ? const Icon(Icons.check, color: Colors.green, size: 24)
+                : const Icon(Icons.close, color: Colors.red, size: 24),
             const SizedBox(width: 12),
-            Text(text, style: TextStyle(fontSize: 24)),
+            Text(text, style: const TextStyle(fontSize: 24)),
           ],
         ),
       );
@@ -250,12 +250,12 @@ class _LoginScreenState extends State<LoginScreen> {
   }) =>
       ElevatedButton.icon(
         style: ElevatedButton.styleFrom(
-          minimumSize: Size.fromHeight(50),
+          minimumSize: const Size.fromHeight(50),
         ),
         icon: Icon(icon, size: 26),
         label: Text(
           text,
-          style: TextStyle(fontSize: 20),
+          style: const TextStyle(fontSize: 20),
         ),
         onPressed: onClicked,
       );

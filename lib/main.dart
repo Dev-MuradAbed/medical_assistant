@@ -16,7 +16,7 @@ Future main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  runApp(MedicalAssist());
+  runApp(const MedicalAssist());
 }
 
 class MedicalAssist extends StatelessWidget {
@@ -28,7 +28,7 @@ class MedicalAssist extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/lunch_screen',
       routes: {
-        '/lunch_screen':(context) => const CodeFore(),
+        '/lunch_screen':(context) => const LunchScreen(),
         '/login_screen':(context) => const LoginScreen(),
         '/home_screen':(context) => const HomeScreen(),
         '/signup_screen':(context) => const SignupScreen(),
