@@ -137,30 +137,33 @@ class _Sginup_ScreenState extends State<SignupScreen> {
                 label: 'Gender',
                 controller: genderController,
                 keyboardType: TextInputType.text,
-                sufWidget: DropdownButton(
-                  underline: Container(height: 0),
-                  borderRadius: BorderRadius.circular(10),
-                  elevation: 4,
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
+                sufWidget: Padding(
+                  padding: const EdgeInsetsDirectional.only(end:20),
+                  child: DropdownButton(
+                    underline: Container(height: 0),
+                    borderRadius: BorderRadius.circular(10),
+                    elevation: 4,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                    ),
+                    icon: const Icon(
+                      Icons.keyboard_arrow_down_outlined,
+                      color: Colors.grey,
+                    ),
+                    iconSize: 30,
+                    items: genderList
+                        .map<DropdownMenuItem<String>>((value) =>
+                        DropdownMenuItem<String>(
+                            value: value.toString(),
+                            child: Text('$value')))
+                        .toList(),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        _selectGender = (newValue!);
+                      });
+                    },
                   ),
-                  icon: const Icon(
-                    Icons.keyboard_arrow_down_outlined,
-                    color: Colors.grey,
-                  ),
-                  iconSize: 30,
-                  items: genderList
-                      .map<DropdownMenuItem<String>>((value) =>
-                      DropdownMenuItem<String>(
-                          value: value.toString(),
-                          child: Text('$value')))
-                      .toList(),
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      _selectGender = (newValue!);
-                    });
-                  },
                 ),
               ),
               const SizedBox(height: 35),

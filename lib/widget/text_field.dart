@@ -31,6 +31,14 @@ class TextInput extends StatefulWidget {
 }
 
 class _TextInputState extends State<TextInput> {
+  String _selectGender = 'Meal';
+
+  // List of items in our dropdown menu
+  List genderList = [
+    'Meal',
+    'Female',
+  ];
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -70,10 +78,11 @@ class _TextInputState extends State<TextInput> {
           borderSide: const BorderSide(color: greenClr, width: 1.5),
           borderRadius: BorderRadius.circular(25),
         ),
-         suffixIcon: IconButton(
-           onPressed: widget.onpressed,
-          icon: widget.sufWidget??Container(),
-         ),
+         suffixIcon:widget.sufWidget,
+         // IconButton(
+         //   onPressed: widget.onpressed,
+         //  icon: widget.sufWidget??Container(),
+         // ),
       ),
       onTap: widget.onTap,
     );
