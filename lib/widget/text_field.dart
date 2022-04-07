@@ -10,14 +10,15 @@ class TextInput extends StatefulWidget {
     Key? key,
     this.widgetIcon ,
     this.sufWidget,
+     this.readOnly = false,
     required this.label,
     required this.controller,
     this.obscureText = false,
-    required this.keyboardType,
-    this.onpressed,
+     this.keyboardType=TextInputType.text,
+    this.onPressed,
     this.onTap,
   }) : super(key: key);
-   VoidCallback? onpressed;
+   VoidCallback? onPressed;
    VoidCallback? onTap;
   final String label;
   final Widget? widgetIcon;
@@ -25,6 +26,7 @@ class TextInput extends StatefulWidget {
   final TextEditingController controller;
  final  bool obscureText;
   final TextInputType keyboardType;
+  final bool readOnly;
 
   @override
   State<TextInput> createState() => _TextInputState();
@@ -42,6 +44,7 @@ class _TextInputState extends State<TextInput> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      readOnly: widget.readOnly,
       keyboardType: widget.keyboardType,
       obscureText: widget.obscureText,
       controller: widget.controller,
@@ -65,6 +68,7 @@ class _TextInputState extends State<TextInput> {
             ),
           ),
         ),
+
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(25.0),
           borderSide: const BorderSide(color: greenClr, width: 1.5),

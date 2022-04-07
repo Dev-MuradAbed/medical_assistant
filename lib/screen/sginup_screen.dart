@@ -11,7 +11,7 @@ class SignupScreen extends StatefulWidget {
   State<SignupScreen> createState() => _Sginup_ScreenState();
 }
 
-class _Sginup_ScreenState extends State<SignupScreen> {
+class _Sginup_ScreenState extends State<SignupScreen>{
   String _selectGender = 'Meal';
 
   // List of items in our dropdown menu
@@ -94,51 +94,66 @@ class _Sginup_ScreenState extends State<SignupScreen> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const SizedBox(
-                height: 10,
+              const SizedBox(height: 2),
+              Container(
+                height: 100,
+                width: 100,
+                child: const Icon(
+                  Icons.camera_alt_outlined,
+                  size: 36,
+                  color: blueClr,
+                ),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  //borderRadius: BorderRadius.all(Radius.circular(10)),
+                  border: Border.all(color: greenClr, width: 2),
+                  //color: greenClr,
+                  shape: BoxShape.circle,
+                ),
               ),
+              const SizedBox(height: 20),
               TextInput(
                   label: 'User ID',
                   controller: _idController,
                   keyboardType: TextInputType.number),
-              const SizedBox(height: 35),
+              const SizedBox(height: 30),
               TextInput(
-                  label: 'User Name',
-                  controller: nameController,
-                  keyboardType: TextInputType.number),
-              const SizedBox(height: 35),
+                label: 'User Name',
+                controller: nameController,
+              ),
+              const SizedBox(height: 30),
               TextInput(
                 label: 'Birthday',
+                readOnly: true,
                 controller: birthController,
-                keyboardType: TextInputType.none,
                 onTap: () async => _getDate(),
               ),
-              const SizedBox(height: 35),
+              const SizedBox(height: 30),
               TextInput(
                   label: 'Phone Number',
                   controller: phoneController,
                   keyboardType: TextInputType.number),
-              const SizedBox(height: 35),
+              const SizedBox(height: 30),
               TextInput(
                   label: 'Other Phone',
                   controller: otherPhoneController,
                   keyboardType: TextInputType.number),
-              const SizedBox(height: 35),
+              const SizedBox(height: 30),
               TextInput(
-                onTap: ()async{
+                onTap: () async {
                   setState(() {
                     genderController.text = _selectGender;
                   });
                 },
                 label: 'Gender',
+                readOnly: true,
                 controller: genderController,
-                keyboardType: TextInputType.text,
                 sufWidget: Padding(
-                  padding: const EdgeInsetsDirectional.only(end:20),
+                  padding: const EdgeInsetsDirectional.only(end: 20),
                   child: DropdownButton(
                     underline: Container(height: 0),
                     borderRadius: BorderRadius.circular(10),
@@ -154,41 +169,41 @@ class _Sginup_ScreenState extends State<SignupScreen> {
                     iconSize: 30,
                     items: genderList
                         .map<DropdownMenuItem<String>>((value) =>
-                        DropdownMenuItem<String>(
-                            value: value.toString(),
-                            child: Text('$value')))
+                            DropdownMenuItem<String>(
+                                value: value.toString(), child: Text('$value')))
                         .toList(),
                     onChanged: (String? newValue) {
                       setState(() {
                         _selectGender = (newValue!);
+                        genderController.text = _selectGender;
                       });
                     },
                   ),
                 ),
               ),
-              const SizedBox(height: 35),
+              const SizedBox(height: 30),
               TextInput(
                   label: 'Height',
                   controller: heightController,
                   keyboardType: TextInputType.number),
-              const SizedBox(height: 35),
+              const SizedBox(height: 30),
               TextInput(
                   label: 'Weight',
                   controller: weightController,
                   keyboardType: TextInputType.number),
-              const SizedBox(height: 35),
+              const SizedBox(height: 30),
               TextInput(
                   label: 'Password',
                   controller: _passwordController,
                   keyboardType: TextInputType.number),
-              const SizedBox(height: 35),
+              const SizedBox(height: 30),
               TextInput(
                   label: 'confirm Password',
                   controller: _passwordConfirmController,
                   keyboardType: TextInputType.number),
-              const SizedBox(height: 35),
-              ButtonWidget(text: "Create", onPressed: () {}),
-              const SizedBox(height: 35),
+              const SizedBox(height: 30),
+              ButtonWidget(text: "Create", onPressed: perSingUp),
+              const SizedBox(height: 30),
             ],
           ),
         ),
@@ -227,5 +242,46 @@ class _Sginup_ScreenState extends State<SignupScreen> {
     setState(() {
       birthController.text = '${date.day}/${date.month}/${date.year}';
     });
+  }
+
+  void perSingUp() {
+    if(checkSignup()){
+      singUp();
+    }
+  }
+
+  bool checkSignup() {
+    if (nameController.text.isNotEmpty &&
+        birthController.text.isNotEmpty &&
+        genderController.text.isNotEmpty &&
+        heightController.text.isNotEmpty &&
+        weightController.text.isNotEmpty &&
+        _passwordController.text.isNotEmpty &&
+        _passwordConfirmController.text.isNotEmpty &&
+        _passwordController.text == _passwordConfirmController.text &&
+        _idController.text.isNotEmpty &&
+        phoneController.text.isNotEmpty &&
+        otherPhoneController.text.isNotEmpty &&
+        emailController.text.isNotEmpty &&
+        _idController.text.length == 9) {
+      return true;
+    }
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: const Text('Please fill all the fields'),
+        backgroundColor: Colors.red,
+        behavior: SnackBarBehavior.floating,
+        duration: const Duration(seconds: 2),
+        margin: const EdgeInsets.all(30),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+      ),
+    );
+    return false;
+  }
+
+  singUp() {
+    Navigator.pushReplacementNamed(context, '/home_screen');
   }
 }

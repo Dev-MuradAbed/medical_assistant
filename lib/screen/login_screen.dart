@@ -85,7 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     color: greenClr,
                     size: 22,
                   ),
-                  onpressed: () {
+                  onPressed: () {
                     setState(() {
                       isPassword = !isPassword;
                     });
@@ -95,14 +95,15 @@ class _LoginScreenState extends State<LoginScreen> {
                       ? const Icon(Icons.visibility_off)
                       : const Icon(Icons.visibility),
                 ),
-                const SizedBox(height: 10),
-                const Padding(
-                  padding: EdgeInsetsDirectional.only(end: 20.0),
+
+                 Padding(
+                  padding: const EdgeInsetsDirectional.only(end: 20.0),
                   child: Align(
                     alignment: Alignment.centerRight,
-                    child: Text(
-                      'FORGET PASSWORD ?',
-                      style: TextStyle(
+                    child: TextButton(
+                      onPressed: ()=>Navigator.pushNamed(context, '/forget_screen'),
+                      child: const Text('FORGET PASSWORD ?',
+                      style:  TextStyle(
                         fontFamily: 'Candara',
                         color: blueClr,
                         fontSize: 12,
@@ -110,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
-                ),
+                )),
                 const SizedBox(height: 20),
                 ButtonWidget(text: "LOG IN", onPressed: loginPer),
                 const SizedBox(height: 10),

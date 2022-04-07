@@ -2,7 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:medical_assistant/screen/checkForecode.dart';
+import 'package:medical_assistant/screen/change_password.dart';
+import 'package:medical_assistant/screen/forget_screen.dart';
 import 'package:medical_assistant/screen/home_screen.dart';
 import 'package:medical_assistant/screen/login_screen.dart';
 import 'package:medical_assistant/screen/sginup_screen.dart';
@@ -26,12 +27,14 @@ class MedicalAssist extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/lunch_screen',
+      initialRoute: '/change_password',
       routes: {
-        '/lunch_screen':(context) => const CodeFore(),
+        '/lunch_screen':(context) => const ForgetScreen(),
         '/login_screen':(context) => const LoginScreen(),
         '/home_screen':(context) => const HomeScreen(),
         '/signup_screen':(context) => const SignupScreen(),
+        '/forget_screen':(context) => const ForgetScreen(),
+        '/change_password':(context) => const ChangePassword(),
 
       },
     );

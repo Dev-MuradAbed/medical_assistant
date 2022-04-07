@@ -11,9 +11,9 @@ class ButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onPressed,
-      child: const Text(
-        'LOG IN',
-        style: TextStyle(
+      child:  Text(
+        text,
+        style: const TextStyle(
           fontFamily: 'Candara',
           color: Colors.white,
           fontSize: 20,
