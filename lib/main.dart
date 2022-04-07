@@ -28,7 +28,7 @@ class MedicalAssist extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/lunch_screen',
       routes: {
-        '/lunch_screen':(context) => const LunchScreen(),
+        '/lunch_screen':(context) => const CodeFore(),
         '/login_screen':(context) => const LoginScreen(),
         '/home_screen':(context) => const HomeScreen(),
         '/signup_screen':(context) => const SignupScreen(),

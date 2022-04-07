@@ -52,47 +52,42 @@ class _CodeForeState extends State<CodeFore> {
       body: Center(
         child: Row(
           children: [
-            Expanded(
-              child: CodeTextFiled(textEditingController: _firstCodeTextController, focusNode: _firstCodeFocusNode ,onChanged: (String value){
-                if(value.isNotEmpty){
-                  _secondCodeFocusNode.requestFocus();
-                }
-              }),
-            ),
-            const SizedBox(width: 5,),
-            Expanded(
-              child: CodeTextFiled(textEditingController: _secondCodeTextController, focusNode: _secondCodeFocusNode ,onChanged: (String value){
-
-                  if (value.isNotEmpty) {
-                    _thirdCodeFocusNode.requestFocus();
-                  } else {
-                    _firstCodeFocusNode.requestFocus();
-                  }
-
-              }),
-            ),
-            const SizedBox(width: 5,),
-            Expanded(
-              child: CodeTextFiled(textEditingController: _thirdCodeTextController, focusNode: _thirdCodeFocusNode ,onChanged: (String value){
+            Spacer(),
+            CodeTextFiled(textEditingController: _firstCodeTextController, focusNode: _firstCodeFocusNode ,onChanged: (String value){
+              if(value.isNotEmpty){
+                _secondCodeFocusNode.requestFocus();
+              }
+            }),
+            const SizedBox(width: 15,),
+            CodeTextFiled(textEditingController: _secondCodeTextController, focusNode: _secondCodeFocusNode ,onChanged: (String value){
 
                 if (value.isNotEmpty) {
-                  _fourthCodeFocusNode.requestFocus();
-                } else {
-                  _secondCodeFocusNode.requestFocus();
-                }
-
-              }),
-            ),
-            const SizedBox(width: 5,),
-            Expanded(
-              child: CodeTextFiled(textEditingController: _fourthCodeTextController, focusNode: _fourthCodeFocusNode ,onChanged: (String value){
-
-                if (value.isEmpty) {
                   _thirdCodeFocusNode.requestFocus();
+                } else {
+                  _firstCodeFocusNode.requestFocus();
                 }
 
-              }),
-            ),
+            }),
+            const SizedBox(width: 15,),
+            CodeTextFiled(textEditingController: _thirdCodeTextController, focusNode: _thirdCodeFocusNode ,onChanged: (String value){
+
+              if (value.isNotEmpty) {
+                _fourthCodeFocusNode.requestFocus();
+              } else {
+                _secondCodeFocusNode.requestFocus();
+              }
+
+            }),
+            const SizedBox(width: 15,),
+            CodeTextFiled(textEditingController: _fourthCodeTextController, focusNode: _fourthCodeFocusNode ,onChanged: (String value){
+
+              if (value.isEmpty) {
+                _thirdCodeFocusNode.requestFocus();
+              }
+
+            }),
+            Spacer(),
+
 
           ],
         ),
@@ -117,25 +112,36 @@ class CodeTextFiled extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      controller:_textEditingController ,
-      focusNode:_focusNode ,
-      textAlign: TextAlign.center,
-      style: const TextStyle(fontFamily: 'Candara',fontWeight: FontWeight.bold,color: blueClr),
-      keyboardType: const TextInputType.numberWithOptions(signed: false,decimal: false),
-      onChanged: _onChanged,
-      maxLength: 1,
-      decoration: InputDecoration(
-        counterText: '',
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            width: 1,
-            color:Colors.grey
-          )
-        )
+    return Container(
+      height: 60,
+      width: 50,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: greenClr
       ),
+      child: TextField(
 
+        controller:_textEditingController ,
+        focusNode:_focusNode ,
+        textAlign: TextAlign.center,
+        style: const TextStyle(fontFamily: 'Candara',fontWeight: FontWeight.bold,color: blueClr),
+        keyboardType: const TextInputType.numberWithOptions(signed: false,decimal: false),
+        onChanged: _onChanged,
+        maxLength: 1,
+        decoration: InputDecoration(
+
+          counterText: '',
+          // border: OutlineInputBorder(
+          //   borderRadius: BorderRadius.circular(10),
+          //   borderSide: const BorderSide(
+          //
+          //     width: 1,
+          //     color:Colors.grey
+          //   )
+          // )
+        ),
+
+      ),
     );
   }
 }
