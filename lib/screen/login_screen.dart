@@ -70,13 +70,21 @@ class _LoginScreenState extends State<LoginScreen> {
                     label: 'Enter ID',
                     controller: _idController,
                     keyboardType: TextInputType.number,
-                    oreIcon: Icons.person),
+                    widgetIcon: const Icon(
+                      Icons.person,
+                      color: greenClr,
+                      size: 22,
+                    )),
                 const SizedBox(height: 20),
                 TextInput(
                   label: 'password',
                   controller: _passwordController,
                   keyboardType: TextInputType.text,
-                  oreIcon: Icons.lock,
+                  widgetIcon: const Icon(
+                    Icons.person,
+                    color: greenClr,
+                    size: 22,
+                  ),
                   onpressed: () {
                     setState(() {
                       isPassword = !isPassword;
@@ -110,7 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const  Text(
+                    const Text(
                       'YOU DON\'T HAVE ANY ACCOUNT ? ',
                       style: TextStyle(
                         fontFamily: 'Candara',
@@ -119,16 +127,19 @@ class _LoginScreenState extends State<LoginScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    TextButton(onPressed: (){
-
-                      Navigator.pushNamed(context, '/signup_screen');
-                    }, child:const  Text('SGIN UP.',style: TextStyle(
-                      fontFamily: 'Candara',
-                      color: greenClr,
-                      fontSize: 8,
-                      fontWeight: FontWeight.bold,
-                    ),))
-
+                    TextButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/signup_screen');
+                        },
+                        child: const Text(
+                          'SGIN UP.',
+                          style: TextStyle(
+                            fontFamily: 'Candara',
+                            color: greenClr,
+                            fontSize: 8,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ))
                   ],
                 ),
                 const SizedBox(height: 20),
@@ -249,4 +260,3 @@ class _LoginScreenState extends State<LoginScreen> {
         onPressed: onClicked,
       );
 }
-
