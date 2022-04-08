@@ -1,103 +1,147 @@
 import 'package:flutter/material.dart';
-import 'package:medical_assistant/them.dart';
 
-class NewsScreen extends StatefulWidget {
-  const NewsScreen({Key? key}) : super(key: key);
+import '../models/news_model.dart';
 
-  @override
-  State<NewsScreen> createState() => _NewsScreenState();
-}
 
-class _NewsScreenState extends State<NewsScreen> {
-  List categories = ['Covid19', 'Cypto', 'Tech', 'Business', 'Health'];
-  int selectedCategory = 0;
+class NewsViewPage extends StatelessWidget {
+  final News newsPost;
+  const NewsViewPage({Key? key, required this.newsPost}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: const Text(
-          'Medical Assistant',
-          style: TextStyle(
-            color: blueClr,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-      body: ListView(
-        clipBehavior: Clip.antiAlias,
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        children: [
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: List.generate(
-                5,
-                (index) => GestureDetector(
+      body: Container(
+          width: size.width,
+          child: Stack(
+            alignment: Alignment.topLeft,
+            children: [
+              ClipRRect(
+                child: Image(
+                  fit: BoxFit.cover,
+                  image: NetworkImage(newsPost.image),
+                  height: size.height,
+                  width: size.width,
+                ),
+              ),
+              Container(
+                width: size.width,
+                height: size.height,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      // const Color(0xCC000000),
+                      const Color(0x00000000),
+                      const Color(0x00000000),
+                      const Color(0xCC000000),
+                    ],
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.topLeft,
+                child: GestureDetector(
                   onTap: () {
-                    setState(() {
-                      selectedCategory = index;
-                    });
+                    Navigator.pop(context);
                   },
                   child: Container(
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                    ),
-                    clipBehavior: Clip.antiAlias,
-                    // margin: const EdgeInsets.only(left: 10),
-                    alignment: Alignment.center,
-                    height: 35,
-                    width: 80,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      border: Border.all(
-                        color: greenClr,
-                        width: 2,
-                      ),
-                      color: selectedCategory == index
-                          ? greenClr
-                          : Colors.transparent,
-                    ),
-                    child: Text(
-                      categories[index],
-                      style: TextStyle(
-                          color: selectedCategory == index
-                              ? Colors.white
-                              : blueClr),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10)),
+                    padding: EdgeInsets.all(5),
+                    margin: EdgeInsets.only(top: 30, left: 10),
+                    child: Icon(
+                      Icons.arrow_back,
                     ),
                   ),
                 ),
               ),
-            ),
-          ),
-          const SizedBox(height: 20),
-          GridView(
-            scrollDirection: Axis.horizontal,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 1,
-              mainAxisSpacing: 10,
-            ),
-            children: [
-            Container(
-              width: 320,
-              height: 160,
-              color: Colors.red,
-            )
-
+              Positioned(
+                bottom: 0,
+                left: 0,
+                // alignment: Alignment.bottomCenter,
+                child: Container(
+                  width: size.width,
+                  margin: EdgeInsets.all(20),
+                  child: Column(
+                    children: [
+                      Text(
+                        newsPost.title,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                            width: 30,
+                            height: 30,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                    image: NetworkImage(newsPost.sourceImage))),
+                          ),
+                          Expanded(
+                            child: Container(
+                              margin: EdgeInsets.only(left: 10),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    newsPost.source,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    newsPost.time,
+                                    style: TextStyle(color: Colors.grey[400]),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(right: 40),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.bookmark_outlined,
+                                  color: Colors.white,
+                                  size: 30,
+                                ),
+                                Icon(
+                                  Icons.share,
+                                  color: Colors.white,
+                                  size: 30,
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top: 10, right: 40),
+                        height: 3,
+                        decoration: BoxDecoration(color: Colors.white),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top: 10, right: 40),
+                        child: Text(newsPost.descrption,
+                            style: TextStyle(
+                              color: Colors.white,
+                            )),
+                      )
+                    ],
+                  ),
+                ),
+              )
             ],
-          ),
-        ],
-      ),
+          )),
     );
   }
 }
-// /ListView.builder(
-//         itemCount: 10,
-//         itemBuilder: (context, index) => const Card(),
-//       )
