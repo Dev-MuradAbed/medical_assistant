@@ -85,17 +85,27 @@ class _LoginScreenState extends State<LoginScreen> {
                     color: greenClr,
                     size: 22,
                   ),
-                  onPressed: () {
-                    setState(() {
-                      isPassword = !isPassword;
-                    });
-                  },
+                  // onPressed: () {
+                  //   setState(() {
+                  //     isPassword = !isPassword;
+                  //     print(isPassword);
+                  //   });
+                  // },
                   obscureText: isPassword,
-                  sufWidget: isPassword == true
-                      ? const Icon(Icons.visibility_off)
-                      : const Icon(Icons.visibility),
-                ),
-
+                  sufWidget:IconButton(
+                    icon: Icon(
+                      isPassword ? Icons.visibility : Icons.visibility_off,
+                      color: greenClr,
+                      size: 22,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        isPassword = !isPassword;
+                        print(isPassword);
+                      });
+                    },
+                  ),
+                  ),
                  Padding(
                   padding: const EdgeInsetsDirectional.only(end: 20.0),
                   child: Align(

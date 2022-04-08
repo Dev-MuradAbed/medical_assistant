@@ -100,7 +100,7 @@ class _ForgetScreenState extends State<ForgetScreen> {
           ),
           const SizedBox(height: 15),
           const Text(
-            'ao*****57@gmail.com',
+            'dev*****ed@gmail.com',
             style: TextStyle(
               fontFamily: 'Candara',
               color: blackClr,
@@ -162,7 +162,9 @@ class _ForgetScreenState extends State<ForgetScreen> {
             ],
           ),
           const SizedBox(height: 50),
-          ButtonWidget(text: 'Sent Again', onPressed: () {}),
+          ButtonWidget(text: 'Sent Again', onPressed: () {
+            Navigator.pushNamed(context, '/change_password');
+          }),
           const SizedBox(height: 90),
         ],
       ),

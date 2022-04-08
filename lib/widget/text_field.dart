@@ -15,10 +15,10 @@ class TextInput extends StatefulWidget {
     required this.controller,
     this.obscureText = false,
      this.keyboardType=TextInputType.text,
-    this.onPressed,
+    // this.onPressed,
     this.onTap,
   }) : super(key: key);
-   VoidCallback? onPressed;
+   // VoidCallback? onPressed;
    VoidCallback? onTap;
   final String label;
   final Widget? widgetIcon;
