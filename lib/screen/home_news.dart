@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:medical_assistant/them.dart';
 
-import '../components/categorySelector.dart';
-import '../components/newsCarousel.dart';
-import '../components/tiledNewsView.dart';
-import '../components/topbar.dart';
-import '../components/welcomeWidget.dart';
+import '../widget/categorySelector.dart';
+import '../widget/newsCarousel.dart';
+import '../widget/tiledNewsView.dart';
 
 
 

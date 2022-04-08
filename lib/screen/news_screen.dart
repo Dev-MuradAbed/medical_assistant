@@ -11,6 +11,7 @@ class NewsViewPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Container(
           width: size.width,
           child: Stack(
