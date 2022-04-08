@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medical_assistant/them.dart';
 
 import '../api/category_service.dart';
 import '../models/category_model.dart';
@@ -33,15 +34,19 @@ class _CategorySelectorState extends State<CategorySelector> {
                 child: AnimatedContainer(
                   duration: Duration(milliseconds: 150),
                   decoration: BoxDecoration(
+                    border: Border.all(
+                      color: isSelected ?Colors.transparent:greenClr,
+                      width: 1.5
+                    ),
                       borderRadius: BorderRadius.circular(10),
-                      color: isSelected ? Colors.black : Colors.white),
+                      color: isSelected ? greenClr : Colors.white),
                   padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
                   margin: EdgeInsets.symmetric(horizontal: 2),
                   child: Text(
                     category.name,
                     style: TextStyle(
                         fontSize: 15,
-                        color: isSelected ? Colors.white : Colors.black),
+                        color: isSelected ? Colors.white : blueClr),
                   ),
                 ),
               );
