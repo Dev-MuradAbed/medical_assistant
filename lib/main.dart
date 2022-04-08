@@ -7,6 +7,7 @@ import 'package:medical_assistant/screen/forget_screen.dart';
 import 'package:medical_assistant/screen/home_screen.dart';
 import 'package:medical_assistant/screen/login_screen.dart';
 import 'package:medical_assistant/screen/map_pat_screen.dart';
+import 'package:medical_assistant/screen/news_screen.dart';
 import 'package:medical_assistant/screen/sginup_screen.dart';
 
 import 'screen/lunch_screen.dart';
@@ -28,7 +29,8 @@ class MedicalAssist extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/lunch_screen',
+     home: const NewsScreen(),
+     // initialRoute: '/lunch_screen',
       routes: {
         // '/lunch_screen':(context) =>  Search(),
         '/lunch_screen':(context) =>  MapPatScreen(),
@@ -37,6 +39,7 @@ class MedicalAssist extends StatelessWidget {
         '/signup_screen':(context) => const SignupScreen(),
         '/forget_screen':(context) => const ForgetScreen(),
         '/change_password':(context) => const ChangePassword(),
+       // '/change_password':(context) => const ChangePassword(),
 
       },
     );
