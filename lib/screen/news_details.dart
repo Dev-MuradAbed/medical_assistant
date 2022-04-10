@@ -1,71 +1,120 @@
-import 'dart:async';
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:medical_assistant/state/state_managment.dart';
-import 'package:webview_flutter/webview_flutter.dart';
-import 'package:riverpod/riverpod.dart';
 
-class MyNewDetail extends StatefulWidget {
-  const MyNewDetail({Key? key}) : super(key: key);
-
-  @override
-  State<MyNewDetail> createState() => _MyNewDetailState();
-}
-
-class _MyNewDetailState extends State<MyNewDetail> {
-  double progress = 0;
-  final Completer<WebViewController> _controller =
-      Completer<WebViewController>();
-  @override
-  void initState() {
-    super.initState();
-    if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-  }
+class NewsViewPage extends StatelessWidget {
+  final String? title;
+  final String? image;
+  final String? description;
+  final String imagenull;
+  final String? time;
+  const NewsViewPage({
+    Key? key,
+    required this.title,
+    required this.image,
+    required this.description,
+    required this.imagenull,
+    required this.time,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(statusBarColor: Color(0xFFA51234)));
-
-    return MaterialApp(
-      home: Scaffold(
-        body: SafeArea(
-          child: Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Row(
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.arrow_back),
-                      onPressed: () => Navigator.pop(context),
-                      alignment: AlignmentDirectional.topStart,
-                    ),
-                  ],
-                ),
-                Container(
-                  padding: const EdgeInsets.all(10),
-                child: progress < 1.0?LinearProgressIndicator(value: progress,):Container(
-                  child: Expanded(
-                    child: WebView(
-                      // initialUrl: context.read(flavorConfigProvider).state.url
-                    ),
-                  ),
-                ),
-                )
-              ],
-            ),
-          ),
+    var size = MediaQuery.of(context).size;
+    return Scaffold(
+extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        leading:
+        IconButton(
+          icon: const Icon(Icons.arrow_back_ios,color: Colors.white,),
+          onPressed: ()=>Navigator.pop(context),
         ),
       ),
+      body: SizedBox(
+          width: size.width,
+          child: Stack(
+            alignment: Alignment.topLeft,
+            children: [
+
+              ClipRRect(
+                child: Image(
+                  fit: BoxFit.cover,
+                  image: NetworkImage(image??imagenull),
+                  height: size.height,
+                  width: size.width,
+                ),
+              ),
+
+              Positioned(
+                bottom: 0,
+                left: 0,
+                child: Stack(
+                  children: [
+                    Container(
+                      color: Color(0xAA333639),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8),
+                        child:Container(
+                          width: size.width,
+                          margin: const EdgeInsets.all(20),
+                          child: Column(
+                            children: [
+                              Text(
+                                title??'No title',
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Row(
+                                children: [
+                                  const SizedBox(
+                                    width: 30,
+                                    height: 30,
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      margin: const EdgeInsets.only(left: 10),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            time??'No time',
+                                            style: TextStyle(color: Colors.grey[400]),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsets.only(right: 40),
+                                  )
+                                ],
+                              ),
+                              Container(
+                                margin: const EdgeInsets.only(top: 10, right: 40),
+                                height: 3,
+                                decoration: const BoxDecoration(color: Colors.white),
+                              ),
+                              Container(
+                                margin: const EdgeInsets.only(top: 10, right: 40),
+                                child: Text( description??'No description',
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                    )),
+                              ),
+                              SizedBox(height: 30,)
+                            ],
+                          ),
+                        ),
+                      ),
+                    )
+
+                  ],
+                ),
+              )
+            ],
+          )),
     );
   }
 }
