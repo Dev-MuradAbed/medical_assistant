@@ -2,13 +2,15 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:medical_assistant/screen/change_password.dart';
 import 'package:medical_assistant/screen/forget_screen.dart';
-import 'package:medical_assistant/screen/home_news.dart';
+import 'package:medical_assistant/screen/home_news_screen.dart';
+
 import 'package:medical_assistant/screen/home_screen.dart';
 import 'package:medical_assistant/screen/login_screen.dart';
 import 'package:medical_assistant/screen/map_pat_screen.dart';
-import 'package:medical_assistant/screen/news_screen.dart';
+
 import 'package:medical_assistant/screen/sginup_screen.dart';
 
 import 'screen/lunch_screen.dart';
@@ -20,7 +22,7 @@ Future main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  runApp(const MedicalAssist());
+  runApp(const ProviderScope(child:   MedicalAssist()));
 }
 
 class MedicalAssist extends StatelessWidget {
@@ -30,11 +32,11 @@ class MedicalAssist extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-     home:  HomePage(),
-     // initialRoute: '/lunch_screen',
+     // home:  HomePage(),
+     initialRoute: '/lunch_screen',
       routes: {
         // '/lunch_screen':(context) =>  Search(),
-        '/lunch_screen':(context) => const MapPatScreen(),
+        '/lunch_screen':(context) => const Home_News_Screen(),
         '/login_screen':(context) => const LoginScreen(),
         '/home_screen':(context) => const HomeScreen(),
         '/signup_screen':(context) => const SignupScreen(),
