@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:medical_assistant/them.dart';
 import 'package:medical_assistant/widget/text_field.dart';
@@ -30,7 +32,7 @@ class _Sginup_ScreenState extends State<SignupScreen>{
   late TextEditingController genderController;
   late TextEditingController heightController;
   late TextEditingController weightController;
-
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   @override
   void initState() {
     // TODO: implement initState
@@ -124,6 +126,12 @@ class _Sginup_ScreenState extends State<SignupScreen>{
               TextInput(
                 label: 'User Name',
                 controller: nameController,
+              ),
+              const SizedBox(height: 30),
+              TextInput(
+                label: 'Email',
+                controller: emailController,
+                keyboardType: TextInputType.emailAddress,
               ),
               const SizedBox(height: 30),
               TextInput(
@@ -245,6 +253,7 @@ class _Sginup_ScreenState extends State<SignupScreen>{
   }
 
   void perSingUp() {
+
     if(checkSignup()){
       singUp();
     }
@@ -262,8 +271,25 @@ class _Sginup_ScreenState extends State<SignupScreen>{
         _idController.text.isNotEmpty &&
         phoneController.text.isNotEmpty &&
         otherPhoneController.text.isNotEmpty &&
-        emailController.text.isNotEmpty &&
-        _idController.text.length == 9) {
+        // emailController.text.isNotEmpty &&
+        _idController.text.isNotEmpty) {
+      _firebaseAuth.createUserWithEmailAndPassword(
+          email: emailController.text,
+          password: _passwordController.text).then((value){
+        FirebaseFirestore.instance.collection("UserData").
+        doc(value.user!.uid).set({
+          'email':emailController.text,
+          'name':nameController.text,
+          'birth':birthController.text,
+          'gender':genderController.text,
+          'phone':phoneController.text,
+          'otherPhone':otherPhoneController.text,
+          'height':heightController.text,
+          'weight':weightController.text,
+          'idCard':_idController.text,
+          'role':'user',
+        });
+      });
       return true;
     }
     ScaffoldMessenger.of(context).showSnackBar(

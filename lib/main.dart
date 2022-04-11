@@ -1,5 +1,6 @@
 
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,7 +17,8 @@ import 'package:medical_assistant/screen/sginup_screen.dart';
 import 'screen/lunch_screen.dart';
 
 Future main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -36,7 +38,7 @@ class MedicalAssist extends StatelessWidget {
      initialRoute: '/lunch_screen',
       routes: {
         // '/lunch_screen':(context) =>  Search(),
-        '/lunch_screen':(context) => const Home_News_Screen(),
+        '/lunch_screen':(context) => const LunchScreen(),
         '/login_screen':(context) => const LoginScreen(),
         '/home_screen':(context) => const HomeScreen(),
         '/signup_screen':(context) => const SignupScreen(),
