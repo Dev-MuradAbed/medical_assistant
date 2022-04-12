@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import '../them.dart';
 
 class TextInput extends StatefulWidget {
-
-
   TextInput({
     Key? key,
     this.widgetIcon ,
@@ -17,7 +15,7 @@ class TextInput extends StatefulWidget {
     this.obscureText = false,
      this.keyboardType=TextInputType.text,
     // this.onPressed,
-    this.onTap,
+    this.onTap, this.onSaved, this.validator,
   }) : super(key: key);
    // VoidCallback? onPressed;
    VoidCallback? onTap;
@@ -25,10 +23,12 @@ class TextInput extends StatefulWidget {
   final Widget? widgetIcon;
   final Widget? sufWidget;
   final TextEditingController? controller;
- final  bool obscureText;
+  final  bool obscureText;
   final TextInputType keyboardType;
   final bool readOnly;
  final  String? hint;
+ final FormFieldSetter<String>? onSaved;
+ final FormFieldValidator<String>? validator;
   @override
   State<TextInput> createState() => _TextInputState();
 }
@@ -49,6 +49,8 @@ class _TextInputState extends State<TextInput> {
       keyboardType: widget.keyboardType,
       obscureText: widget.obscureText,
       controller: widget.controller,
+      onSaved: widget.onSaved,
+      validator: widget.validator,
       decoration: InputDecoration(
         prefixIcon: widget.widgetIcon,
 

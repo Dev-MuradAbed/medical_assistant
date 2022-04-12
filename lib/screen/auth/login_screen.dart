@@ -1,9 +1,11 @@
 import 'dart:math';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:medical_assistant/api/local_auth_api.dart';
+import 'package:medical_assistant/screen/home_screen.dart';
 import 'package:medical_assistant/them.dart';
 
 import '../../widgets/button_widget.dart';
@@ -20,13 +22,14 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool isPassword = true;
-  late TextEditingController _idController;
+  final _formkey = GlobalKey<FormState>();
+  late TextEditingController _emailController;
   late TextEditingController _passwordController;
 
   @override
   void initState() {
     // TODO: implement initState
-    _idController = TextEditingController();
+    _emailController = TextEditingController();
     _passwordController = TextEditingController();
     super.initState();
   }
@@ -34,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void dispose() {
     // TODO: implement dispose
-    _idController.dispose();
+    _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
@@ -62,119 +65,146 @@ class _LoginScreenState extends State<LoginScreen> {
           Container(
             alignment: Alignment.center,
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const ChooseJob(),
-                const SizedBox(height: 39),
-                TextInput(
-                    label: 'Enter ID',
-                    controller: _idController,
-                    keyboardType: TextInputType.number,
+            child: Form(
+              key: _formkey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const ChooseJob(),
+                  const SizedBox(height: 39),
+                  TextInput(
+                      label: 'Enter Email',
+                      controller: _emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      widgetIcon: const Icon(
+                        Icons.person,
+                        color: greenClr,
+                        size: 22,
+                      ),
+                  validator: (value) {
+                    if (value!.length == 0) {
+                      return "Email cannot be empty";
+                    }
+                    if (!RegExp(
+                        "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
+                        .hasMatch(value)) {
+                      return ("Please enter a valid email");
+                    } else {
+                      return null;
+                    }
+                  },
+                    onSaved: (value) {
+                      _emailController.text = value!;
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  TextInput(
+                    label: 'password',
+                    controller: _passwordController,
+                    keyboardType: TextInputType.emailAddress,
                     widgetIcon: const Icon(
                       Icons.person,
                       color: greenClr,
                       size: 22,
-                    )),
-                const SizedBox(height: 20),
-                TextInput(
-                  label: 'password',
-                  controller: _passwordController,
-                  keyboardType: TextInputType.text,
-                  widgetIcon: const Icon(
-                    Icons.person,
-                    color: greenClr,
-                    size: 22,
-                  ),
-                  // onPressed: () {
-                  //   setState(() {
-                  //     isPassword = !isPassword;
-                  //     print(isPassword);
-                  //   });
-                  // },
-                  obscureText: isPassword,
-                  sufWidget:IconButton(
-                    icon: Icon(
-                      isPassword ? Icons.visibility : Icons.visibility_off,
-                      color: greenClr,
-                      size: 22,
                     ),
-                    onPressed: () {
-                      setState(() {
-                        isPassword = !isPassword;
-                        print(isPassword);
-                      });
-                    },
-                  ),
-                  ),
-                 Padding(
-                  padding: const EdgeInsetsDirectional.only(end: 20.0),
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
-                      onPressed: ()=>Navigator.pushNamed(context, '/forget_screen'),
-                      child: const Text('FORGET PASSWORD ?',
-                      style:  TextStyle(
-                        fontFamily: 'Candara',
-                        color: blueClr,
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                )),
-                const SizedBox(height: 20),
-                ButtonWidget(text: "LOG IN", onPressed: loginPer),
-                const SizedBox(height: 10),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'YOU DON\'T HAVE ANY ACCOUNT ? ',
-                      style: TextStyle(
-                        fontFamily: 'Candara',
+                    obscureText: isPassword,
+                    sufWidget:IconButton(
+                      icon: Icon(
+                        isPassword ? Icons.visibility : Icons.visibility_off,
                         color: greenClr,
-                        fontSize: 8,
-                        fontWeight: FontWeight.bold,
+                        size: 22,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          isPassword = !isPassword;
+                          print(isPassword);
+                        });
+                      },
+                    ),
+                    validator:  (value) {
+                      RegExp regex = new RegExp(r'^.{6,}$');
+                      if (value!.isEmpty) {
+                        return "Password cannot be empty";
+                      }
+                      if (!regex.hasMatch(value)) {
+                        return ("please enter valid password min. 6 character");
+                      } else {
+                        return null;
+                      }
+                    },
+                    onSaved: (value) {
+                      _passwordController.text = value!;
+                    },
+                    ),
+                   Padding(
+                    padding: const EdgeInsetsDirectional.only(end: 20.0),
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                        onPressed: ()=>Navigator.pushNamed(context, '/forget_screen'),
+                        child: const Text('FORGET PASSWORD ?',
+                        style:  TextStyle(
+                          fontFamily: 'Candara',
+                          color: blueClr,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                    TextButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/signup_screen');
-                        },
-                        child: const Text(
-                          'SGIN UP.',
-                          style: TextStyle(
-                            fontFamily: 'Candara',
-                            color: greenClr,
-                            fontSize: 8,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ))
-                  ],
-                ),
-                const SizedBox(height: 20),
-                const Text(
-                  '- OR - ',
-                  style: TextStyle(
-                    fontFamily: 'Candara',
-                    color: blueClr,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 35),
-                // buildAuthenticate(context),
-                // buildAvailability(context),
-                GestureDetector(
-                    onTap: () async {
-                      final isAuthenticated = await LocalAuthApi.authenticate();
+                  )),
+                  const SizedBox(height: 20),
+                  ButtonWidget(text: "LOG IN", onPressed: loginPer),
+                  const SizedBox(height: 10),
 
-                      if (isAuthenticated) login();
-                    },
-                    child: SvgPicture.asset('assets/images/fig.svg'))
-              ],
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'YOU DON\'T HAVE ANY ACCOUNT ? ',
+                        style: TextStyle(
+                          fontFamily: 'Candara',
+                          color: greenClr,
+                          fontSize: 8,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/signup_screen');
+                          },
+                          child: const Text(
+                            'SGIN UP.',
+                            style: TextStyle(
+                              fontFamily: 'Candara',
+                              color: greenClr,
+                              fontSize: 8,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ))
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  const Text(
+                    '- OR - ',
+                    style: TextStyle(
+                      fontFamily: 'Candara',
+                      color: blueClr,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 35),
+                  // buildAuthenticate(context),
+                  // buildAvailability(context),
+                  GestureDetector(
+                      onTap: () async {
+                        final isAuthenticated = await LocalAuthApi.authenticate();
+
+                        if (isAuthenticated) login();
+                      },
+                      child: SvgPicture.asset('assets/images/fig.svg'))
+                ],
+              ),
             ),
           ),
         ]),
@@ -189,8 +219,8 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   bool check() {
-    if (_idController.text.isNotEmpty &&
-        _idController.text.length == 9 &&
+    if (_emailController.text.isNotEmpty &&
+        _emailController.text.isNotEmpty &&
         _passwordController.text.isNotEmpty) {
       return true;
     }
@@ -213,7 +243,7 @@ class _LoginScreenState extends State<LoginScreen> {
     // FirebaseAuth.instance.signInWithEmailAndPassword(
     //     email: 'ni@t.come',
     //     password: 'test123');
-    Navigator.pushReplacementNamed(context, '/home_screen');
+    Navigator.pushReplacementNamed(context, '/profile_screen');
   }
 
   Widget buildAvailability(BuildContext context) => buildButton(
@@ -254,7 +284,29 @@ class _LoginScreenState extends State<LoginScreen> {
           ],
         ),
       );
-
+  void signIn(String email, String password) async {
+    if (_formkey.currentState!.validate()) {
+      try {
+        UserCredential userCredential =
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: email,
+          password: password,
+        );
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HomeScreen(),
+          ),
+        );
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'user-not-found') {
+          print('No user found for that email.');
+        } else if (e.code == 'wrong-password') {
+          print('Wrong password provided for that user.');
+        }
+      }
+    }
+  }
   Widget buildButton({
     required String text,
     required IconData icon,

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatefulWidget {
 
-  const HomeScreen({Key? key}) : super(key: key);
+class HomeScreen extends StatefulWidget {
+final String? titile;
+  const HomeScreen({Key? key, this.titile}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -13,10 +14,16 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home'),
+        title: Text(widget.titile!),
       ),
       body: Center(
-        child: Text('Home'),
+        child: Column(
+          children: [
+            ElevatedButton(onPressed: (){
+            }, child: Text("LogOUT")),
+            Text(widget.titile!),
+          ],
+        ),
       ),
     );
   }
