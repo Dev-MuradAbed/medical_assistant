@@ -10,9 +10,10 @@ class TextInput extends StatefulWidget {
     Key? key,
     this.widgetIcon ,
     this.sufWidget,
+     this.hint,
      this.readOnly = false,
     required this.label,
-    required this.controller,
+     this.controller,
     this.obscureText = false,
      this.keyboardType=TextInputType.text,
     // this.onPressed,
@@ -23,11 +24,11 @@ class TextInput extends StatefulWidget {
   final String label;
   final Widget? widgetIcon;
   final Widget? sufWidget;
-  final TextEditingController controller;
+  final TextEditingController? controller;
  final  bool obscureText;
   final TextInputType keyboardType;
   final bool readOnly;
-
+ final  String? hint;
   @override
   State<TextInput> createState() => _TextInputState();
 }
@@ -84,8 +85,8 @@ class _TextInputState extends State<TextInput> {
         ),
          suffixIcon:widget.sufWidget,
          // IconButton(
-         //   onPressed: widget.onpressed,
-         //  icon: widget.sufWidget??Container(),
+         //   onPressed: widgets.onpressed,
+         //  icon: widgets.sufWidget??Container(),
          // ),
       ),
       onTap: widget.onTap,

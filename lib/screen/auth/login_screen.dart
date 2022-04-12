@@ -5,9 +5,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:medical_assistant/api/local_auth_api.dart';
 import 'package:medical_assistant/them.dart';
-import 'package:medical_assistant/widget/button_widget.dart';
-import 'package:medical_assistant/widget/text_field.dart';
-import '../widget/choose_job.dart';
+
+import '../../widgets/button_widget.dart';
+import '../../widgets/choose_job.dart';
+import '../../widgets/text_field.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginScreen extends StatefulWidget {

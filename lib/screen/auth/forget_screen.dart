@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:medical_assistant/them.dart';
 
-import '../widget/button_widget.dart';
+import '../../widgets/button_widget.dart';
+
+
 
 class ForgetScreen extends StatefulWidget {
   const ForgetScreen({Key? key}) : super(key: key);

@@ -1,10 +1,12 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:medical_assistant/widget/text_field.dart';
 
-import '../them.dart';
-import '../widget/button_widget.dart';
+
+import '../../them.dart';
+
+import '../../widgets/button_widget.dart';
+import '../../widgets/text_field.dart';
 
 class ChangePassword extends StatefulWidget {
   const ChangePassword({Key? key}) : super(key: key);

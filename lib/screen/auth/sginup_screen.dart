@@ -2,9 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:medical_assistant/them.dart';
-import 'package:medical_assistant/widget/text_field.dart';
 
-import '../widget/button_widget.dart';
+import '../../widgets/button_widget.dart';
+import '../../widgets/text_field.dart';
+
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({Key? key}) : super(key: key);
