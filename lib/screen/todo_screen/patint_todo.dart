@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -15,7 +16,6 @@ import '../../widgets/todo_widgets/task_tile.dart';
 
 class DoctorToPatient extends StatefulWidget {
    DoctorToPatient({Key? key, required this.pyload}) : super(key: key);
-
    String pyload;
 
   @override
@@ -23,6 +23,8 @@ class DoctorToPatient extends StatefulWidget {
 }
 
 class _HomePageState extends State<DoctorToPatient> {
+  final Stream<QuerySnapshot> _usersStream=FirebaseFirestore.instance.
+  collection('NotesDoctor').snapshots();
   late NotifyHelper notifyHelper;
   SizeConfig size = SizeConfig();
 
@@ -98,18 +100,19 @@ class _HomePageState extends State<DoctorToPatient> {
                 scrollDirection: SizeConfig.orientation == Orientation.landscape
                     ? Axis.horizontal
                     : Axis.vertical,
-                itemCount: _taskController.listTask.length,
+                // itemCount:snapshot.data!.docs.length,
+                itemCount:   _taskController.listTask.length,
                 itemBuilder: (BuildContext context, int index) {
+                  // var task=snapshot.data!.docChanges[index];
                   var task = _taskController.listTask[index];
-
                   if (task.repeat == 'Delay' ||
                       task.date == DateFormat.yMd().format(_selectedTime) ||
                       (task.repeat == 'Weekly' &&
                           _selectedTime
-                                      .difference(
-                                          DateFormat.yMd().parse(task.date!))
-                                      .inDays %
-                                  7 ==
+                              .difference(
+                              DateFormat.yMd().parse(task.date!))
+                              .inDays %
+                              7 ==
                               0) ||
                       (task.repeat == 'Monthly' &&
                           DateFormat.yMd().parse(task.date!).day ==

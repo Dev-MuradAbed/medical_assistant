@@ -12,6 +12,9 @@ import 'package:medical_assistant/screen/auth/login_screen.dart';
 import 'package:medical_assistant/screen/auth/sginup_screen.dart';
 import 'package:medical_assistant/screen/home_screen.dart';
 import 'package:medical_assistant/screen/profile_screen.dart';
+import 'package:medical_assistant/screen/todo_screen/patint_todo.dart';
+import 'package:medical_assistant/services/theme_services.dart';
+import 'package:medical_assistant/todo_them/theme.dart';
 import 'db/db_helper.dart';
 import 'screen/lunch_screen.dart';
 
@@ -34,9 +37,12 @@ class MedicalAssist extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: Themes.light,
+      darkTheme: Themes.dark,
+      themeMode: ThemeServices().theme,
       debugShowCheckedModeBanner: false,
-     // home:  HomePage(),
-     initialRoute: '/lunch_screen',
+     home:  DoctorToPatient(pyload: '',),
+     // initialRoute: '/lunch_screen',
       routes: {
         // '/lunch_screen':(context) =>  Search(),
         '/lunch_screen':(context) => const LunchScreen(),

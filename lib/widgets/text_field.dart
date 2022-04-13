@@ -45,6 +45,7 @@ class _TextInputState extends State<TextInput> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+
       readOnly: widget.readOnly,
       keyboardType: widget.keyboardType,
       obscureText: widget.obscureText,
@@ -71,6 +72,7 @@ class _TextInputState extends State<TextInput> {
             ),
           ),
         ),
+        hintText: widget.hint,
 
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(25.0),

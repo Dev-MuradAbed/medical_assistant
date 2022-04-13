@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:medical_assistant/api/local_auth_api.dart';
 import 'package:medical_assistant/screen/home_screen.dart';
+import 'package:medical_assistant/screen/profile_screen.dart';
 import 'package:medical_assistant/them.dart';
 
 import '../../widgets/button_widget.dart';
@@ -153,7 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   )),
                   const SizedBox(height: 20),
-                  ButtonWidget(text: "LOG IN", onPressed: loginPer),
+                  ButtonWidget(text: "LOG IN", onPressed: ()=>signIn(_emailController.text,_passwordController.text)),
                   const SizedBox(height: 10),
 
                   Row(
@@ -295,7 +296,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => HomeScreen(),
+            builder: (context) => ProfileScreen(),
           ),
         );
       } on FirebaseAuthException catch (e) {

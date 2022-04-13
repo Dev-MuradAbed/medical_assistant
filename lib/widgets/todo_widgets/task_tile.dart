@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -6,9 +7,15 @@ import '../../todo_them/size_config.dart';
 import '../../todo_them/theme.dart';
 
 
-class TaskTile extends StatelessWidget {
+class TaskTile extends StatefulWidget {
   const TaskTile(this.task, {Key? key}) : super(key: key);
   final Task task;
+
+  @override
+  State<TaskTile> createState() => _TaskTileState();
+}
+
+class _TaskTileState extends State<TaskTile> {
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +31,7 @@ class TaskTile extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
-            color: _gEtColor(task.color)),
+            color: _gEtColor(widget.task.color)),
         child: Row(
           children: [
             Expanded(
@@ -33,7 +40,7 @@ class TaskTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '${task.title}',
+                      '${widget.task.title}',
                       style: GoogleFonts.lato(
                         textStyle: const TextStyle(
                             fontSize: 16,
@@ -52,7 +59,7 @@ class TaskTile extends StatelessWidget {
                         ),
                         const SizedBox(width: 10),
                         Text(
-                          '${task.startTime} - ${task.endTime}',
+                          '${widget.task.startTime} - ${widget.task.endTime}',
                           style: GoogleFonts.lato(
                             textStyle: TextStyle(
                                 fontSize: 13, color: Colors.grey[200]),
@@ -62,7 +69,7 @@ class TaskTile extends StatelessWidget {
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      '${task.note}',
+                      '${widget.task.note}',
                       style: GoogleFonts.lato(
                         textStyle:
                             const TextStyle(fontSize: 15, color: Colors.white),
@@ -81,7 +88,7 @@ class TaskTile extends StatelessWidget {
             RotatedBox(
               quarterTurns: 3,
               child: Text(
-                task.isCompleted == 0 ? 'TODO' : 'Completed',
+                widget.task.isCompleted == 0 ? 'TODO' : 'Completed',
                 style: GoogleFonts.lato(
                   textStyle: const TextStyle(
                       fontSize: 12,
