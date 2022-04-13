@@ -7,11 +7,12 @@ import 'package:rxdart/rxdart.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
-import '../models/task_todo.dart';
+import '../models/doctor_model.dart';
+
 import '../screen/todo_screen/notification_screen.dart';
 
 
-class NotifyHelper <T>{
+class DoctorNotification{
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
   FlutterLocalNotificationsPlugin();
 
@@ -70,7 +71,7 @@ class NotifyHelper <T>{
   }
 
 
-  cancleNotification(Task task)async{
+  cancleNotification(DoctorTask task)async{
     flutterLocalNotificationsPlugin.cancel(task.id!);
   }
 
@@ -78,7 +79,7 @@ class NotifyHelper <T>{
     flutterLocalNotificationsPlugin.cancelAll();
   }
 
-  scheduledNotification(int hour, int minutes, Task task) async {
+  scheduledNotification(int hour, int minutes, DoctorTask task) async {
     await flutterLocalNotificationsPlugin.zonedSchedule(
 
       task.id!,
@@ -104,8 +105,8 @@ class NotifyHelper <T>{
     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
 
 
-    var formmatedDate = DateFormat.yMd().parse(date);
-    final tz.TZDateTime fd = tz.TZDateTime.from(formmatedDate, tz.local);
+    var formatedDate = DateFormat.yMd().parse(date);
+    final tz.TZDateTime fd = tz.TZDateTime.from(formatedDate, tz.local);
 
     tz.TZDateTime scheduledDate =
     tz.TZDateTime(tz.local, fd.year, fd.month, fd.day, hour, minutes);
@@ -114,15 +115,15 @@ class NotifyHelper <T>{
 
     if (scheduledDate.isBefore(now)) {
       if(repeat == 'Daily'){
-        scheduledDate = tz.TZDateTime(tz.local, now.year, now.month, (formmatedDate.day)+1, hour, minutes);
+        scheduledDate = tz.TZDateTime(tz.local, now.year, now.month, (formatedDate.day)+1, hour, minutes);
 
       }
       if(repeat == 'Weekly'){
-        scheduledDate = tz.TZDateTime(tz.local, now.year, now.month, (formmatedDate.day)+7, hour, minutes);
+        scheduledDate = tz.TZDateTime(tz.local, now.year, now.month, (formatedDate.day)+7, hour, minutes);
 
       }
       if(repeat == 'Monthly'){
-        scheduledDate = tz.TZDateTime(tz.local, now.year, (formmatedDate.month)+1, formmatedDate.day, hour, minutes);
+        scheduledDate = tz.TZDateTime(tz.local, now.year, (formatedDate.month)+1, formatedDate.day, hour, minutes);
 
       }
 //      scheduledDate = scheduledDate.add(const Duration(days: 1));
