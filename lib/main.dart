@@ -12,11 +12,11 @@ import 'package:medical_assistant/screen/auth/login_screen.dart';
 import 'package:medical_assistant/screen/auth/sginup_screen.dart';
 import 'package:medical_assistant/screen/home_screen.dart';
 import 'package:medical_assistant/screen/profile_screen.dart';
-import 'package:medical_assistant/screen/todo_screen/doctor_task.dart';
+import 'package:medical_assistant/screen/todo_screen/doctor_todo_screen/doctor_task.dart';
 import 'package:medical_assistant/services/theme_services.dart';
 import 'package:medical_assistant/todo_them/theme.dart';
-import 'db/db_helper.dart';
-import 'db/docotr_db.dart';
+import 'db/todo_db/patient_db.dart';
+import 'db/todo_db/docotr_db.dart';
 import 'screen/lunch_screen.dart';
 
 Future main() async {

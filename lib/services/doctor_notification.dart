@@ -7,7 +7,7 @@ import 'package:rxdart/rxdart.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
-import '../models/doctor_model.dart';
+import '../models/todo_model/todo_doctor.dart';
 
 import '../screen/todo_screen/notification_screen.dart';
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
-import '../models/doctor_model.dart';
+import '../../models/todo_model/todo_doctor.dart';
+import '../../models/todo_model/todo_doctor.dart';
 
 
 
@@ -40,15 +41,18 @@ class DoctorHelper {
     }
   }
 
-  static Future<int> insert(DoctorTask? task) async {
-    print('insert function code');
+  static Future<int> insertDoctor(DoctorTask? task) async {
+    print('insert function code to doctor');
     return await _db?.insert(_tableName, task!.toJson())??1;
 
   }
-
+  static Future<int> deleteAllTask() async {
+    print('delete All function code');
+    return await _db!.delete(_tableName);
+  }
 
   static Future<List<Map<String, dynamic>>> query() async {
-    print('query function code');
+    print('query function code ');
     return await _db!.query(_tableName);
   }
 

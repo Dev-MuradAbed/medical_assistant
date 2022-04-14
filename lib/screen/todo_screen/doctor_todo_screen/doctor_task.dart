@@ -6,14 +6,15 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:medical_assistant/widgets/todo_widgets/doctor_tile.dart';
+import 'package:medical_assistant/widgets/todo_widgets/doctor_todo_widget/doctor_tile.dart';
 
-import '../../controllers/doctor_controller.dart';
-import '../../models/doctor_model.dart';
-import '../../services/doctor_notification.dart';
+import '../../../controllers/todo_controller/doctor_controller.dart';
+import '../../../models/todo_model/todo_doctor.dart';
+import '../../../services/doctor_notification.dart';
 
-import '../../todo_them/size_config.dart';
-import '../../todo_them/theme.dart';
+import '../../../services/theme_services.dart';
+import '../../../todo_them/size_config.dart';
+import '../../../todo_them/theme.dart';
 
 class DoctorTaskScreen extends StatefulWidget {
   const DoctorTaskScreen({Key? key}) : super(key: key);
@@ -51,10 +52,24 @@ class _DoctorTaskScreenState extends State<DoctorTaskScreen> {
   Widget build(BuildContext context) {
     size.init(context);
     return Scaffold(
+
       backgroundColor: context.theme.backgroundColor,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: context.theme.backgroundColor,
+        actions:  [
+          IconButton(
+
+            color: Get.isDarkMode ? Colors.white : Colors.black,
+            icon:const Icon(Icons.cleaning_services_outlined,size: 24,),
+            onPressed: () {
+              notifyHelper.flutterLocalNotificationsPlugin.cancelAll();
+              _taskController.deleteAllTask();
+            },
+          ),
+
+          const SizedBox(width: 20)
+        ],
       ),
       body: SafeArea(
         child: FutureBuilder(
@@ -235,4 +250,5 @@ class _DoctorTaskScreenState extends State<DoctorTaskScreen> {
   Future<void> _onRefresh() async {
     _taskController.getDoctorTask();
   }
+
 }

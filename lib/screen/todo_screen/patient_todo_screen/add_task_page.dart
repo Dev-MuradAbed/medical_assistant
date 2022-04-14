@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-import '../../controllers/task_controller.dart';
-import '../../models/task_todo.dart';
-import '../../todo_them/theme.dart';
-import '../../widgets/todo_widgets/button.dart';
-import '../../widgets/todo_widgets/input_field.dart';
+import '../../../controllers/todo_controller/patient_controller.dart';
+import '../../../models/todo_model/todo_patient.dart';
+import '../../../todo_them/theme.dart';
+
+import '../../../widgets/todo_widgets/patient_todo_widget/button.dart';
+import '../../../widgets/todo_widgets/patient_todo_widget/input_field.dart';
 
 
 class AddTaskPage extends StatefulWidget {

@@ -6,15 +6,17 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
-import '../../controllers/task_controller.dart';
-import '../../models/task_todo.dart';
-import '../../services/notification_services.dart';
-import '../../services/theme_services.dart';
+import '../../../controllers/todo_controller/patient_controller.dart';
+import '../../../models/todo_model/todo_patient.dart';
+import '../../../services/notification_services.dart';
+import '../../../services/theme_services.dart';
 
-import '../../todo_them/size_config.dart';
-import '../../todo_them/theme.dart';
-import '../../widgets/todo_widgets/button.dart';
-import '../../widgets/todo_widgets/task_tile.dart';
+import '../../../todo_them/size_config.dart';
+import '../../../todo_them/theme.dart';
+
+import '../../../todo_them/theme.dart';
+import '../../../widgets/todo_widgets/patient_todo_widget/button.dart';
+import '../../../widgets/todo_widgets/patient_todo_widget/task_tile.dart';
 import 'add_task_page.dart';
 
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
-import '../models/task_todo.dart';
+import '../../models/todo_model/todo_patient.dart';
+import '../../models/todo_model/todo_patient.dart';
 
 
 class DBHelper {

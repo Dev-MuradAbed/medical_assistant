@@ -2,20 +2,21 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../models/task_todo.dart';
-import '../../todo_them/size_config.dart';
-import '../../todo_them/theme.dart';
+import '../../../models/todo_model/todo_doctor.dart';
+
+import '../../../todo_them/size_config.dart';
+import '../../../todo_them/theme.dart';
 
 
-class TaskTile extends StatefulWidget {
-  const TaskTile(this.task, {Key? key}) : super(key: key);
-  final Task task;
+class DoctorTile extends StatefulWidget {
+  const DoctorTile(this.task, {Key? key}) : super(key: key);
+  final DoctorTask task;
 
   @override
-  State<TaskTile> createState() => _TaskTileState();
+  State<DoctorTile> createState() => _DoctorTileState();
 }
 
-class _TaskTileState extends State<TaskTile> {
+class _DoctorTileState extends State<DoctorTile> {
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +73,7 @@ class _TaskTileState extends State<TaskTile> {
                       '${widget.task.note}',
                       style: GoogleFonts.lato(
                         textStyle:
-                            const TextStyle(fontSize: 15, color: Colors.white),
+                        const TextStyle(fontSize: 15, color: Colors.white),
                       ),
                     )
                   ],
