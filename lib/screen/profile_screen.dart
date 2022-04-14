@@ -96,11 +96,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               readOnly: true,
               label: 'User Name',
               hint: nameFirebase,
-              sufWidget: IconButton(
-                icon: (
-                    Icon(Icons.edit)),
-                onPressed: ()=>_updateProfile(),
-              ),
+              // sufWidget: IconButton(
+              //   icon: (
+              //       Icon(Icons.edit)),
+              //   // onPressed: ()=>_updateProfile(),
+              // ),
             ),
             const SizedBox(height: 30),
             TextInput(
@@ -244,39 +244,39 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     );
   }
-  _updateProfile()async{
-    final firebaseUser =  FirebaseAuth.instance.currentUser;
-    if(firebaseUser!=null) {
-     await   FirebaseFirestore.instance.collection('UserData').
-      doc(firebaseUser.uid).update(
-       {
-         'idCard':'',
-         'name':'Murad2000',
-         'birth':'',
-         'email':'',
-         'gender':'',
-         'height':'',
-         'otherPhone':'',
-         'phone':'',
-         'weight':'',
-       }
-     );
-    }
-  }
+  // _updateProfile()async{
+  //   final firebaseUser =  FirebaseAuth.instance.currentUser;
+  //   if(firebaseUser!=null) {
+  //    await   FirebaseFirestore.instance.collection('UserData').
+  //     doc(firebaseUser.uid).update(
+  //      {
+  //        'idCard':'',
+  //        'name':'Murad2000',
+  //        'birth':'',
+  //        'email':'',
+  //        'gender':'',
+  //        'height':'',
+  //        'otherPhone':'',
+  //        'phone':'',
+  //        'weight':'',
+  //      }
+  //    );
+  //   }
+  // }
 _fetch()async{
     final firebaseUser =  FirebaseAuth.instance.currentUser;
     if(firebaseUser!=null){
-      await FirebaseFirestore.instance.collection('UserData').
-  doc(firebaseUser.uid).get().then((ds){
-    idCardFirebase=ds.data()!['idCard'];
-    nameFirebase=ds.data()!['name'];
-      birthFirebase =ds.data()!['birth'];
-      EmailFirebase =ds.data()!['email'];
-      genderFirebase =ds.data()!['gender'];
-      heightFirebase =ds.data()!['height'];
-      OtherPhoneFirebase =ds.data()!['otherPhone'];
-      PhoneFirebase =ds.data()!['phone'];
-      WeightFirebase =ds.data()!['weight'];
+      await FirebaseFirestore.instance.collection('NotesDoctor').
+  doc('Xu6LjBwQPHj6QmKDcjpl').get().then((ds){
+    idCardFirebase=ds.data()!['startTime'];
+    // nameFirebase=ds.data()!['name'];
+    //   birthFirebase =ds.data()!['birth'];
+    //   EmailFirebase =ds.data()!['email'];
+    //   genderFirebase =ds.data()!['gender'];
+    //   heightFirebase =ds.data()!['height'];
+    //   OtherPhoneFirebase =ds.data()!['otherPhone'];
+    //   PhoneFirebase =ds.data()!['phone'];
+    //   WeightFirebase =ds.data()!['weight'];
       // if(ds.data()!['role']=='admain'){
       //   return print('User');
       // }else{

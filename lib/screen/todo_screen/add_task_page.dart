@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -21,8 +22,8 @@ class _AddTaskPageState extends State<AddTaskPage> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
   DateTime _selectedTime = DateTime.now();
-  String startTime = DateFormat('hh:mm aaa').format(DateTime.now()).toString();
-  String endTime = DateFormat('hh:mm aaa')
+  String startTime = DateFormat('hh:mm a').format(DateTime.now()).toString();
+  String endTime = DateFormat('hh:mm a')
       .format(DateTime.now().add(const Duration(minutes: 15)))
       .toString();
   int _selectRemind = 5;

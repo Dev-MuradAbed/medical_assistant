@@ -12,7 +12,7 @@ class DoctorController extends GetxController {
     return DoctorHelper.insert(task!);
   }
 
-  Future<void> getTasks() async {
+  Future<void> getDoctorTask() async {
     final List<Map<String, dynamic>> tasks = await DoctorHelper.query();
     doctorTask.assignAll(tasks.map((data) => DoctorTask.fromJson(data)).toList());
   }
