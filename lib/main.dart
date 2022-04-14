@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:medical_assistant/read_camera.dart';
 import 'package:medical_assistant/screen/auth/change_password.dart';
 import 'package:medical_assistant/screen/auth/forget_password.dart';
 import 'package:medical_assistant/screen/auth/login_screen.dart';
@@ -43,7 +44,7 @@ class MedicalAssist extends StatelessWidget {
       darkTheme: Themes.dark,
       themeMode: ThemeServices().theme,
       debugShowCheckedModeBanner: false,
-      home:  const DoctorTaskScreen(),
+      home:  const PlusRate(),
     // initialRoute: '/lunch_screen',
       routes: {
         // '/lunch_screen':(context) =>  Search(),

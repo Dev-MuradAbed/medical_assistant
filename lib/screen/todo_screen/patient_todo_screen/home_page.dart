@@ -111,10 +111,6 @@ class _HomePageState extends State<HomePage> {
                       (task.repeat=='Weekly'&&_selectedTime.difference(DateFormat.yMd().parse(task.date!)).inDays%7 ==0)
                       ||(task.repeat=='Monthly'&&  DateFormat.yMd().parse(task.date!).day==_selectedTime.day)
                   ) {
-                    // var hour = task.startTime.toString().split(':')[0];
-                    // var minute = task.startTime.toString().split(':')[1];
-                    // print('hour : $hour');
-                    // print('minute :  $minute');
                     var date = DateFormat.jm().parse(task.startTime.toString());
                     var myTime = DateFormat('HH:mm').format(date);
                     NotifyHelper().scheduledNotification(
@@ -123,7 +119,7 @@ class _HomePageState extends State<HomePage> {
                       task
                     );
                     return AnimationConfiguration.staggeredList(
-                      position: index,
+                      position:index,
                       duration: const Duration(milliseconds: 1500),
                       child: SlideAnimation(
                         horizontalOffset: 300,
