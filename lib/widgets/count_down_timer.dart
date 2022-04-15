@@ -81,9 +81,9 @@ class CountDownTimer extends StatelessWidget {
               height: height - 10.0,
               child: CustomPaint(
                 painter: CustomTimerPainter(
-                  total: total!,
-                  current: current!,
-                  backgroundColor: bgColor!,
+                  total: total??60,
+                  current: current??0,
+                  backgroundColor: bgColor??Colors.grey,
                   color: color!,
                 ),
               ),

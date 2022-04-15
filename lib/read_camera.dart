@@ -349,14 +349,14 @@ class _PlusRateState extends State<PlusRate>with SingleTickerProviderStateMixin,
        // periodic method of Timer class is used to call the method again and again at an interval of duration parameter.
        // till the timer is stopped by the cancel method
        if (seconds == 0) {
-         setState(() {
+         setState(()async {
            timer.cancel(); // when the seconds reached to 0 stop the timer
            seconds =
            60; // when the timer is stopped set the timer text to 60 again
            _untoggle(); // stop the BPM estimation process when the timer reached to 0
            buttonText =
            "Check Heart Rate"; // when the timer stops change the text to Check Heart Rate because BPM process is stopped
-           _save(); // here save method is called to save the BPM value when timer is over
+         await  _save(); // here save method is called to save the BPM value when timer is over
          });
        } else {
          setState(() {
@@ -374,10 +374,9 @@ class _PlusRateState extends State<PlusRate>with SingleTickerProviderStateMixin,
         bpm: _bpm,
         date:DateTime.now().toString(),
       ));
-      debugPrint("$value");
-      debugPrint("${_resultController.resultList.length}");
-    }catch(e){
-      debugPrint("$e");
+      debugPrint("test $value");
+      debugPrint("The Length ${_resultController.resultList.length}  $_bpm}");
+}catch(e){debugPrint("$e");
     }
      // List list = _dateTime().split(
      //     " ");
