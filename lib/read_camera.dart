@@ -9,6 +9,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:wakelock/wakelock.dart';
 
+import 'controllers/result_controller/result_controller.dart';
+import 'models/result_model/result_model.dart';
 import 'models/sensorvalue.dart';
 class PlusRate extends StatefulWidget {
   const PlusRate({Key? key}) : super(key: key);
@@ -18,6 +20,7 @@ class PlusRate extends StatefulWidget {
 }
 
 class _PlusRateState extends State<PlusRate>with SingleTickerProviderStateMixin,WidgetsBindingObserver {
+  final ResultController _resultController = ResultController();
   List<SalesData>datas=[
     SalesData('jan', 35),
     SalesData('feb', 25),
@@ -153,7 +156,7 @@ class _PlusRateState extends State<PlusRate>with SingleTickerProviderStateMixin,
                               borderRadius: BorderRadius.circular(30)),
                           child: Text(
                             buttonText,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Colors.white, fontSize: 15),
                           ),
                           color: Colors.green,
@@ -170,9 +173,9 @@ class _PlusRateState extends State<PlusRate>with SingleTickerProviderStateMixin,
 
                       ),
                       MaterialButton(
-                          child: Text(
+                          child: const Text(
                             "Records",
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Colors.white, fontSize: 15),
                           ),
                           color: Colors.green,
@@ -180,7 +183,7 @@ class _PlusRateState extends State<PlusRate>with SingleTickerProviderStateMixin,
                               borderRadius: BorderRadius.circular(30)),
                           onPressed: () {
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => LoginScreen()));
+                                builder: (context) => const LoginScreen()));
                           }),
                     ],
                   )
@@ -190,13 +193,13 @@ class _PlusRateState extends State<PlusRate>with SingleTickerProviderStateMixin,
             ),),
             Row(
               children: [
-                CircleAvatar(radius: 2,backgroundColor:Colors.blue,),
-                Text("Pulse Rate")
+                const CircleAvatar(radius: 2,backgroundColor:Colors.blue,),
+                const Text("Pulse Rate")
               ],
             ),
-            SizedBox(width: 20,height: 20,),
+            const SizedBox(width: 20,height: 20,),
             Expanded(flex: 1, child: Container(
-              margin: EdgeInsets.all(12),
+              margin: const EdgeInsets.all(12),
               child: SfCartesianChart(
                 primaryXAxis: CategoryAxis(),
                 title: ChartTitle(text:'Half Yearly Sales Analysis'),
@@ -208,7 +211,7 @@ class _PlusRateState extends State<PlusRate>with SingleTickerProviderStateMixin,
                       xValueMapper: (SalesData sales,_)=>sales.day,
                       yValueMapper: (SalesData sales,_)=>sales.bmp,
                   name: 'Sales',
-                    dataLabelSettings: DataLabelSettings(isVisible: true)
+                    dataLabelSettings: const DataLabelSettings(isVisible: true)
                   )
 
                 ],
@@ -307,7 +310,7 @@ class _PlusRateState extends State<PlusRate>with SingleTickerProviderStateMixin,
        List _cameras = await availableCameras();
        _controller = CameraController(_cameras.first, ResolutionPreset.low);
        await _controller?.initialize();
-       Future.delayed(Duration(milliseconds: 50)).then((onValue) {
+       Future.delayed(const Duration(milliseconds: 50)).then((onValue) {
          _controller?.setFlashMode(FlashMode
              .torch);
        });
@@ -364,25 +367,37 @@ class _PlusRateState extends State<PlusRate>with SingleTickerProviderStateMixin,
      });
    }
    _save() async {
-     List list = _dateTime().split(
-         " ");
-     String date = list[0].toString();
-     String time = list[1].toString().substring(0,
-         5);
-     final directory =
-     await getExternalStorageDirectory();
-     final file = File(
-         '${directory!.path}/heartRate.txt');
-     final text = "\n" +
-         date +
-         " " +
-         time +
-         " " +
-         _bpm.toString();
-     await file.writeAsString(text,
-         mode: FileMode
-             .append);
-     print('saved');
+    try{
+      int value = await _resultController.addTask(task: ResultModel(
+       hourTime:DateTime.now().hour.toString() ,
+        minuteTime: DateTime.now().minute.toString(),
+        bpm: _bpm,
+        date:DateTime.now().toString(),
+      ));
+      debugPrint("$value");
+      debugPrint("${_resultController.resultList.length}");
+    }catch(e){
+      debugPrint("$e");
+    }
+     // List list = _dateTime().split(
+     //     " ");
+     // String date = list[0].toString();
+     // String time = list[1].toString().substring(0,
+     //     5);
+     // final directory =
+     // await getExternalStorageDirectory();
+     // final file = File(
+     //     '${directory!.path}/heartRate.txt');
+     // final text = "\n" +
+     //     date +
+     //     " " +
+     //     time +
+     //     " " +
+     //     _bpm.toString();
+     // await file.writeAsString(text,
+     //     mode: FileMode
+     //         .append);
+     // print('saved');
    }
    String _dateTime() {
      DateTime now =  DateTime.now();
