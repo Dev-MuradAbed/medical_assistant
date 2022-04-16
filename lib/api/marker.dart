@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../models/place.dart';
-class Markers{
+class Markersa{
   List<Marker> getMarkers(List<Place>? places) {
     List<Marker> markers = [];
     places!.forEach((Place) {

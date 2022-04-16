@@ -3,9 +3,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:medical_assistant/read_camera.dart';
 import 'package:medical_assistant/screen/auth/change_password.dart';
 import 'package:medical_assistant/screen/auth/forget_password.dart';
@@ -13,7 +14,7 @@ import 'package:medical_assistant/screen/auth/login_screen.dart';
 import 'package:medical_assistant/screen/auth/sginup_screen.dart';
 import 'package:medical_assistant/screen/home_screen.dart';
 import 'package:medical_assistant/screen/profile_screen.dart';
-import 'package:medical_assistant/screen/todo_screen/doctor_todo_screen/doctor_task.dart';
+
 import 'package:medical_assistant/services/theme_services.dart';
 import 'package:medical_assistant/todo_them/theme.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +23,7 @@ import 'api/places.dart';
 import 'db/result_db/result_db.dart';
 import 'db/todo_db/patient_db.dart';
 import 'db/todo_db/docotr_db.dart';
+import 'models/place.dart';
 import 'screen/lunch_screen.dart';
 
 Future main() async {
@@ -36,7 +38,7 @@ Future main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  runApp( ProviderScope(child:   MedicalAssist()));
+  runApp(  MedicalAssist());
 }
 
 class MedicalAssist extends StatelessWidget {
@@ -48,7 +50,25 @@ class MedicalAssist extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-
+FutureProvider(create: (context)=>locatorService.getLocation(), initialData: []),
+        FutureProvider(
+          create: (context) {
+            ImageConfiguration configuration =
+            createLocalImageConfiguration(context);
+            return BitmapDescriptor.fromAssetImage(
+                configuration, 'assets/hospital.png');
+          },
+          initialData: null,
+        ),
+        ProxyProvider<Position, Future<List<Place>>>(
+          update: (context, position, places) {
+            print('main result ${position.latitude},${position.longitude}');
+            return placesService.getPlaces(
+              latt: position.latitude,
+              lngt: position.longitude,
+            );
+          },
+        )
       ],
 
       child: GetMaterialApp(

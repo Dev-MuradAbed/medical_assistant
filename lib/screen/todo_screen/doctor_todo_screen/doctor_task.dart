@@ -95,12 +95,10 @@ class _DoctorTaskScreenState extends State<DoctorTaskScreen> {
   }
 
   _fetch() async {
-    await FirebaseFirestore.instance
-        .collection('NotesDoctor')
+    await FirebaseFirestore.instance.collection('NotesDoctor')
         .doc('Xu6LjBwQPHj6QmKDcjpl')
         .get()
         .then((ds) {
-      print('text');
       title = ds.data()!['title'];
       color = ds.data()!['color'];
       startTime = ds.data()!['startTime'];
