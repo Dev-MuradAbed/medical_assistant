@@ -8,7 +8,7 @@ class ResultController extends GetxController {
   final RxList<ResultModel> resultList = <ResultModel>[].obs;
 
   Future<int> addTask({ResultModel? task}) async {
-    return ResultDbHelper.insertDoctor(task!);
+    return ResultDbHelper.insertDoctor(task);
   }
 
   Future<void> getDoctorTask() async {

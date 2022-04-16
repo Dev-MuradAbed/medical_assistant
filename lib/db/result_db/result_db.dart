@@ -38,7 +38,9 @@ class ResultDbHelper {
 
   static Future<int> insertDoctor(ResultModel? task) async {
     print('insert function code to ResultDb');
-    return await _db?.insert(_tableName, task!.toJson())??1;
+  var x=  await _db?.insert(_tableName, task!.toJson())??1;
+  print(x);
+    return x;
 
   }
   // static Future<int> deleteAllTask() async {
