@@ -25,15 +25,16 @@ class DoctorTaskScreen extends StatefulWidget {
 class _DoctorTaskScreenState extends State<DoctorTaskScreen> {
   late DoctorNotification notifyHelper;
   SizeConfig size = SizeConfig();
-  String? title;
-  int? color;
-  String? startTime;
-  String? endTime;
-  String? repeat;
-  int? remind;
-  String? note;
-  int? isCompleted;
-  String? date;
+  // String? title;
+  // int? color;
+  // String? startTime;
+  // String? endTime;
+  // String? repeat;
+  // int? remind;
+  // String? note;
+  // int? isCompleted;
+  // String? date;
+  final Stream <QuerySnapshot> _userStream=FirebaseFirestore.instance.collection("NotesDoctor").snapshots();
   @override
   void initState() {
     // TODO: implement initState
@@ -73,61 +74,59 @@ class _DoctorTaskScreenState extends State<DoctorTaskScreen> {
       body: SafeArea(
         child: FutureBuilder(
           future: _fetch(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
+          builder:(context,snapshot){
+            if(snapshot.connectionState==ConnectionState.waiting){
+              return Center(
+                child:CircularProgressIndicator(),
+              );
+            }else{
               return Column(
-                children: [
+                children:[
                   _addDateTask(),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  _showNote()
+                        const SizedBox(
+                          height: 15,
+                        ),
+                  _showNote(),
                 ],
               );
             }
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          },
+          }
         ),
       ),
     );
   }
 
   _fetch() async {
-    await FirebaseFirestore.instance.collection('NotesDoctor')
-        .doc('Xu6LjBwQPHj6QmKDcjpl')
-        .get()
-        .then((ds) {
-      title = ds.data()!['title'];
-      color = ds.data()!['color'];
-      startTime = ds.data()!['startTime'];
-      endTime = ds.data()!['endTime'];
-      repeat = ds.data()!['repeat'];
-      remind = ds.data()!['remind'];
-      note = ds.data()!['note'];
-      isCompleted = ds.data()!['isCompleted'];
-      date = ds.data()!['date'];
-      // print(date);
-      _taskController.addTask(
-          task: DoctorTask(
-              title: title ?? 'xxxx',
-              color: color ?? 0,
-              startTime: startTime ?? '03:44',
-              endTime: endTime ?? '04:44',
-              repeat: repeat ?? 'Daily',
-              remind: remind ?? 1,
-              note: note ?? 'xx',
-              isCompleted: isCompleted ?? 1,
-              date: date ?? '02/02/2000'));
-      print("test len ${_taskController.doctorTask.length}");
-    }).catchError((e) {
-      print(e);
-    });
+print('_fetch function');
+  await   FirebaseFirestore.instance.collection("NotesDoctor").get().then((value){
+    print('value.docs.length ${value.docs.length}');
+    for(int i=0;i<value.docs.length;i++){
+      if(value.docs[i].data()['idpat']=='123'){
+        _taskController.addTask(task: DoctorTask(
+          title:value.docs[i].data()['title']??'No Title' ,
+          date: value.docs[i].data()['date'] ??'No Date',
+          isCompleted: value.docs[i].data()['isCompleted']??0 ,
+          remind: value.docs[i].data()['remind']??0 ,
+          repeat: value.docs[i].data()['repeat'] ??"No Repeat",
+          note: value.docs[i].data()['note'] ?? 'No Note',
+          endTime: value.docs[i].data()['endTime'] ??'No End Time',
+          startTime: value.docs[i].data()['startTime'] ??'No Start Time',
+          color: value.docs[i].data()['color'] ??1,
+        ));
+        print('value.docs[i].data()${value.docs[i].data()}');
+      }
+
+    }
   }
 
+      );
+
+        }
+
+
   _showNote() {
-    return Expanded(child: Obx(() {
+    return Expanded(
+        child: Obx(() {
       if (_taskController.doctorTask.isEmpty) {
         return _noTask();
       }
