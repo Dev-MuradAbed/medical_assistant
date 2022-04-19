@@ -8,11 +8,12 @@ class DoctorController extends GetxController {
   Future<dynamic> addTask({DoctorTask? task}) async {
     //
 for(var i=0;i<doctorTask.length;i++){
-  if(doctorTask[i].id==task?.id){
-    doctorTask.removeAt(i);
-    break;
+  if(doctorTask[i].idNote==task?.idNote){
+    print('task is exist');
+   break;
   }
 }
+print('success add ');
 doctorTask.add(task!);
 await DoctorHelper.insertDoctor(task);
     // if(doctorTask.id==nul){
