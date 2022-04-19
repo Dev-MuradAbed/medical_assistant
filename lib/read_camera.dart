@@ -3,7 +3,6 @@ import 'dart:io';
 import 'dart:ui';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:medical_assistant/screen/auth/login_screen.dart';
 import 'package:medical_assistant/widgets/count_down_timer.dart';
 import 'package:path_provider/path_provider.dart';
@@ -57,7 +56,6 @@ class _PlusRateState extends State<PlusRate>with SingleTickerProviderStateMixin,
       });
     });
     WidgetsBinding.instance?.addObserver(this);
-    _resultController.getDoctorTask();
   }
   @override
   void dispose() {
@@ -193,14 +191,11 @@ class _PlusRateState extends State<PlusRate>with SingleTickerProviderStateMixin,
               ),
 
             ),),
-               Row(
-                children: [
-                  const CircleAvatar(radius: 2,backgroundColor:Colors.blue,),
-                  const Text("Pulse Rate"),
-                    Text('${_resultController.resultList[0].bpm}'),
-
-                ],
-
+            Row(
+              children: [
+                const CircleAvatar(radius: 2,backgroundColor:Colors.blue,),
+                const Text("Pulse Rate")
+              ],
             ),
             const SizedBox(width: 20,height: 20,),
             Expanded(flex: 1, child: Container(
@@ -354,14 +349,14 @@ class _PlusRateState extends State<PlusRate>with SingleTickerProviderStateMixin,
        // periodic method of Timer class is used to call the method again and again at an interval of duration parameter.
        // till the timer is stopped by the cancel method
        if (seconds == 0) {
-         setState(() {
+         setState(()async {
            timer.cancel(); // when the seconds reached to 0 stop the timer
            seconds =
            60; // when the timer is stopped set the timer text to 60 again
            _untoggle(); // stop the BPM estimation process when the timer reached to 0
            buttonText =
            "Check Heart Rate"; // when the timer stops change the text to Check Heart Rate because BPM process is stopped
-           _save(); // here save method is called to save the BPM value when timer is over
+         await  _save(); // here save method is called to save the BPM value when timer is over
          });
        } else {
          setState(() {
@@ -380,7 +375,7 @@ class _PlusRateState extends State<PlusRate>with SingleTickerProviderStateMixin,
         date:DateTime.now().toString(),
       ));
       debugPrint("test $value");
-      debugPrint("The Length ${_resultController.resultList[1].bpm}  $_bpm ${DateTime.now().hour.toString()}");
+      debugPrint("The Length ${_resultController.resultList.length}  $_bpm}");
 }catch(e){debugPrint("$e");
     }
      // List list = _dateTime().split(

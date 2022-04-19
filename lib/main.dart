@@ -14,7 +14,6 @@ import 'package:medical_assistant/screen/auth/login_screen.dart';
 import 'package:medical_assistant/screen/auth/sginup_screen.dart';
 import 'package:medical_assistant/screen/home_screen.dart';
 import 'package:medical_assistant/screen/profile_screen.dart';
-import 'package:medical_assistant/screen/todo_screen/doctor_todo_screen/doctor_task.dart';
 
 import 'package:medical_assistant/services/theme_services.dart';
 import 'package:medical_assistant/todo_them/theme.dart';
@@ -78,7 +77,7 @@ FutureProvider(create: (context)=>locatorService.getLocation(), initialData: [])
         darkTheme: Themes.dark,
         themeMode: ThemeServices().theme,
         debugShowCheckedModeBanner: false,
-        home:  const DoctorTaskScreen(),
+        home:  const PlusRate(),
       // initialRoute: '/lunch_screen',
         routes: {
           // '/lunch_screen':(context) =>  Search(),
