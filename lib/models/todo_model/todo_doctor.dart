@@ -11,6 +11,7 @@ class DoctorTask {
   int? color;
   int? remind;
   String? repeat;
+  int? idNote;
 
   DoctorTask({
     this.id,
@@ -22,6 +23,7 @@ class DoctorTask {
     this.endTime,
     this.color,
     this.remind,
+    this.idNote,
     this.repeat,
   });
 
@@ -37,6 +39,7 @@ class DoctorTask {
       'color': color,
       'remind': remind,
       'repeat': repeat,
+      'idNote': idNote,
     };
   }
 
@@ -51,5 +54,6 @@ class DoctorTask {
     color = json['color'];
     remind = json['remind'];
     repeat = json['repeat'];
+    idNote = json['idNote'];
   }
 }

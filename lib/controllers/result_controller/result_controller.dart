@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:medical_assistant/models/result_model/result_model.dart';
 
@@ -8,7 +9,12 @@ class ResultController extends GetxController {
   final RxList<ResultModel> resultList = <ResultModel>[].obs;
 
   Future<int> addTask({ResultModel? task}) async {
-    return ResultDbHelper.insertDoctor(task!);
+   int val = await   ResultDbHelper.insertDoctor(task!);
+   if(val != 0) {
+     resultList.add(task);
+     debugPrint("Success Added");
+   }
+   return val;
   }
 
   Future<void> getDoctorTask() async {

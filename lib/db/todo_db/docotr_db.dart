@@ -31,6 +31,7 @@ class DoctorHelper {
                     'endTime STRING, '
                     'date INTEGER, '
                     'remind INTEGER, '
+                    'idNote INTEGER, '
                     'repeat STRING)',
               );
             });

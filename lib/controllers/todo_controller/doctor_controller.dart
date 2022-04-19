@@ -5,25 +5,9 @@ import '../../models/todo_model/todo_doctor.dart';
 
 class DoctorController extends GetxController {
   final RxList<DoctorTask> doctorTask = <DoctorTask>[].obs;
+
   Future<dynamic> addTask({DoctorTask? task}) async {
-    //
-for(var i=0;i<doctorTask.length;i++){
-  if(doctorTask[i].id==task?.id){
-    doctorTask.removeAt(i);
-    break;
-  }
-}
-doctorTask.add(task!);
-await DoctorHelper.insertDoctor(task);
-    // if(doctorTask.id==nul){
-    //   // task.id=await DoctorHelper.insertDoctor(task);
-    // }else{
-    //   print('update');
-    //
-    //
-    //
-    // }
-    // return DoctorHelper.insertDoctor(task);
+    return DoctorHelper.insertDoctor(task!);
   }
 
   Future<void> getDoctorTask() async {

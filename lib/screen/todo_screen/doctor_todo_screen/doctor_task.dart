@@ -25,6 +25,7 @@ class DoctorTaskScreen extends StatefulWidget {
 class _DoctorTaskScreenState extends State<DoctorTaskScreen> {
   late DoctorNotification notifyHelper;
   SizeConfig size = SizeConfig();
+
   // String? title;
   // int? color;
   // String? startTime;
@@ -34,7 +35,9 @@ class _DoctorTaskScreenState extends State<DoctorTaskScreen> {
   // String? note;
   // int? isCompleted;
   // String? date;
-  final Stream <QuerySnapshot> _userStream=FirebaseFirestore.instance.collection("NotesDoctor").snapshots();
+  final Stream<QuerySnapshot> _userStream =
+      FirebaseFirestore.instance.collection("NotesDoctor").snapshots();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -52,81 +55,89 @@ class _DoctorTaskScreenState extends State<DoctorTaskScreen> {
   Widget build(BuildContext context) {
     size.init(context);
     return Scaffold(
-
       backgroundColor: context.theme.backgroundColor,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: context.theme.backgroundColor,
-        actions:  [
+        actions: [
           IconButton(
-
             color: Get.isDarkMode ? Colors.white : Colors.black,
-            icon:const Icon(Icons.cleaning_services_outlined,size: 24,),
+            icon: const Icon(
+              Icons.cleaning_services_outlined,
+              size: 24,
+            ),
             onPressed: () {
               notifyHelper.flutterLocalNotificationsPlugin.cancelAll();
               _taskController.deleteAllTask();
             },
           ),
-
           const SizedBox(width: 20)
         ],
       ),
       body: SafeArea(
         child: FutureBuilder(
-          future: _fetch(),
-          builder:(context,snapshot){
-            if(snapshot.connectionState==ConnectionState.waiting){
-              return Center(
-                child:CircularProgressIndicator(),
-              );
-            }else{
-              return Column(
-                children:[
-                  _addDateTask(),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                  _showNote(),
-                ],
-              );
-            }
-          }
-        ),
+            future: _fetch(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else {
+                return Column(
+                  children: [
+                    _addDateTask(),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    _showNote(),
+                  ],
+                );
+              }
+            }),
       ),
     );
   }
 
   _fetch() async {
-print('_fetch function');
-  await   FirebaseFirestore.instance.collection("NotesDoctor").get().then((value){
-    print('value.docs.length ${value.docs.length}');
-    for(int i=0;i<value.docs.length;i++){
-      if(value.docs[i].data()['idpat']=='123'){
-        _taskController.addTask(task: DoctorTask(
-          title:value.docs[i].data()['title']??'No Title' ,
-          date: value.docs[i].data()['date'] ??'No Date',
-          isCompleted: value.docs[i].data()['isCompleted']??0 ,
-          remind: value.docs[i].data()['remind']??0 ,
-          repeat: value.docs[i].data()['repeat'] ??"No Repeat",
-          note: value.docs[i].data()['note'] ?? 'No Note',
-          endTime: value.docs[i].data()['endTime'] ??'No End Time',
-          startTime: value.docs[i].data()['startTime'] ??'No Start Time',
-          color: value.docs[i].data()['color'] ??1,
-        ));
-        print('value.docs[i].data()${value.docs[i].data()}');
-      }
-
-    }
-  }
-
-      );
+    print('_fetch function');
+    await FirebaseFirestore.instance
+        .collection("NotesDoctor")
+        .get()
+        .then((value) {
+      print('value.docs.length ${value.docs.length}');
+      for (int i = 0; i < value.docs.length; i++) {
+        if (value.docs[i].data()['idpat'] == '123') {
+     //   print('weeeeeeeeeeee ${value.docs[i].data()['idNote']} weeeeeeeee');
+              // '${_taskController.doctorTask[i].idNote}');
+          if (_taskController.doctorTask[0].idNote != value.docs[i].data()['idNote']) {
+            print('weeeeeeeeeeee ${value.docs[i].data()['idNote']} weeeeeeeee');
+            _taskController.addTask(
+                task: DoctorTask(
+              title: value.docs[i].data()['title'] ?? 'No Title',
+              date: value.docs[i].data()['date'] ?? 'No Date',
+              isCompleted: value.docs[i].data()['isCompleted'] ?? 0,
+              idNote: value.docs[i].data()['idNote'],
+              remind: value.docs[i].data()['remind'] ?? 0,
+              repeat: value.docs[i].data()['repeat'] ?? "No Repeat",
+              note: value.docs[i].data()['note'] ?? 'No Note',
+              endTime: value.docs[i].data()['endTime'] ?? 'No End Time',
+              startTime: value.docs[i].data()['startTime'] ?? 'No Start Time',
+              color: value.docs[i].data()['color'] ?? 1,
+            ));
+            print('value.docs[i].data()${value.docs[i].data()}');
+            print('dif*');
+          }
+          else{
+            print('second "else "');
+          }
 
         }
-
+      }
+    });
+  }
 
   _showNote() {
-    return Expanded(
-        child: Obx(() {
+    return Expanded(child: Obx(() {
       if (_taskController.doctorTask.isEmpty) {
         return _noTask();
       }
@@ -246,5 +257,4 @@ print('_fetch function');
   Future<void> _onRefresh() async {
     _taskController.getDoctorTask();
   }
-
 }
