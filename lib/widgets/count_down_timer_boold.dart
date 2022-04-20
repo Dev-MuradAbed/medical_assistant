@@ -45,7 +45,7 @@ class CustomTimerPainter extends CustomPainter {
 
 class CountDownTimer extends StatelessWidget {
   final double? total;
-  final int? current, bpm;
+  final int? current;
   final double fontSize;
   final double width, height;
   final Color? bgColor, color, textColor;
@@ -60,7 +60,7 @@ class CountDownTimer extends StatelessWidget {
     this.bgColor,
     this.color,
     this.textColor,
-    this.bpm, this.sp, this.dp,
+    this.sp, this.dp,
   });
 
   @override
@@ -97,14 +97,14 @@ class CountDownTimer extends StatelessWidget {
                 ),
                 Divider(),
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  if (bpm! > 30 && bpm! < 150)
-                    Text(
-                      "BPM ",
+                  if(sp!=null&&dp!=null&&(sp!>dp!||sp!<60||dp!<30))
+                    const Text(
+                      "mmHg ",
                       style: TextStyle(fontSize: 16, color: Colors.grey),
                       textAlign: TextAlign.center,
                     ),
                   Text(
-                    (bpm! > 30 && bpm! < 150 ? bpm.toString() : "--"),
+                    (sp!=null&&dp!=null&&(sp!<dp!||sp!<60||dp!<30)? '$sp / $dp': "--"),
                     style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
                   ),
                 ]),

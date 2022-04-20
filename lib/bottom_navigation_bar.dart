@@ -27,7 +27,7 @@ class _BNBarState extends State<BNBar> {
     Icon(Icons.favorite, size: 26, color:whitClr ),
     Icon(Icons.event_note_outlined, size: 26, color: whitClr)
   ];
-  final screens = const [
+  final screens =  [
     ProfileScreen(),
     MapPatScreen(),
     HomeNewsScreen(),
