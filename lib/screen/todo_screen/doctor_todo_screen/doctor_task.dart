@@ -106,11 +106,8 @@ class _DoctorTaskScreenState extends State<DoctorTaskScreen> {
         .then((value) {
       print('value.docs.length ${value.docs.length}');
       for (int i = 0; i < value.docs.length; i++) {
+        print("for");
         if (value.docs[i].data()['idpat'] == '123') {
-     //   print('weeeeeeeeeeee ${value.docs[i].data()['idNote']} weeeeeeeee');
-              // '${_taskController.doctorTask[i].idNote}');
-          if (_taskController.doctorTask[0].idNote != value.docs[i].data()['idNote']) {
-            print('weeeeeeeeeeee ${value.docs[i].data()['idNote']} weeeeeeeee');
             _taskController.addTask(
                 task: DoctorTask(
               title: value.docs[i].data()['title'] ?? 'No Title',
@@ -126,10 +123,7 @@ class _DoctorTaskScreenState extends State<DoctorTaskScreen> {
             ));
             print('value.docs[i].data()${value.docs[i].data()}');
             print('dif*');
-          }
-          else{
-            print('second "else "');
-          }
+
 
         }
       }

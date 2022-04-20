@@ -6,26 +6,31 @@ import '../../models/todo_model/todo_doctor.dart';
 class DoctorController extends GetxController {
   final RxList<DoctorTask> doctorTask = <DoctorTask>[].obs;
   Future<dynamic> addTask({DoctorTask? task}) async {
-    //
-for(var i=0;i<doctorTask.length;i++){
-  if(doctorTask[i].idNote==task?.idNote){
-    print('task is exist');
-   break;
-  }
-}
-print('success add ');
-doctorTask.add(task!);
-await DoctorHelper.insertDoctor(task);
-    // if(doctorTask.id==nul){
-    //   // task.id=await DoctorHelper.insertDoctor(task);
-    // }else{
-    //   print('update');
-    //
-    //
-    //
-    // }
-    // return DoctorHelper.insertDoctor(task);
-  }
+    final List<Map<String, dynamic>> tasks = await DoctorHelper.query();
+    doctorTask.assignAll(tasks.map((data) => DoctorTask.fromJson(data)).toList());
+    if(task!.idNote!=null){
+      final int index=doctorTask.indexWhere((element) => element.idNote ==task.idNote);
+      if(index !=-1){
+        print(-1);
+        doctorTask[index]=task;
+      }else{
+        print('add 1');
+        doctorTask.add(task);
+        await DoctorHelper.insertDoctor(task);
+      }
+    }else{
+      print('add2');
+      doctorTask.add(task);
+      await DoctorHelper.insertDoctor(task);
+
+    }
+
+
+    }
+
+
+
+
 
   Future<void> getDoctorTask() async {
     final List<Map<String, dynamic>> tasks = await DoctorHelper.query();
