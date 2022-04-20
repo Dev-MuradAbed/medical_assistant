@@ -1,5 +1,3 @@
-
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,12 +13,14 @@ import 'package:medical_assistant/screen/auth/sginup_screen.dart';
 import 'package:medical_assistant/screen/home_screen.dart';
 import 'package:medical_assistant/screen/profile_screen.dart';
 import 'package:medical_assistant/screen/todo_screen/doctor_todo_screen/doctor_task.dart';
+import 'package:medical_assistant/screen/todo_screen/todo_home.dart';
 
 import 'package:medical_assistant/services/theme_services.dart';
 import 'package:medical_assistant/todo_them/theme.dart';
 import 'package:provider/provider.dart';
 import 'api/geolocator.dart';
 import 'api/places.dart';
+import 'bottom_navigation_bar.dart';
 import 'db/result_db/result_db.dart';
 import 'db/todo_db/patient_db.dart';
 import 'db/todo_db/docotr_db.dart';
@@ -39,23 +39,25 @@ Future main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  runApp(  MedicalAssist());
+  runApp(MedicalAssist());
 }
 
 class MedicalAssist extends StatelessWidget {
   final locatorService = GeoLocator();
   final placesService = PlaceS();
-   MedicalAssist({Key? key}) : super(key: key);
+
+  MedicalAssist({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-FutureProvider(create: (context)=>locatorService.getLocation(), initialData: []),
+        FutureProvider(
+            create: (context) => locatorService.getLocation(), initialData: []),
         FutureProvider(
           create: (context) {
             ImageConfiguration configuration =
-            createLocalImageConfiguration(context);
+                createLocalImageConfiguration(context);
             return BitmapDescriptor.fromAssetImage(
                 configuration, 'assets/hospital.png');
           },
@@ -71,31 +73,40 @@ FutureProvider(create: (context)=>locatorService.getLocation(), initialData: [])
           },
         )
       ],
-
-      child: GetMaterialApp(
-
-        theme: Themes.light ,
-        darkTheme: Themes.dark,
-        themeMode: ThemeServices().theme,
-        debugShowCheckedModeBanner: false,
-        home:  const DoctorTaskScreen(),
-      // initialRoute: '/lunch_screen',
-        routes: {
-          // '/lunch_screen':(context) =>  Search(),
-          '/lunch_screen':(context) => const LunchScreen(),
-          '/profile_screen':(context) => const ProfileScreen(),
-          '/login_screen':(context) => const LoginScreen(),
-          '/home_screen':(context) => const HomeScreen(),
-          '/signup_screen':(context) => const SignupScreen(),
-          '/forget_screen':(context) => const ForgetPassword(),
-          '/change_password':(context) => const ChangePassword(),
-         // '/change_password':(context) => const ChangePassword(),
-
-        },
-      ),
+      child: MyMaterialApp(),
     );
   }
 }
 
+class MyMaterialApp extends StatefulWidget {
+  const MyMaterialApp({Key? key}) : super(key: key);
 
+  @override
+  State<MyMaterialApp> createState() => _MyMaterialAppState();
+}
 
+class _MyMaterialAppState extends State<MyMaterialApp> {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: Themes.light,
+      darkTheme: Themes.dark,
+      themeMode: ThemeServices().theme,
+      debugShowCheckedModeBanner: false,
+//home: const TodoHome(),
+       initialRoute: '/nvbar_screen',
+      routes: {
+        // '/lunch_screen':(context) =>  Search(),
+        '/lunch_screen': (context) => const LunchScreen(),
+        '/profile_screen': (context) => const ProfileScreen(),
+        '/login_screen': (context) => const LoginScreen(),
+        '/home_screen': (context) => const HomeScreen(),
+        '/signup_screen': (context) => const SignupScreen(),
+        '/forget_screen': (context) => const ForgetPassword(),
+        '/change_password': (context) => const ChangePassword(),
+        '/nvbar_screen':(context) => const BNBar(),
+
+      },
+    );
+  }
+}

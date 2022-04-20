@@ -5,16 +5,17 @@ import 'package:medical_assistant/api/news_api.dart';
 import 'package:medical_assistant/models/ariticles.dart';
 
 import '../models/news.dart';
+import '../them.dart';
 import 'news_details.dart';
 
-class Home_News_Screen extends StatefulWidget {
-  const Home_News_Screen({Key? key}) : super(key: key);
+class HomeNewsScreen extends StatefulWidget {
+  const HomeNewsScreen({Key? key}) : super(key: key);
 
   @override
-  State<Home_News_Screen> createState() => _Home_News_ScrrenState();
+  State<HomeNewsScreen> createState() => _Home_News_ScrrenState();
 }
 
-class _Home_News_ScrrenState extends State<Home_News_Screen>
+class _Home_News_ScrrenState extends State<HomeNewsScreen>
     with SingleTickerProviderStateMixin {
   String imagenull="https://www.aljazeera.net/wp-content/uploads/2021/09/GettyImages-521329128.jpg?resize=770%2C513";
   final List<Tab> tabs = <Tab>[
@@ -45,9 +46,9 @@ class _Home_News_ScrrenState extends State<Home_News_Screen>
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.white,
-          title: Text(
-            'App Name',
-            style: TextStyle(color: Colors.black),
+          title: const Text(
+            'Medical Assistant',
+            style: TextStyle(color: blueClr),
           ),
           bottom: TabBar(
             isScrollable: true,

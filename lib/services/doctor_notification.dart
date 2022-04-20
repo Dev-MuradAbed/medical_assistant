@@ -82,7 +82,7 @@ class DoctorNotification{
   scheduledNotification(int hour, int minutes, DoctorTask task) async {
     await flutterLocalNotificationsPlugin.zonedSchedule(
 
-      task.id!,
+      task.id??0,
       task.title,
       task.note,
       //tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)),
