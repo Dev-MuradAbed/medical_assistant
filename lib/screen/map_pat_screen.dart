@@ -4,12 +4,13 @@ import 'package:flutter_svg/svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:medical_assistant/api/marker.dart';
-import 'package:medical_assistant/them.dart';
+
 import 'package:provider/provider.dart';
 
 import '../api/geolocator.dart';
 import '../api/places.dart';
 import '../models/place.dart';
+import '../theme.dart';
 
 class MapPatScreen extends StatefulWidget {
   const MapPatScreen({Key? key}) : super(key: key);

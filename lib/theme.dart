@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+const Color blueClr = Color(0xFF184093);
+const Color greenClr = Color(0xFF19A049);
+const Color whitClr = Color(0xFFFFFFFF);
+const Color blackClr = Color(0xFF000000);
 const Color bluishClr = Color(0xFF4e5ae8);
 const Color orangeClr = Color(0xCFFF8746);
 const Color pinkClr = Color(0xFFff4667);
@@ -78,3 +82,14 @@ TextStyle get body2Text{
       )
   );
 }
+
+TextStyle get titleStyle{
+  return  const TextStyle(
+      fontSize: 18,
+      fontWeight: FontWeight.bold,
+      color:darkGreyClr
+    // Get.isDarkMode? Colors.white:Colors.black
+
+  );
+}
+

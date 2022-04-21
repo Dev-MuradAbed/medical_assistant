@@ -7,8 +7,9 @@ import 'package:local_auth/local_auth.dart';
 import 'package:medical_assistant/api/local_auth_api.dart';
 import 'package:medical_assistant/screen/home_screen.dart';
 import 'package:medical_assistant/screen/profile_screen.dart';
-import 'package:medical_assistant/them.dart';
 
+
+import '../../theme.dart';
 import '../../widgets/button_widget.dart';
 import '../../widgets/choose_job.dart';
 import '../../widgets/text_field.dart';
@@ -83,7 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         size: 22,
                       ),
                   validator: (value) {
-                    if (value!.length == 0) {
+                    if (value!.isEmpty) {
                       return "Email cannot be empty";
                     }
                     if (!RegExp(

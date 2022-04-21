@@ -5,7 +5,8 @@ import 'package:medical_assistant/api/news_api.dart';
 import 'package:medical_assistant/models/ariticles.dart';
 
 import '../models/news.dart';
-import '../them.dart';
+
+import '../theme.dart';
 import 'news_details.dart';
 
 class HomeNewsScreen extends StatefulWidget {

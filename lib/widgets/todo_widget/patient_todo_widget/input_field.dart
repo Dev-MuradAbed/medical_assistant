@@ -1,10 +1,10 @@
- import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 
-import 'package:get/get.dart';
+import '../../../size_config.dart';
+import '../../../theme.dart';
 
-import '../../../todo_them/size_config.dart';
-import '../../../todo_them/theme.dart';
+ // import 'package:get/get.dart';
 class InputField extends StatelessWidget {
   const InputField(
       {Key? key,
@@ -28,7 +28,7 @@ class InputField extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title,style: TitleStyle,),
+          Text(title,style: titleStyle,),
           Container(
             padding: const EdgeInsets.only(left: 14),
             margin: const EdgeInsets.only(top: 8),
@@ -47,22 +47,20 @@ class InputField extends StatelessWidget {
                       controller: controller,
                       readOnly: widget!=null?true:false,
                       style: subTitle,
-                      cursorColor: Get.isDarkMode?Colors.grey[100]:Colors.grey[700],
+                      cursorColor: Colors.grey,
                       decoration:  InputDecoration(
                         hintText: hint,
                         hintStyle: subTitle,
-                        enabledBorder: UnderlineInputBorder(
+                        enabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(
-                            color: context.theme.backgroundColor,
-                            width: 0
+                          color: Colors.grey,
                           )
                         ),
-                        focusedBorder: UnderlineInputBorder(
+                        focusedBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(
-                            color: context.theme.backgroundColor,
-                            width: 0
+                          color: Colors.grey,
                           )
-                        )
+                         )
                       ),
                     )),
                 widget??Container()

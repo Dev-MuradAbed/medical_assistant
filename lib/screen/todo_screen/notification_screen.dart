@@ -1,45 +1,45 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+// import 'package:get/get.dart';
 
-import '../../todo_them/theme.dart';
+import '../../theme.dart';
+
 
 class NotificationScreen extends StatefulWidget {
-  const NotificationScreen({Key? key, required this.pylode}) : super(key: key);
-  final String pylode;
+  const NotificationScreen({Key? key, required this.payload}) : super(key: key);
+  final String payload;
 
   @override
   _NotificationScreenState createState() => _NotificationScreenState();
 }
 
 class _NotificationScreenState extends State<NotificationScreen> {
-  late String _pyload;
-
+  late String payload;
   @override
   void initState() {
-    _pyload = widget.pylode;
+    payload = widget.payload;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: context.theme.backgroundColor,
+      //  backgroundColor: context.theme.backgroundColor,
       appBar: AppBar(
         title: Text(
-          _pyload.toString().split('|')[0],
-          style: TextStyle(
-            color: Get.isDarkMode ? Colors.white : darkGreyClr,
+          payload.toString().split('|')[0],
+          style: const TextStyle(
+            color: darkGreyClr,
           ),
         ),
-        backgroundColor: context.theme.backgroundColor,
+        //backgroundColor: context.theme.backgroundColor,
         centerTitle: true,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios,
-            color: Get.isDarkMode ? Colors.white : darkGreyClr,
+            color: darkGreyClr,
           ),
-          onPressed: () => Get.back(),
+          onPressed: () => Navigator.pop(context),
         ),
       ),
       body: SafeArea(
@@ -48,25 +48,24 @@ class _NotificationScreenState extends State<NotificationScreen> {
             const SizedBox(height: 10),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children: const [
                 Text('Hello ,Nahed',
                     style: TextStyle(
                         fontSize: 26,
                         fontWeight: FontWeight.w900,
-                        color: Get.isDarkMode ? Colors.white : darkGreyClr)),
-                const SizedBox(height: 10),
+                        color: darkGreyClr)),
+                SizedBox(height: 10),
                 Text('Your have a reminder',
                     style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w300,
-                        color:
-                            Get.isDarkMode ? Colors.grey[100] : darkGreyClr)),
+                        color: darkGreyClr)),
               ],
             ),
             Expanded(
               child: Container(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+                const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
                 margin: const EdgeInsets.symmetric(horizontal: 30),
                 decoration: BoxDecoration(
                   color: primaryClr,
@@ -79,7 +78,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       rowNotification('Title', Icons.text_format),
                       const SizedBox(height: 20),
                       Text(
-                        _pyload.toString().split('|')[0],
+                        payload.toString().split('|')[0],
                         style: const TextStyle(
                           color: Colors.white,
                         ),
@@ -88,7 +87,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       rowNotification('Description', Icons.description),
                       const SizedBox(height: 20),
                       Text(
-                        _pyload.toString().split('|')[1],
+                        payload.toString().split('|')[1],
                         style: const TextStyle(
                           color: Colors.white,
                         ),
@@ -97,7 +96,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       rowNotification('Time', Icons.calendar_today_sharp),
                       const SizedBox(height: 20),
                       Text(
-                        _pyload.toString().split('|')[2],
+                        payload.toString().split('|')[2],
                         style: const TextStyle(
                           color: Colors.white,
                         ),

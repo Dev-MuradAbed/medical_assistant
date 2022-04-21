@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 
-import '../them.dart';
+
+import '../theme.dart';
 
 class TextInput extends StatefulWidget {
   TextInput({
@@ -84,7 +84,7 @@ class _TextInputState extends State<TextInput> {
         ),
         focusColor: greenClr,
         border: OutlineInputBorder(
-          borderSide: const BorderSide(color: greenClr, width: 1.5),
+          borderSide:  const BorderSide(color: greenClr, width: 1.5),
           borderRadius: BorderRadius.circular(25),
         ),
          suffixIcon:widget.sufWidget,

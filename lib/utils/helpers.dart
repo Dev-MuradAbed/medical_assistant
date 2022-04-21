@@ -4,7 +4,9 @@ mixin Helper {
   void showSnackBar(BuildContext context,
       {required String message, required bool error}) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(message),
+
+      elevation: 5,
+      content: Text(message,),
       backgroundColor: error ? Colors.red : Colors.green,
       dismissDirection: DismissDirection.horizontal,
       duration: const Duration(seconds: 3),

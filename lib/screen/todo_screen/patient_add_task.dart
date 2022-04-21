@@ -1,14 +1,14 @@
-
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 import 'package:intl/intl.dart';
+import 'package:medical_assistant/utils/helpers.dart';
+import 'package:provider/provider.dart';
 
-import '../../../controllers/todo_controller/patient_controller.dart';
-import '../../../models/todo_model/todo_patient.dart';
-import '../../../todo_them/theme.dart';
-
-import '../../../widgets/todo_widgets/patient_todo_widget/button.dart';
-import '../../../widgets/todo_widgets/patient_todo_widget/input_field.dart';
+import '../../models/todo_model/patient_todo_model.dart';
+import '../../provider/todo_provider/todo_patient_provider.dart';
+import '../../theme.dart';
+import '../../widgets/todo_widget/patient_todo_widget/button.dart';
+import '../../widgets/todo_widget/patient_todo_widget/input_field.dart';
 
 
 class AddTaskPage extends StatefulWidget {
@@ -18,25 +18,33 @@ class AddTaskPage extends StatefulWidget {
   State<AddTaskPage> createState() => _AddTaskPageState();
 }
 
-class _AddTaskPageState extends State<AddTaskPage> {
-  final TaskController _taskController = TaskController();
-  final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _noteController = TextEditingController();
+class _AddTaskPageState extends State<AddTaskPage>with Helper {
+  @override
+  void initState() {
+    // TODO: implement initState
+    Provider.of<TaskProvider>(context, listen: false).getTask();
+    super.initState();
+  }
+
+  final TaskProvider _taskController = TaskProvider();
+  final TextEditingController _titlecontroller = TextEditingController();
+  final TextEditingController _notecontroller = TextEditingController();
   DateTime _selectedTime = DateTime.now();
-  String startTime = DateFormat('hh:mm a').format(DateTime.now()).toString();
-  String endTime = DateFormat('hh:mm a')
+  String startTime = DateFormat('hh:mm aaa').format(DateTime.now()).toString();
+  String endTime = DateFormat('hh:mm aaa')
       .format(DateTime.now().add(const Duration(minutes: 15)))
       .toString();
-  int _selectRemind = 5;
-  List<int> remindList = [5, 10, 15, 20];
+  int _selecRemind = 5;
+  List<int> RemindList = [5, 10, 15, 20];
   String _selectRepeat = 'None';
-  List<String> repeatList = ['None', 'Delay', 'Weekly', 'Monthly'];
-  int _selectedColor = 0;
+  List<String> repsetList = ['None', 'Delay', 'Weekly', 'Monthly'];
+  int _selectedColore = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: context.theme.backgroundColor,
+      backgroundColor: Colors.white,
+      //backgroundColor: context.theme.backgroundColor,
       appBar: _appBar(),
       body: SafeArea(
         child: Container(
@@ -51,12 +59,12 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 InputField(
                   title: 'Title',
                   hint: 'Enter Title Task',
-                  controller: _titleController,
+                  controller: _titlecontroller,
                 ),
                 InputField(
                   title: 'Note',
                   hint: 'Enter Note Task',
-                  controller: _noteController,
+                  controller: _notecontroller,
                 ),
                 InputField(
                   title: 'Date',
@@ -73,31 +81,31 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   children: [
                     Expanded(
                         child: InputField(
-                      title: 'Start Time',
-                      hint: startTime,
-                      widget: IconButton(
-                        onPressed: () => _getTime(isStart: true),
-                        icon: const Icon(Icons.access_time, color: Colors.grey),
-                      ),
-                    )),
+                          title: 'Start Time',
+                          hint: startTime,
+                          widget: IconButton(
+                            onPressed: () => _getTime(isStart: true),
+                            icon: const Icon(Icons.access_time, color: Colors.grey),
+                          ),
+                        )),
                     const SizedBox(width: 12),
                     Expanded(
                         child: InputField(
-                      title: 'End Time',
-                      hint: endTime,
-                      widget: IconButton(
-                        onPressed: () => _getTime(isStart: false),
-                        icon: const Icon(
-                          Icons.access_time,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    )),
+                          title: 'End Time',
+                          hint: endTime,
+                          widget: IconButton(
+                            onPressed: () => _getTime(isStart: false),
+                            icon: const Icon(
+                              Icons.access_time,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        )),
                   ],
                 ),
                 InputField(
                   title: 'Remind',
-                  hint: '$_selectRemind minuet early',
+                  hint: '$_selecRemind minuet early',
                   widget: Row(
                     children: [
                       DropdownButton(
@@ -110,13 +118,13 @@ class _AddTaskPageState extends State<AddTaskPage> {
                           color: Colors.grey,
                         ),
                         iconSize: 30,
-                        items: remindList.map<DropdownMenuItem<String>>(
-                            (int value) => DropdownMenuItem<String>(
+                        items: RemindList.map<DropdownMenuItem<String>>(
+                                (int value) => DropdownMenuItem<String>(
                                 value: value.toString(),
                                 child: Text('$value'))).toList(),
                         onChanged: (String? newvalue) {
                           setState(() {
-                            _selectRemind = int.parse(newvalue!);
+                            _selecRemind = int.parse(newvalue!);
                           });
                         },
                       ),
@@ -132,10 +140,10 @@ class _AddTaskPageState extends State<AddTaskPage> {
                       DropdownButton(
                         underline: Container(height: 0),
                         style: subTitle,
-                        items: repeatList
+                        items: repsetList
                             .map<DropdownMenuItem<String>>((String value) =>
-                                DropdownMenuItem<String>(
-                                    value: value, child: Text(value)))
+                            DropdownMenuItem<String>(
+                                value: value, child: Text(value)))
                             .toList(),
                         onChanged: (String? value) {
                           setState(() {
@@ -159,7 +167,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    columnMethode(),
+                    Column_methode(),
                     MyButton(
                         label: 'Create Task',
                         onTap: () {
@@ -176,26 +184,29 @@ class _AddTaskPageState extends State<AddTaskPage> {
   }
 
   AppBar _appBar() => AppBar(
-        elevation: 0,
-        backgroundColor: context.theme.backgroundColor,
-        leading: IconButton(
-          color: Get.isDarkMode ? Colors.white : Colors.black,
-          icon: const Icon(
-            Icons.arrow_back_ios,
-            size: 24,
-          ),
-          onPressed: () => Get.back(),
-        ),
-        actions: const [
-          CircleAvatar(
-            radius: 18,
-            backgroundImage: AssetImage('assets/images/person.jpeg'),
-          ),
-          SizedBox(width: 6)
-        ],
-      );
 
-  Column columnMethode() {
+    backgroundColor:white,
+    elevation: 0,
+    //backgroundColor: context.theme.backgroundColor,
+    leading: IconButton(
+      color: Colors.black,
+      icon: const Icon(
+        Icons.arrow_back_ios,
+        size: 24,
+      ),
+      onPressed: () => Navigator.pop(context),
+    ),
+    actions: const [
+      CircleAvatar(
+        radius: 18,
+        backgroundImage: AssetImage('assets/images/person.jpeg'),
+      ),
+      SizedBox(width: 6)
+    ],
+  );
+
+
+  Column Column_methode() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -203,66 +214,62 @@ class _AddTaskPageState extends State<AddTaskPage> {
         Wrap(
           children: List.generate(
               3,
-              (index) => GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _selectedColor = index;
-                      });
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CircleAvatar(
-                        backgroundColor: index == 0
-                            ? primaryClr
-                            : index == 1
-                                ? pinkClr
-                                : orangeClr,
-                        radius: 14,
-                        child: _selectedColor == index
-                            ? const Icon(Icons.done,
-                                size: 16, color: Colors.white)
-                            : null,
-                      ),
-                    ),
-                  )),
+                  (index) => GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _selectedColore = index;
+                  });
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CircleAvatar(
+                    backgroundColor: index == 0
+                        ? primaryClr
+                        : index == 1
+                        ? pinkClr
+                        : orangeClr,
+                    radius: 14,
+                    child: _selectedColore == index
+                        ? const Icon(Icons.done,
+                        size: 16, color: Colors.white)
+                        : null,
+                  ),
+                ),
+              )),
         )
       ],
     );
   }
 
   validateTask() async {
-    if (_titleController.text.isNotEmpty && _noteController.text.isNotEmpty) {
+    if (_titlecontroller.text.isNotEmpty && _notecontroller.text.isNotEmpty) {
       _addTaskToDb();
-      Get.back();
-    } else if (_titleController.text.isEmpty || _noteController.text.isEmpty) {
-      Get.snackbar('required ', 'All filed require ',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.white,
-          colorText: pinkClr,
-          icon: const Icon(
-            Icons.warning_amber_rounded,
-            color: Colors.red,
-          ));
+      Navigator.pop(context);
+    } else if (_titlecontroller.text.isEmpty || _notecontroller.text.isEmpty) {
+      showSnackBar( context,message: 'Required title or note ', error: true);
     } else {
       print('nothing');
     }
   }
 
   _addTaskToDb() async {
-    try{
-      int value =await _taskController.addTask(task: Task(
-        title: _titleController.text,
-        note: _noteController.text,
-        color: _selectedColor,
-        isCompleted: 0,
-        startTime: startTime,
-        endTime: endTime,
-        date: DateFormat.yMd().format(_selectedTime),
-        remind: _selectRemind,
-        repeat: _selectRepeat,
-      ));
+    try {
+      int value = await _taskController.addTask(
+          task: Task(
+            title: _titlecontroller.text,
+            note: _notecontroller.text,
+            color: _selectedColore,
+            isCompleted: 0,
+            startTime: startTime,
+            endTime: endTime,
+            date: DateFormat.yMd().format(_selectedTime),
+            remind: _selecRemind,
+            repeat: _selectRepeat,
+          ));
       print('$value');
-    }catch(e){
+      print('success add task');
+      Provider.of<TaskProvider>(context,listen: false).getTask();
+    } catch (e) {
       print(e);
     }
   }
@@ -290,11 +297,10 @@ class _AddTaskPageState extends State<AddTaskPage> {
       initialTime: isStart
           ? TimeOfDay.fromDateTime(DateTime.now())
           : TimeOfDay.fromDateTime(
-              DateTime.now().add(
-
-                const Duration(minutes: 15),
-              ),
-            ),
+        DateTime.now().add(
+          const Duration(minutes: 15),
+        ),
+      ),
     );
     String _formatDate = _pickedTime!.format(context);
     if (isStart) {

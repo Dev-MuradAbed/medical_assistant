@@ -1,22 +1,15 @@
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../models/todo_model/todo_patient.dart';
-import '../../../todo_them/size_config.dart';
-import '../../../todo_them/theme.dart';
-import '../../../todo_them/theme.dart';
+
+import '../../../models/todo_model/patient_todo_model.dart';
+import '../../../size_config.dart';
+import '../../../theme.dart';
 
 
-class TaskTile extends StatefulWidget {
+class TaskTile extends StatelessWidget {
   const TaskTile(this.task, {Key? key}) : super(key: key);
   final Task task;
-
-  @override
-  State<TaskTile> createState() => _TaskTileState();
-}
-
-class _TaskTileState extends State<TaskTile> {
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +25,7 @@ class _TaskTileState extends State<TaskTile> {
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
-            color: _gEtColor(widget.task.color)),
+            color: _gEtColor(task.color)),
         child: Row(
           children: [
             Expanded(
@@ -41,12 +34,12 @@ class _TaskTileState extends State<TaskTile> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '${widget.task.title}',
+                      '${task.title}',
                       style: GoogleFonts.lato(
                         textStyle: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
-                            color: Colors.white),
+                            color:Colors.white),
                       ),
                     ),
                     const SizedBox(height: 12),
@@ -60,7 +53,7 @@ class _TaskTileState extends State<TaskTile> {
                         ),
                         const SizedBox(width: 10),
                         Text(
-                          '${widget.task.startTime} - ${widget.task.endTime}',
+                          '${task.startTime} - ${task.endTime}',
                           style: GoogleFonts.lato(
                             textStyle: TextStyle(
                                 fontSize: 13, color: Colors.grey[200]),
@@ -70,10 +63,10 @@ class _TaskTileState extends State<TaskTile> {
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      '${widget.task.note}',
+                      '${task.note}',
                       style: GoogleFonts.lato(
                         textStyle:
-                            const TextStyle(fontSize: 15, color: Colors.white),
+                            const TextStyle(fontSize: 15, color:white),
                       ),
                     )
                   ],
@@ -89,12 +82,12 @@ class _TaskTileState extends State<TaskTile> {
             RotatedBox(
               quarterTurns: 3,
               child: Text(
-                widget.task.isCompleted == 0 ? 'TODO' : 'Completed',
+                task.isCompleted == 0 ? 'TODO' : 'Completed',
                 style: GoogleFonts.lato(
                   textStyle: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white),
+                      color: white),
                 ),
               ),
             )

@@ -15,6 +15,7 @@ class DoctorTask {
 
   DoctorTask({
     this.id,
+    this.idNote,
     this.title,
     this.note,
     this.isCompleted,
@@ -23,7 +24,6 @@ class DoctorTask {
     this.endTime,
     this.color,
     this.remind,
-    this.idNote,
     this.repeat,
   });
 
