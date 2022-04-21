@@ -6,8 +6,12 @@ import 'package:medical_assistant/screen/home_news_screen.dart';
 import 'package:medical_assistant/screen/map_pat_screen.dart';
 import 'package:medical_assistant/screen/news_details.dart';
 import 'package:medical_assistant/screen/profile_screen.dart';
-import 'package:medical_assistant/screen/todo_screen/patient_todo_screen/home_page.dart';
-import 'package:medical_assistant/them.dart';
+import 'package:medical_assistant/screen/todo_screen/patient_home_todo.dart';
+import 'package:medical_assistant/theme.dart';
+
+
+
+
 
 class BNBar extends StatefulWidget {
   const BNBar({Key? key}) : super(key: key);
@@ -31,8 +35,8 @@ class _BNBarState extends State<BNBar> {
     ProfileScreen(),
     MapPatScreen(),
     HomeNewsScreen(),
-    PlusRate(),
-    HomePage(),
+    // PlusRate(),
+    PatientHomeTodo(),
   ];
 
   @override

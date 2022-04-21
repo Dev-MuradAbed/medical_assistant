@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/todo_model/patient_todo_model.dart';
+import '../../provider/todo_provider/todo_doctor_provider.dart';
 import '../../provider/todo_provider/todo_patient_provider.dart';
 import '../../services/todo_patient_notification.dart';
 import '../../size_config.dart';
@@ -24,6 +25,8 @@ class PatientHomeTodo extends StatefulWidget {
 }
 
 class _PatientHomeTodoState extends State<PatientHomeTodo> {
+
+  // DoctorTaskProvider s=DoctorTaskProvider()
   late PatientNotificationHelper notifyHelper;
   SizeConfig size = SizeConfig();
 

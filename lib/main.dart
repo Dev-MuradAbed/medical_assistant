@@ -14,6 +14,7 @@ import 'package:medical_assistant/screen/auth/sginup_screen.dart';
 import 'package:medical_assistant/screen/home_screen.dart';
 
 import 'package:medical_assistant/screen/profile_screen.dart';
+import 'package:medical_assistant/screen/todo_screen/doctor_home_todo.dart';
 import 'package:medical_assistant/screen/todo_screen/patient_home_todo.dart';
 
 import 'package:medical_assistant/theme.dart';
@@ -81,7 +82,7 @@ class MedicalAssist extends StatelessWidget {
         darkTheme: Themes.dark,
         // themeMode: ThemeServices().theme,
         debugShowCheckedModeBanner: false,
-        home: const PatientHomeTodo(),
+        home: const DoctorHomeTodo(),
         // initialRoute: '/lunch_screen',
         routes: {
           // '/lunch_screen':(context) =>  Search(),

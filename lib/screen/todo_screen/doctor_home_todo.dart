@@ -5,16 +5,17 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:medical_assistant/models/todo_model/doctor_todo_model.dart';
 import 'package:provider/provider.dart';
 
 import '../../provider/todo_provider/todo_doctor_provider.dart';
-import '../../provider/todo_provider/todo_patient_provider.dart';
 import '../../services/todo_doctor_notification.dart';
-import '../../services/todo_patient_notification.dart';
+
 import '../../size_config.dart';
 import '../../theme.dart';
 import '../../widgets/todo_widget/patient_todo_widget/doctor_task_tile.dart';
-import '../../widgets/todo_widget/patient_todo_widget/patient_task_tile.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 
 class DoctorHomeTodo extends StatefulWidget {
@@ -37,8 +38,7 @@ class _DoctorHomeTodoState extends State<DoctorHomeTodo> {
     notifyHelper.requestIOSPermissions();
     Provider.of<DoctorTaskProvider>(context, listen: false).getTask();
   }
-
-  //final TaskProvider _taskController = TaskProvider();
+  final DoctorTaskProvider _taskController = DoctorTaskProvider();
   DateTime _selectedTime = DateTime.now();
 
   @override
@@ -53,18 +53,31 @@ class _DoctorHomeTodoState extends State<DoctorHomeTodo> {
       child: Scaffold(
         //backgroundColor: context.theme.backgroundColor,
         appBar: _appBar(),
-        body: FutureProvider(
-          create: (context) =>
-              Provider.of<DoctorTaskProvider>(context, listen: false).getTask(),
-          initialData: [],
-          child: Consumer<DoctorTaskProvider>(
-            builder: (context, taskProvider, child) {
-              return Column(children: [
-                _addDateTask(),
-                _showTask(),
-              ]);
-            },
-          ),
+        body: FutureBuilder(
+          future: _feach(),
+          builder: (context,snapshot){
+            if(snapshot.connectionState==ConnectionState.waiting){
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }else{
+              return FutureProvider(
+                create: (context) =>
+                    Provider.of<DoctorTaskProvider>(context).getTask(),
+                initialData: [],
+                child: Consumer<DoctorTaskProvider>(
+                  builder: (context, taskProvider, child) {
+                    return Column(children: [
+                      _addDateTask(),
+                      _showTask(),
+                    ]);
+                  },
+                ),
+              );
+            }
+
+          },
+
         ),
       ),
     );
@@ -122,7 +135,7 @@ class _DoctorHomeTodoState extends State<DoctorHomeTodo> {
                       DateFormat.yMd().parse(task.date!).day ==
                           _selectedTime.day)) {
                 var date =
-                DateFormat.jm().parse(task.startTime.toString());
+                DateFormat.Hm().parse(task.startTime.toString());
                 var myTime = DateFormat('HH:mm').format(date);
                 DoctorNotificationHelper(context).scheduledNotification(
                     int.parse(myTime.toString().split(':')[0]),
@@ -145,7 +158,47 @@ class _DoctorHomeTodoState extends State<DoctorHomeTodo> {
           ),
         ));
   }
+_feach()async {
+await FirebaseFirestore.instance.collection('NotesDoctor').get()
+    .then((value){
+      print(value.docs.length);
+      for(int i=0;i<value.docs.length;i++){
+        print("for");
+        if(value.docs[i].data()['idpat']=='123'
+            // &&
+            // value.docs[i].data()['idNote']!=Provider.of<DoctorTaskProvider>(context).doctorTask[i].idNote
 
+        ){
+          print("${value.docs[i].data()['idNote']}");
+          print("${value.docs[i].data()['title']}");
+          print("${value.docs[i].data()['startTime']}");
+          print("${value.docs[i].data()['endTime']}");
+          print("${value.docs[i].data()['note']}");
+          print("${value.docs[i].data()['repeat']}");
+          print("${value.docs[i].data()['isCompleted']}");
+          print("${value.docs[i].data()['color']}");
+          // print("jnkj${Provider.of<DoctorTaskProvider>(context).doctorTask[i].note}");
+          print("if");
+          _taskController.addTask(task: DoctorTask(
+            idNote:value.docs[i].data()['idNote']??0,
+            startTime:value.docs[i].data()['startTime'] ??'00:00',
+            endTime:value.docs[i].data()['endTime']??'00:00' ,
+            title:value.docs[i].data()['title'] ??'title',
+            note:value.docs[i].data()['note'] ??'title',
+            id:value.docs[i].data()['idpat'] ??0,
+            repeat: value.docs[i].data()['repeat']??'Daily',
+            remind:value.docs[i].data()['remind'] ??0,
+            isCompleted:value.docs[i].data()['isCompleted']??1 ,
+            color: value.docs[i].data()['color']??0,
+            date:value.docs[i].data()['date'] ??'00/00/0000',
+
+          ));
+          print(value.docs[i].data()['idNote']);
+          print('length${ _taskController.doctorTask.length}');
+        }
+      }
+    });
+}
 
   _addDateTask() {
     return Container(
