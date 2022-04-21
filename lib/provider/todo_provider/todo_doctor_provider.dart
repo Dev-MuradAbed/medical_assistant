@@ -9,15 +9,21 @@ import '../../models/todo_model/patient_todo_model.dart';
 class DoctorTaskProvider extends ChangeNotifier {
   final DoctorTaskController _taskController = DoctorTaskController();
   List<DoctorTask> doctorTask = <DoctorTask>[];
-
-  Future<int> addTask({required DoctorTask task}) async {
-    int newRow = await _taskController.insert(task);
-    if (newRow != 0) {
-      doctorTask.add(task);
-      notifyListeners();
-    }
-    return newRow;
+// create add task method insert data to database and notify the list
+  addTask({required DoctorTask task}) async {
+    print('jji');
+    await _taskController.insert(task);
+    notifyListeners();
   }
+  // Future<int> addTask({required DoctorTask task}) async {
+  //   print("ddddddddddd");
+  //   int newRow = await _taskController.insert(task);
+  //   if (newRow != 0) {
+  //     doctorTask.add(task);
+  //     notifyListeners();
+  //   }
+  //   return newRow;
+  // }
 
   Future<void>getTask() async {
     final List<Map<String, dynamic>> tasks = await _taskController.query();

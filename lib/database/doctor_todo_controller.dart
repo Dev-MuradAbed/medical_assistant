@@ -20,7 +20,7 @@ class DoctorTaskController{
   }
 
   Future<List<Map<String, dynamic>>> query() async {
-    print('query function code');
+    print('query function code doctor');
     return await database.query('doctorTask');
   }
 

@@ -5,6 +5,7 @@ import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 
 import 'package:intl/intl.dart';
 import 'package:medical_assistant/models/todo_model/doctor_todo_model.dart';
+import 'package:medical_assistant/models/todo_model/patient_todo_model.dart';
 
 import 'package:rxdart/rxdart.dart';
 import 'package:timezone/data/latest.dart' as tz;
@@ -86,7 +87,7 @@ class DoctorNotificationHelper {
     flutterLocalNotificationsPlugin.cancelAll();
   }
 
-  scheduledNotification(int hour, int minutes, DoctorTask task) async {
+  scheduledNotification(int hour, int minutes, Task task) async {
     await flutterLocalNotificationsPlugin.zonedSchedule(
       task.id!,
       task.title,

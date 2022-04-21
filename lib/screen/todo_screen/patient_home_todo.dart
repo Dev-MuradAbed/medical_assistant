@@ -26,7 +26,6 @@ class PatientHomeTodo extends StatefulWidget {
 
 class _PatientHomeTodoState extends State<PatientHomeTodo> {
 
-  // DoctorTaskProvider s=DoctorTaskProvider()
   late PatientNotificationHelper notifyHelper;
   SizeConfig size = SizeConfig();
 

@@ -31,4 +31,16 @@ class TaskController{
     WHERE id = ?  
     ''', [1, id]);
   }
+  Future<bool> FutureCheckId(int id) async {
+    print('check id function code');
+    var c= await database.rawQuery('''
+    SELECT * 
+    FROM tasks 
+    WHERE id = ?  
+    ''', [id]);
+    if(c.isEmpty){
+      return false;
+    }
+    return true;
+  }
 }
