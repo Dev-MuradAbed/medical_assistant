@@ -35,7 +35,7 @@ class DbController {
                 'repeat STRING)',
           );
           db.execute(
-            'CREATE TABLE doctorTask ('
+            'CREATE TABLE doctor ('
                 'id INTEGER PRIMARY KEY AUTOINCREMENT, '
                 'title STRING, '
                 'note TEXT, '

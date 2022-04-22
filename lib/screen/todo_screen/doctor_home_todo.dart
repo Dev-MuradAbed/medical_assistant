@@ -5,12 +5,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:medical_assistant/models/todo_model/doctor_todo_model.dart';
 import 'package:medical_assistant/models/todo_model/patient_todo_model.dart';
 import 'package:provider/provider.dart';
 
 import '../../provider/todo_provider/todo_doctor_provider.dart';
 import '../../provider/todo_provider/todo_patient_provider.dart';
-import '../../services/todo_doctor_notification.dart';
+import '../../services/todo_Doctor_notification.dart';
 
 import '../../size_config.dart';
 import '../../theme.dart';
@@ -35,7 +36,7 @@ class _DoctorHomeTodoState extends State<DoctorHomeTodo> {
     notifyHelper = DoctorNotificationHelper(context);
     notifyHelper.initializeNotification();
     notifyHelper.requestIOSPermissions();
-    Provider.of<TaskProvider>(context, listen: false).getTask();
+    Provider.of<TaskDoctorProvider>(context, listen: false).getTask();
   }
 
   final TaskProvider _taskController = TaskProvider();
@@ -108,7 +109,7 @@ class _DoctorHomeTodoState extends State<DoctorHomeTodo> {
             ),
             onPressed: () {
               notifyHelper.flutterLocalNotificationsPlugin.cancelAll();
-              Provider.of<DoctorTaskProvider>(context, listen: false)
+              Provider.of<TaskDoctorProvider>(context, listen: false)
                   .deleteAllTask();
             },
           ),
@@ -118,8 +119,12 @@ class _DoctorHomeTodoState extends State<DoctorHomeTodo> {
 
   _showTask() {
     return Expanded(
-        child: Provider.of<TaskProvider>(context).listTask.isEmpty
-            ?_noTask()
+        child: Provider.of<TaskDoctorProvider>(context).listTask.isEmpty
+            ?Column(
+          children: [
+            Text(Provider.of<TaskDoctorProvider>(context).listTask.length.toString())
+          ],
+        )
             : RefreshIndicator(
                 onRefresh: _onRefresh,
                 child: ListView.builder(
@@ -127,10 +132,10 @@ class _DoctorHomeTodoState extends State<DoctorHomeTodo> {
                       SizeConfig.orientation == Orientation.landscape
                           ? Axis.horizontal
                           : Axis.vertical,
-                  itemCount: Provider.of<TaskProvider>(context).listTask.length,
+                  itemCount: Provider.of<TaskDoctorProvider>(context).listTask.length,
                   itemBuilder: (BuildContext context, int index) {
                     var task =
-                        Provider.of<TaskProvider>(context).listTask[index];
+                        Provider.of<TaskDoctorProvider>(context).listTask[index];
 
                     if (task.repeat == 'Delay' ||
                         task.date == DateFormat.yMd().format(_selectedTime) ||
@@ -179,9 +184,9 @@ class _DoctorHomeTodoState extends State<DoctorHomeTodo> {
         print("for");
         if (value.docs[i].data()['idpat'] == '123') {
           try {
-            await Provider.of<TaskProvider>(context, listen: false).
+            await Provider.of<TaskDoctorProvider>(context, listen: false).
             addTask(
-                task: Task(
+                task: DoctorTask(
                 title: value.docs[i].data()['title'] ?? 'title',
                 note: value.docs[i].data()['note'] ?? 'title',
                 color: value.docs[i].data()['color'] ?? 'title',
@@ -204,7 +209,7 @@ class _DoctorHomeTodoState extends State<DoctorHomeTodo> {
             //   remind: value.docs[i].data()['remind'] ?? 0,
             //   repeat: value.docs[i].data()['repeat'] ?? 'Daily',
             // ));
-            print('length${_taskController.listTask.length}');
+            print('length${Provider.of<TaskDoctorProvider>(context).listTask.length}');
           } catch (e) {
             print(e);
           }
@@ -288,6 +293,6 @@ class _DoctorHomeTodoState extends State<DoctorHomeTodo> {
   }
 
   Future<void> _onRefresh() async {
-    Provider.of<DoctorTaskProvider>(context).getTask();
+    Provider.of<TaskDoctorProvider>(context).getTask();
   }
 }

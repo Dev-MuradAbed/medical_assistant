@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 
-
+// import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:medical_assistant/models/todo_model/doctor_todo_model.dart';
-import 'package:medical_assistant/models/todo_model/patient_todo_model.dart';
-
+import 'package:path/path.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
-
+import '../models/todo_model/patient_todo_model.dart';
 import '../screen/todo_screen/notification_screen.dart';
 
 
@@ -87,7 +86,7 @@ class DoctorNotificationHelper {
     flutterLocalNotificationsPlugin.cancelAll();
   }
 
-  scheduledNotification(int hour, int minutes, Task task) async {
+  scheduledNotification(int hour, int minutes, DoctorTask task) async {
     await flutterLocalNotificationsPlugin.zonedSchedule(
       task.id!,
       task.title,
@@ -174,10 +173,44 @@ class DoctorNotificationHelper {
     tz.setLocalLocation(tz.getLocation(timeZoneName));
   }
 
+/*   Future selectNotification(String? payload) async {
+    if (payload != null) {
+      //selectedNotificationPayload = "The best";
+      selectNotificationSubject.add(payload);
+      print('notification payload: $payload');
+    } else {
+      print("Notification Done");
+    }
+    Get.to(() => SecondScreen(selectedNotificationPayload));
+  } */
 
+//Older IOS
   Future onDidReceiveLocalNotification(
       int id, String? title, String? body, String? payload,) async {
-
+    // display a dialog with the notification details, tap ok to go to another page
+    /* showDialog(
+      context: context,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: const Text('Title'),
+        content: const Text('Body'),
+        actions: [
+          CupertinoDialogAction(
+            isDefaultAction: true,
+            child: const Text('Ok'),
+            onPressed: () async {
+              Navigator.of(context, rootNavigator: true).pop();
+              await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Container(color: Colors.white),
+                ),
+              );
+            },
+          )
+        ],
+      ),
+    );
+ */
     showDialog(context: context, builder: (BuildContext context){
       return AlertDialog(
         title: Text(body!),
@@ -194,7 +227,7 @@ class DoctorNotificationHelper {
           MaterialPageRoute(
             builder: (context) => NotificationScreen(payload: payload),
           ));
-
+      //Get.to(() => NotificationScreen( pylode:payload,));
     });
   }
 }

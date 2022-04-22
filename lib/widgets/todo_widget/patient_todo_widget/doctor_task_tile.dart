@@ -10,7 +10,7 @@ import '../../../theme.dart';
 
 class DoctorTaskTile extends StatelessWidget {
   const DoctorTaskTile(this.task, {Key? key}) : super(key: key);
-  final Task task;
+  final DoctorTask task;
 
   @override
   Widget build(BuildContext context) {

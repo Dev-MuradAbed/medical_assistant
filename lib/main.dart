@@ -1,9 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:geolocator/geolocator.dart';
-
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:medical_assistant/provider/todo_provider/todo_doctor_provider.dart';
 import 'package:medical_assistant/provider/todo_provider/todo_patient_provider.dart';
 
@@ -15,22 +12,19 @@ import 'package:medical_assistant/screen/home_screen.dart';
 
 import 'package:medical_assistant/screen/profile_screen.dart';
 import 'package:medical_assistant/screen/todo_screen/doctor_home_todo.dart';
-import 'package:medical_assistant/screen/todo_screen/patient_home_todo.dart';
-
 import 'package:medical_assistant/theme.dart';
 import 'package:provider/provider.dart';
 import 'api/geolocator.dart';
 import 'api/places.dart';
-import 'bottom_navigation_bar.dart';
-
+import 'database/controller/Doctor_db.dart';
 import 'database/controller/patient_db.dart';
-import 'models/place.dart';
 import 'screen/lunch_screen.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await DbController().initDatabase();
+  // await DbDoctorController().initDatabase();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -73,8 +67,9 @@ class MedicalAssist extends StatelessWidget {
         // )
         ChangeNotifierProvider<TaskProvider>(
           create: (context) => TaskProvider(),
-        ), ChangeNotifierProvider<DoctorTaskProvider>(
-          create: (context) => DoctorTaskProvider(),
+        ),
+        ChangeNotifierProvider<TaskDoctorProvider>(
+          create: (context) => TaskDoctorProvider(),
         ),
       ],
       child: MaterialApp(
