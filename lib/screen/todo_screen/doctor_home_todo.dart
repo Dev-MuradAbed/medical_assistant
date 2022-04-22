@@ -5,10 +5,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:medical_assistant/models/todo_model/doctor_todo_model.dart';
 import 'package:medical_assistant/models/todo_model/patient_todo_model.dart';
 import 'package:provider/provider.dart';
-import 'package:sqflite/sqflite.dart';
 
 import '../../provider/todo_provider/todo_doctor_provider.dart';
 import '../../provider/todo_provider/todo_patient_provider.dart';
@@ -53,7 +51,6 @@ class _DoctorHomeTodoState extends State<DoctorHomeTodo> {
       ),
       color: Colors.white,
       child: Scaffold(
-        //backgroundColor: context.theme.backgroundColor,
         appBar: _appBar(),
         body: FutureBuilder(
           future: _feach(),
@@ -122,7 +119,7 @@ class _DoctorHomeTodoState extends State<DoctorHomeTodo> {
   _showTask() {
     return Expanded(
         child: Provider.of<TaskProvider>(context).listTask.isEmpty
-            ? _noTask()
+            ?_noTask()
             : RefreshIndicator(
                 onRefresh: _onRefresh,
                 child: ListView.builder(
@@ -180,17 +177,11 @@ class _DoctorHomeTodoState extends State<DoctorHomeTodo> {
       print(value.docs.length);
       for (int i = 0; i < value.docs.length; i++) {
         print("for");
-        // print("if${Provider.of<TaskProvider>(context).listTask[i].id}");
-
-        if (value.docs[i].data()['idpat'] == '123'
-            // &&
-            // value.docs[i].data()['idpat']!=Provider.of<TaskProvider>(context).listTask[i].id
-
-            ) {
+        if (value.docs[i].data()['idpat'] == '123') {
           try {
             await Provider.of<TaskProvider>(context, listen: false).
             addTask(
-                  task: Task(
+                task: Task(
                 title: value.docs[i].data()['title'] ?? 'title',
                 note: value.docs[i].data()['note'] ?? 'title',
                 color: value.docs[i].data()['color'] ?? 'title',
