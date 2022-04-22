@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 
 const Color blueClr = Color(0xFF184093);
@@ -30,55 +30,55 @@ class Themes {
 
 TextStyle get heading{
   return GoogleFonts.lato(
-      textStyle: TextStyle(
+      textStyle: const TextStyle(
           fontSize: 24,
           fontWeight: FontWeight.bold,
-          color: Get.isDarkMode? Colors.white:Colors.black
+          color: Colors.black
       )
   );
 }
 TextStyle get subheading{
   return GoogleFonts.lato(
-      textStyle: TextStyle(
+      textStyle: const TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.w400,
-          color: Get.isDarkMode? Colors.white:Colors.black
+          color: Colors.black
       )
   );
 }
 TextStyle get TitleStyle{
   return GoogleFonts.lato(
-      textStyle: TextStyle(
+      textStyle: const TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.bold,
-          color: Get.isDarkMode? Colors.white:Colors.black
+          color: Colors.black
       )
   );
 }
 TextStyle get subTitle{
   return GoogleFonts.lato(
-      textStyle: TextStyle(
+      textStyle: const TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.w400,
-          color: Get.isDarkMode? Colors.white:Colors.black
+          color: Colors.black
       )
   );
 }
 TextStyle get bodyText{
   return GoogleFonts.lato(
-      textStyle: TextStyle(
+      textStyle: const TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.w400,
-          color: Get.isDarkMode? Colors.white:Colors.black
+          color: Colors.black
       )
   ); 
 }
 TextStyle get body2Text{
   return GoogleFonts.lato(
-      textStyle: TextStyle(
+      textStyle: const TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.bold,
-          color: Get.isDarkMode? Colors.grey[200]:Colors.black
+          color: Colors.black
       )
   );
 }

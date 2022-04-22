@@ -1,8 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:medical_assistant/provider/result_provider.dart';
 import 'package:medical_assistant/provider/todo_provider/todo_doctor_provider.dart';
 import 'package:medical_assistant/provider/todo_provider/todo_patient_provider.dart';
+import 'package:medical_assistant/read_camera.dart';
 import 'package:medical_assistant/screen/ListRate.dart';
 
 import 'package:medical_assistant/screen/auth/change_password.dart';
@@ -17,8 +19,9 @@ import 'package:medical_assistant/theme.dart';
 import 'package:provider/provider.dart';
 import 'api/geolocator.dart';
 import 'api/places.dart';
-import 'database/controller/Doctor_db.dart';
-import 'database/controller/patient_db.dart';
+
+import 'database/patient_db.dart';
+import 'screen/list_result.dart';
 import 'screen/lunch_screen.dart';
 
 Future main() async {
@@ -44,6 +47,7 @@ class MedicalAssist extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+
         // FutureProvider(
         //   create: (context) => locatorService.getLocation(),
         //   initialData: null,
@@ -66,20 +70,26 @@ class MedicalAssist extends StatelessWidget {
         //     );
         //   },
         // )
-        ChangeNotifierProvider<TaskProvider>(
-          create: (context) => TaskProvider(),
-        ),
-        ChangeNotifierProvider<TaskDoctorProvider>(
-          create: (context) => TaskDoctorProvider(),
+        // ChangeNotifierProvider<TaskProvider>(
+        //   create: (context) => TaskProvider(),
+        // ),
+        // ChangeNotifierProvider<TaskDoctorProvider>(
+        //   create: (context) => TaskDoctorProvider(),
+        // ),
+        ChangeNotifierProvider<ResultProvider>(
+          create: (context) => ResultProvider(),
         ),
       ],
       child: MaterialApp(
         theme: Themes.light,
+       // home:const ListResult(),
         darkTheme: Themes.dark,
+
         // themeMode: ThemeServices().theme,
         debugShowCheckedModeBanner: false,
-        home: const ListRate(),
+        //home: const DoctorHomeTodo(),
         // initialRoute: '/lunch_screen',
+home: PlusRate(),
         routes: {
           // '/lunch_screen':(context) =>  Search(),
           '/lunch_screen': (context) => const LunchScreen(),

@@ -1,34 +1,32 @@
-import 'package:medical_assistant/database/controller/Doctor_db.dart';
-import 'package:medical_assistant/models/todo_model/doctor_todo_model.dart';
 import 'package:sqflite/sqflite.dart';
+import '../../models/todo_model/patient_todo_model.dart';
+import '../patient_db.dart';
 
-import 'controller/patient_db.dart';
-
-class TaskDoctorController{
+class TaskController{
   Database database = DbController().database;
-  Future<int> insert(DoctorTask task) async {
-    print('insert function code doctorTasks');
-    return await database.insert('doctor', task.toJson());
+  Future<int> insert(Task task) async {
+    print('insert function code');
+    return await database.insert('tasks', task.toJson());
   }
 
   Future<int> delete(int id) async {
-    return await database.delete('doctor', where: 'id = ?', whereArgs: [id]);
+    return await database.delete('tasks', where: 'id = ?', whereArgs: [id]);
   }
 
   Future<int> deleteAllTask() async {
     print('delete All function code');
-    return await database.delete('doctor');
+    return await database.delete('tasks');
   }
 
   Future<List<Map<String, dynamic>>> query() async {
     print('query function code');
-    return await database.query('doctor');
+    return await database.query('tasks');
   }
 
   Future<int> update(int id) async {
     print('update function code ');
     return await database.rawUpdate('''
-    UPDATE doctor 
+    UPDATE tasks 
     SET isCompleted = ? 
     WHERE id = ?  
     ''', [1, id]);
@@ -37,7 +35,7 @@ class TaskDoctorController{
     print('check id function code');
     var c= await database.rawQuery('''
     SELECT * 
-    FROM doctor 
+    FROM tasks 
     WHERE id = ?  
     ''', [id]);
     if(c.isEmpty){

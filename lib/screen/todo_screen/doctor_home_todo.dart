@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:medical_assistant/models/todo_model/doctor_todo_model.dart';
 import 'package:medical_assistant/models/todo_model/patient_todo_model.dart';
+import 'package:medical_assistant/utils/helpers.dart';
 import 'package:provider/provider.dart';
 
 import '../../provider/todo_provider/todo_doctor_provider.dart';
@@ -25,7 +26,7 @@ class DoctorHomeTodo extends StatefulWidget {
   State<DoctorHomeTodo> createState() => _DoctorHomeTodoState();
 }
 
-class _DoctorHomeTodoState extends State<DoctorHomeTodo> {
+class _DoctorHomeTodoState extends State<DoctorHomeTodo> with Helper{
   late DoctorNotificationHelper notifyHelper;
   SizeConfig size = SizeConfig();
 
@@ -71,12 +72,13 @@ class _DoctorHomeTodoState extends State<DoctorHomeTodo> {
                   } else {
                     return FutureProvider(
                       create: (context) =>
-                          Provider.of<TaskProvider>(context, listen: false)
+                          Provider.of<TaskDoctorProvider>(context, listen: false)
                               .getTask(),
                       initialData: [],
-                      child: Consumer<TaskProvider>(
+                      child: Consumer<TaskDoctorProvider>(
                         builder: (context, taskProvider, child) {
-                          return Column(children: [
+                          return Column(
+                              children: [
                             _addDateTask(),
                             _showTask(),
                           ]);
@@ -120,11 +122,8 @@ class _DoctorHomeTodoState extends State<DoctorHomeTodo> {
   _showTask() {
     return Expanded(
         child: Provider.of<TaskDoctorProvider>(context).listTask.isEmpty
-            ?Column(
-          children: [
-            Text(Provider.of<TaskDoctorProvider>(context).listTask.length.toString())
-          ],
-        )
+            ?noTask(_onRefresh,
+            "Don't have any Task\nAdd new Task to make your Day productive")
             : RefreshIndicator(
                 onRefresh: _onRefresh,
                 child: ListView.builder(
@@ -246,51 +245,6 @@ class _DoctorHomeTodoState extends State<DoctorHomeTodo> {
     );
   }
 
-  _noTask() {
-    return Stack(
-      children: [
-        AnimatedPositioned(
-            child: RefreshIndicator(
-              onRefresh: _onRefresh,
-              child: SingleChildScrollView(
-                child: Wrap(
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  alignment: WrapAlignment.center,
-                  direction: SizeConfig.orientation == Orientation.landscape
-                      ? Axis.horizontal
-                      : Axis.vertical,
-                  children: [
-                    SizeConfig.orientation == Orientation.landscape
-                        ? const SizedBox(height: 6)
-                        : const SizedBox(height: 220),
-                    SvgPicture.asset(
-                      'assets/images/task.svg',
-                      semanticsLabel: 'Task',
-                      height: 90,
-                      color: primaryClr.withOpacity(0.5),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 30, vertical: 10),
-                      child: Text(
-                        "Don't have any Task\nAdd new Task to make your Day productive",
-                        style: subTitle,
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    SizeConfig.orientation == Orientation.landscape
-                        ? const SizedBox(height: 180)
-                        : const SizedBox(height: 160),
-                  ],
-                ),
-              ),
-            ),
-            duration: const Duration(
-              milliseconds: 2000,
-            ))
-      ],
-    );
-  }
 
   Future<void> _onRefresh() async {
     Provider.of<TaskDoctorProvider>(context).getTask();

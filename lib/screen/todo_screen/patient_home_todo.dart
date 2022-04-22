@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:medical_assistant/utils/helpers.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/todo_model/patient_todo_model.dart';
@@ -24,8 +25,7 @@ class PatientHomeTodo extends StatefulWidget {
   State<PatientHomeTodo> createState() => _PatientHomeTodoState();
 }
 
-class _PatientHomeTodoState extends State<PatientHomeTodo> {
-
+class _PatientHomeTodoState extends State<PatientHomeTodo> with Helper{
   late PatientNotificationHelper notifyHelper;
   SizeConfig size = SizeConfig();
 
@@ -52,7 +52,7 @@ class _PatientHomeTodoState extends State<PatientHomeTodo> {
       ),
       color: Colors.white,
       child: Scaffold(
-        //backgroundColor: context.theme.backgroundColor,
+        backgroundColor: white,
         appBar: _appBar(),
         body: FutureProvider(
           create: (context) =>
@@ -73,85 +73,80 @@ class _PatientHomeTodoState extends State<PatientHomeTodo> {
   }
 
   AppBar _appBar() => AppBar(
-    backgroundColor: Colors.white,
-    elevation: 0,
-    leading: const CircleAvatar(
-      radius: 20,
-      backgroundImage: AssetImage('assets/images/person.jpeg'),
-    ),
-    actions: [
-      IconButton(
-        color: Colors.black,
-        icon: const Icon(
-          Icons.cleaning_services_outlined,
-          size: 24,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: const CircleAvatar(
+          radius: 20,
+          backgroundImage: AssetImage('assets/images/person.jpeg'),
         ),
-        onPressed: () {
-          notifyHelper.flutterLocalNotificationsPlugin.cancelAll();
-          Provider.of<TaskProvider>(context,listen: false).deleteAllTask();
-        },
-      ),
-      const SizedBox(width: 10)
-    ],
-  );
+        actions: [
+          IconButton(
+            color: Colors.black,
+            icon: const Icon(
+              Icons.cleaning_services_outlined,
+              size: 24,
+            ),
+            onPressed: () {
+              notifyHelper.flutterLocalNotificationsPlugin.cancelAll();
+              Provider.of<TaskProvider>(context, listen: false).deleteAllTask();
+            },
+          ),
+          const SizedBox(width: 10)
+        ],
+      );
 
   _showTask() {
     return Expanded(
         child: Provider.of<TaskProvider>(context).listTask.isEmpty
-            ? _noTask()
+            ? noTask(_onRefresh,
+            "Don't have any Task\nAdd new Task to make your Day productive")
             : RefreshIndicator(
-          onRefresh: _onRefresh,
-          child: ListView.builder(
-            scrollDirection:
-            SizeConfig.orientation == Orientation.landscape
-                ? Axis.horizontal
-                : Axis.vertical,
-            itemCount: Provider.of<TaskProvider>(context).listTask.length,
-            itemBuilder: (BuildContext context, int index) {
-              var task =
-              Provider.of<TaskProvider>(context).listTask[index];
+                onRefresh: _onRefresh,
+                child: ListView.builder(
+                  scrollDirection:
+                      SizeConfig.orientation == Orientation.landscape
+                          ? Axis.horizontal
+                          : Axis.vertical,
+                  itemCount: Provider.of<TaskProvider>(context).listTask.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    var task =
+                        Provider.of<TaskProvider>(context).listTask[index];
 
-              if (task.repeat == 'Delay' ||
-                  task.date == DateFormat.yMd().format(_selectedTime) ||
-                  (task.repeat == 'Weekly' &&
-                      _selectedTime
-                          .difference(
-                          DateFormat.yMd().parse(task.date!))
-                          .inDays %
-                          7 ==
-                          0) ||
-                  (task.repeat == 'Monthly' &&
-                      DateFormat.yMd().parse(task.date!).day ==
-                          _selectedTime.day)) {
-                var date =
-                DateFormat.jm().parse(task.startTime.toString());
-                var myTime = DateFormat('HH:mm').format(date);
-                PatientNotificationHelper(context).scheduledNotification(
-                    int.parse(myTime.toString().split(':')[0]),
-                    int.parse(myTime.toString().split(':')[1]),
-                    task);
-                return AnimationConfiguration.staggeredList(
-                  position: index,
-                  duration: const Duration(milliseconds: 1500),
-                  child: SlideAnimation(
-                    horizontalOffset: 300,
-                    child: FadeInAnimation(
-                      child: GestureDetector(
-                        onTap: () {
-                          print('ok');
-                          showBottomSheet(context, task);
-                        },
-                        child: TaskTile(task),
-                      ),
-                    ),
-                  ),
-                );
-              } else {
-                return Container();
-              }
-            },
-          ),
-        ));
+                    if (task.repeat == 'Delay' ||
+                        task.date == DateFormat.yMd().format(_selectedTime) ||
+                        (task.repeat == 'Weekly' &&
+                            _selectedTime.difference(DateFormat.yMd().parse(task.date!)).inDays % 7 == 0) ||
+                        (task.repeat == 'Monthly' &&
+                            DateFormat.yMd().parse(task.date!).day == _selectedTime.day)) {
+                      var date =
+                          DateFormat.jm().parse(task.startTime.toString());
+                      var myTime = DateFormat('HH:mm').format(date);
+                      PatientNotificationHelper(context).scheduledNotification(
+                          int.parse(myTime.toString().split(':')[0]),
+                          int.parse(myTime.toString().split(':')[1]),
+                          task);
+                      return AnimationConfiguration.staggeredList(
+                        position: index,
+                        duration: const Duration(milliseconds: 1500),
+                        child: SlideAnimation(
+                          horizontalOffset: 300,
+                          child: FadeInAnimation(
+                            child: GestureDetector(
+                              onTap: () {
+                                print('ok');
+                                showBottomSheet(context, task);
+                              },
+                              child: TaskTile(task),
+                            ),
+                          ),
+                        ),
+                      );
+                    } else {
+                      return Container();
+                    }
+                  },
+                ),
+              ));
   }
 
   _addTask() {
@@ -178,7 +173,7 @@ class _PatientHomeTodoState extends State<PatientHomeTodo> {
                     MaterialPageRoute(
                       builder: (context) => const AddTaskPage(),
                     ));
-                Provider.of<TaskProvider>(context,listen: false).getTask();
+                Provider.of<TaskProvider>(context, listen: false).getTask();
                 // Get.to(const AddTaskPage());
                 //_taskController.getTasks();
               })
@@ -215,51 +210,6 @@ class _PatientHomeTodoState extends State<PatientHomeTodo> {
     );
   }
 
-  _noTask() {
-    return Stack(
-      children: [
-        AnimatedPositioned(
-            child: RefreshIndicator(
-              onRefresh: _onRefresh,
-              child: SingleChildScrollView(
-                child: Wrap(
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  alignment: WrapAlignment.center,
-                  direction: SizeConfig.orientation == Orientation.landscape
-                      ? Axis.horizontal
-                      : Axis.vertical,
-                  children: [
-                    SizeConfig.orientation == Orientation.landscape
-                        ? const SizedBox(height: 6)
-                        : const SizedBox(height: 220),
-                    SvgPicture.asset(
-                      'assets/images/task.svg',
-                      semanticsLabel: 'Task',
-                      height: 90,
-                      color: primaryClr.withOpacity(0.5),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 30, vertical: 10),
-                      child: Text(
-                        "Don't have any Task\nAdd new Task to make your Day productive",
-                        style: subTitle,
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    SizeConfig.orientation == Orientation.landscape
-                        ? const SizedBox(height: 180)
-                        : const SizedBox(height: 160),
-                  ],
-                ),
-              ),
-            ),
-            duration: const Duration(
-              milliseconds: 2000,
-            ))
-      ],
-    );
-  }
 
   showBottomSheet(BuildContext context, Task task) {
     showModalBottomSheet(
@@ -271,11 +221,11 @@ class _PatientHomeTodoState extends State<PatientHomeTodo> {
             width: SizeConfig.screenWidth,
             height: (SizeConfig.orientation == Orientation.landscape)
                 ? (task.isCompleted == 1
-                ? SizeConfig.screenHeight * 0.6
-                : SizeConfig.screenHeight * 0.8)
+                    ? SizeConfig.screenHeight * 0.6
+                    : SizeConfig.screenHeight * 0.8)
                 : (task.isCompleted == 1
-                ? SizeConfig.screenHeight * 0.30
-                : SizeConfig.screenHeight * 0.39),
+                    ? SizeConfig.screenHeight * 0.30
+                    : SizeConfig.screenHeight * 0.39),
             color: Colors.white,
             child: Column(
               children: [
@@ -292,20 +242,21 @@ class _PatientHomeTodoState extends State<PatientHomeTodo> {
                 task.isCompleted == 1
                     ? Container()
                     : _buildBottomSheet(
-                    label: 'Competed Task',
-                    Clr: primaryClr,
-                    onTap: () async {
-                      Provider.of<TaskProvider>(context,listen: false)
-                          .markTaskCompleted(task.id!);
-                      await notifyHelper.flutterLocalNotificationsPlugin
-                          .cancel(task.id!);
-                      Navigator.pop(context);
-                    }),
+                        label: 'Competed Task',
+                        clr: primaryClr,
+                        onTap: () async {
+                          Provider.of<TaskProvider>(context, listen: false)
+                              .markTaskCompleted(task.id!);
+                          await notifyHelper.flutterLocalNotificationsPlugin
+                              .cancel(task.id!);
+                          Navigator.pop(context);
+                        }),
                 _buildBottomSheet(
                     label: 'Deleted Task',
-                    Clr: Colors.red[300]!,
+                    clr: Colors.red[300]!,
                     onTap: () async {
-                      Provider.of<TaskProvider>(context,listen: false).delete(task);
+                      Provider.of<TaskProvider>(context, listen: false)
+                          .delete(task);
                       await notifyHelper.flutterLocalNotificationsPlugin
                           .cancel(task.id!);
                       print('Notification Deleted');
@@ -317,7 +268,7 @@ class _PatientHomeTodoState extends State<PatientHomeTodo> {
                 ),
                 _buildBottomSheet(
                     label: 'Cancel',
-                    Clr: primaryClr,
+                    clr: primaryClr,
                     onTap: () {
                       Navigator.pop(context);
                     }),
@@ -332,9 +283,9 @@ class _PatientHomeTodoState extends State<PatientHomeTodo> {
 
   _buildBottomSheet(
       {required String label,
-        required Function() onTap,
-        required Color Clr,
-        bool isClose = false}) {
+      required Function() onTap,
+      required Color clr,
+      bool isClose = false}) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -343,14 +294,14 @@ class _PatientHomeTodoState extends State<PatientHomeTodo> {
         margin: const EdgeInsets.symmetric(vertical: 4),
         decoration: BoxDecoration(
             border:
-            Border.all(width: 2, color: isClose ? Colors.grey[200]! : Clr),
+                Border.all(width: 2, color: isClose ? Colors.grey[200]! : clr),
             borderRadius: BorderRadius.circular(20),
-            color: isClose ? Colors.transparent : Clr),
+            color: isClose ? Colors.transparent : clr),
         child: Center(
           child: Text(
             label,
             style:
-            isClose ? titleStyle : titleStyle.copyWith(color: Colors.white),
+                isClose ? titleStyle : titleStyle.copyWith(color: Colors.white),
           ),
         ),
       ),
