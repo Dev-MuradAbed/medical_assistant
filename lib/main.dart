@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:medical_assistant/provider/todo_provider/todo_doctor_provider.dart';
 import 'package:medical_assistant/provider/todo_provider/todo_patient_provider.dart';
+import 'package:medical_assistant/screen/ListRate.dart';
 
 import 'package:medical_assistant/screen/auth/change_password.dart';
 import 'package:medical_assistant/screen/auth/forget_password.dart';
@@ -77,7 +78,7 @@ class MedicalAssist extends StatelessWidget {
         darkTheme: Themes.dark,
         // themeMode: ThemeServices().theme,
         debugShowCheckedModeBanner: false,
-        home: const DoctorHomeTodo(),
+        home: const ListRate(),
         // initialRoute: '/lunch_screen',
         routes: {
           // '/lunch_screen':(context) =>  Search(),
