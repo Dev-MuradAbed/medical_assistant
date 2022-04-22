@@ -13,10 +13,9 @@ class ResultProvider extends ChangeNotifier {
 //     notifyListeners();
 
   Future<int> addRecord({required ResultModel task}) async {
-    //print("ddddddddddd");
+
     int newRowId = await _taskController.insert(task);
     if (newRowId != 0) {
-      task.id = newRowId;
       resultList.add(task);
       notifyListeners();
     }

@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:medical_assistant/provider/result_provider.dart';
 import 'package:medical_assistant/screen/auth/login_screen.dart';
+import 'package:medical_assistant/screen/list_result.dart';
 import 'package:medical_assistant/theme.dart';
 
 import 'package:medical_assistant/widgets/count_down_timer.dart';
@@ -217,8 +218,9 @@ class HomeRateView extends State<PlusRate> with SingleTickerProviderStateMixin, 
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30)),
                               onPressed: () {
+                                Provider.of<ResultProvider>(context,listen: false).getRecord();
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => const LoginScreen()));
+                                    builder: (context) => const ListResult()));
                               }),
                         ]),
                     const SizedBox(
@@ -425,16 +427,17 @@ class HomeRateView extends State<PlusRate> with SingleTickerProviderStateMixin, 
   _save() async {
     try{
       int value = await Provider.of<ResultProvider>(context,listen: false).addRecord(task: ResultModel(
-        hourTime:DateTime.now().hour.toString() ,
-        munitTime: DateTime.now().minute.toString(),
-       heartRate: _bpm.toString(),
+        hourTime:DateTime.now().hour,
+        munitTime: DateTime.now().minute,
+       heartRate: _bpm,
         date:DateTime.now().toString(),
-        monthDate: DateTime.now().month.toString(),
-        yearTime: DateTime.now().year.toString(),
+        monthDate: DateTime.now().month,
+        yearTime: DateTime.now().year,
       ));
       Provider.of<ResultProvider>(context,listen: false).getRecord();
       debugPrint("test $value");
-      debugPrint("The Length ${_resultController.resultList.length}  $_bpm}");
+      print('');
+      debugPrint("The Length ${Provider.of<ResultProvider>(context,listen: false).resultList.length}  $_bpm}");
     }catch(e){debugPrint("$e");
     }
   //   List list = _dateTime().split(

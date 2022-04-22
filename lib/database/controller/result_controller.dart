@@ -8,21 +8,21 @@ class ResultController{
   Database database = DbController().database;
   Future<int> insert(ResultModel task) async {
     print('insert function code');
-    return await database.insert('tasks', task.toJson());
+    return await database.insert('result', task.toJson());
   }
 
   Future<int> delete(int id) async {
-    return await database.delete('tasks', where: 'id = ?', whereArgs: [id]);
+    return await database.delete('result', where: 'id = ?', whereArgs: [id]);
   }
 
   Future<int> deleteAllTask() async {
     print('delete All function code');
-    return await database.delete('tasks');
+    return await database.delete('result');
   }
 
   Future<List<Map<String, dynamic>>> query() async {
     print('query function code');
-    return await database.query('tasks');
+    return await database.query('result');
   }
 
   // Future<int> update(int id) async {

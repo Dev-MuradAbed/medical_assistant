@@ -5,7 +5,6 @@ import 'package:medical_assistant/provider/result_provider.dart';
 import 'package:medical_assistant/provider/todo_provider/todo_doctor_provider.dart';
 import 'package:medical_assistant/provider/todo_provider/todo_patient_provider.dart';
 import 'package:medical_assistant/read_camera.dart';
-import 'package:medical_assistant/screen/ListRate.dart';
 
 import 'package:medical_assistant/screen/auth/change_password.dart';
 import 'package:medical_assistant/screen/auth/forget_password.dart';

@@ -1,12 +1,12 @@
 class ResultModel {
   int? id;
   String? bloodPressure;
-  String? heartRate;
+  int? heartRate;
   String? date;
-  String? hourTime;
-  String? munitTime;
-  String? yearTime;
-  String? monthDate;
+  int? hourTime;
+  int? munitTime;
+  int? yearTime;
+  int? monthDate;
 
   ResultModel({
     this.id,
