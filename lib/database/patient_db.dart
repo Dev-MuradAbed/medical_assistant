@@ -50,11 +50,13 @@ class DbController {
       db.execute(
         'CREATE TABLE result ('
         'id INTEGER PRIMARY KEY AUTOINCREMENT, '
-        'bloodPressure STRING, '
+        'sy INTEGER, '
+        'dy INTEGER, '
         'heartRate INTEGER, '
         'date INTEGER, '
         'hourTime STRING, '
         'munitTime STRING, '
+        'dayDate INTEGER, '
         'yearTime STRING, '
         'monthTime STRING)',
       );

@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:medical_assistant/boold.dart';
 import 'package:medical_assistant/provider/result_provider.dart';
 import 'package:medical_assistant/provider/todo_provider/todo_doctor_provider.dart';
 import 'package:medical_assistant/provider/todo_provider/todo_patient_provider.dart';
@@ -13,6 +14,7 @@ import 'package:medical_assistant/screen/auth/sginup_screen.dart';
 import 'package:medical_assistant/screen/home_screen.dart';
 
 import 'package:medical_assistant/screen/profile_screen.dart';
+import 'package:medical_assistant/screen/scann_home.dart';
 import 'package:medical_assistant/screen/todo_screen/doctor_home_todo.dart';
 import 'package:medical_assistant/theme.dart';
 import 'package:provider/provider.dart';
@@ -88,7 +90,7 @@ class MedicalAssist extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         //home: const DoctorHomeTodo(),
         // initialRoute: '/lunch_screen',
-home: PlusRate(),
+home: const HomeScanned(),
         routes: {
           // '/lunch_screen':(context) =>  Search(),
           '/lunch_screen': (context) => const LunchScreen(),

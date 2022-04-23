@@ -23,13 +23,13 @@ class ListRate extends StatelessWidget {
           trailing:  Icon(model.heartRate==null?Icons.monitor_heart_rounded:Icons.favorite,color: greenClr,),
           title:  Padding(
             padding:   const EdgeInsets.only(bottom: 10),
-            child:  Text('${model.monthDate} ,${model.yearTime} ${model.hourTime}:${model.munitTime}'),
+            child:  Text('${model.dayDate} ,${model.monthDate} ,${model.yearTime} ${model.hourTime}:${model.munitTime}'),
           ),
           subtitle:
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children:  [
-              Text(model.heartRate==null?'${model.bloodPressure} mmHg':'${model.heartRate}',),
+              Text(model.heartRate==null?'${model.sy}/${model.dy} mmHg':'${model.heartRate}',),
               const Spacer(),
               const Text("Normal Rate"),
               const Spacer()
