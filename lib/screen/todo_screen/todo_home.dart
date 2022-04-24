@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:medical_assistant/screen/todo_screen/patient_home_todo.dart';
 
 import '../../theme.dart';
@@ -49,22 +50,23 @@ class _TodoHomeState extends State<TodoHome>
     super.initState();
     _tabController = TabController(length: tabs.length, vsync: this);
   }
-
   @override
   void dispose() {
     _tabController.dispose();
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        title: Text(
+              DateFormat.yMMMMd().format(DateTime.now()),
+              style: subheading,
+            ),
         backgroundColor: Colors.white,
         elevation: 0,
         bottom: TabBar(
-         // labelPadding: const EdgeInsets.symmetric(horizontal: 25, vertical: 3),
           controller: _tabController,
           tabs: tabs,
           indicatorColor: greenClr,

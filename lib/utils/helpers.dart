@@ -5,6 +5,7 @@ import '../size_config.dart';
 import '../theme.dart';
 
 mixin Helper {
+
   void showSnackBar(BuildContext context,
       {required String message, required bool error}) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(

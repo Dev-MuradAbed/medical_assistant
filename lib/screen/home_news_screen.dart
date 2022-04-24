@@ -20,12 +20,12 @@ class _Home_News_ScrrenState extends State<HomeNewsScreen>
     with SingleTickerProviderStateMixin {
   String imagenull="https://www.aljazeera.net/wp-content/uploads/2021/09/GettyImages-521329128.jpg?resize=770%2C513";
   final List<Tab> tabs = <Tab>[
-    Tab(text: 'General'),
-    Tab(text: 'Techonology'),
-    Tab(text: 'Sports'),
-    Tab(text: 'Business'),
-    Tab(text: 'Entertainment'),
-    Tab(text: 'Health'),
+    const Tab(text: 'General'),
+    const Tab(text: 'Techonology'),
+    const Tab(text: 'Sports'),
+    const Tab(text: 'Business'),
+    const Tab(text: 'Entertainment'),
+    const Tab(text: 'Health'),
   ];
   late TabController _tabController;
   @override
@@ -56,7 +56,7 @@ class _Home_News_ScrrenState extends State<HomeNewsScreen>
             unselectedLabelColor: Colors.grey,
             labelColor: Colors.white,
             indicatorSize: TabBarIndicatorSize.tab,
-            indicator: BubbleTabIndicator(
+            indicator: const BubbleTabIndicator(
               indicatorHeight: 25.0,
               indicatorColor: Colors.teal,
               tabBarIndicatorSize: TabBarIndicatorSize.tab,
@@ -75,7 +75,7 @@ class _Home_News_ScrrenState extends State<HomeNewsScreen>
                     return Center(
                       child: Text('${snapshot.error}'),
                     );
-                  } else if (snapshot.hasData) {
+                  } else if (snapshot.hasData){
                     var newList = snapshot.data as News;
                     // select top 10
                     //if length >10, we will get from 0~10
@@ -105,7 +105,9 @@ class _Home_News_ScrrenState extends State<HomeNewsScreen>
                               enlargeCenterPage: true,
                               viewportFraction: 0.8),
                           items: sliderList.map((item) {
-                            return Builder(builder: (context) {
+                            return item.urlToImage != null
+                                ?
+                              Builder(builder: (context) {
                               return GestureDetector(
                                 onTap: null,
                                 child: Stack(
@@ -113,7 +115,7 @@ class _Home_News_ScrrenState extends State<HomeNewsScreen>
                                     ClipRRect(
                                       borderRadius: BorderRadius.circular(8),
                                       child: Image.network(
-                                        '${item.urlToImage!=null?item.urlToImage:imagenull}',
+                                        '${item.urlToImage}',
                                         fit: BoxFit.cover,
                                       ),
                                     ),
@@ -122,13 +124,13 @@ class _Home_News_ScrrenState extends State<HomeNewsScreen>
                                           MainAxisAlignment.center,
                                       children: [
                                         Container(
-                                          color: Color(0xAA333639),
+                                          color: const Color(0xAA333639),
                                           child: Padding(
                                             padding: const EdgeInsets.all(8),
                                             child: Text(
                                               '${item.title}',
                                               overflow: TextOverflow.ellipsis,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.bold),
@@ -140,14 +142,21 @@ class _Home_News_ScrrenState extends State<HomeNewsScreen>
                                   ],
                                 ),
                               );
-                            });
+                            })
+                                :ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Image.network(
+                                '$imagenull',
+                                fit: BoxFit.cover,
+                              ),
+                            );
                           }).toList(),
                         ),
                         Padding(
                           padding: const EdgeInsetsDirectional.only(start: 30),
                           child: Container(
                             alignment: AlignmentDirectional.centerStart,
-                            child: Text(
+                            child: const Text(
                               'Latest News',
                               style: TextStyle(
                                   fontSize: 26, fontWeight: FontWeight.bold),
@@ -171,7 +180,8 @@ class _Home_News_ScrrenState extends State<HomeNewsScreen>
                                               time: contentList[index].publishedAt,)));
                                 },
                                 child: ListTile(
-                                  leading:contentList[index].urlToImage!=null? ClipRRect(
+                                  leading:contentList[index].urlToImage!=null?
+                                  ClipRRect(
                                     borderRadius: BorderRadius.circular(8),
                                     child: Image.network(
                                       '${contentList[index].urlToImage}',
@@ -192,11 +202,11 @@ class _Home_News_ScrrenState extends State<HomeNewsScreen>
                                     '${contentList[index].title}',
                                     overflow: TextOverflow.ellipsis,
                                     style:
-                                        TextStyle(fontWeight: FontWeight.bold),
+                                        const TextStyle(fontWeight: FontWeight.bold),
                                   ),
                                   subtitle: Text(
                                     '${contentList[index].publishedAt}',
-                                    style: TextStyle(fontSize: 12),
+                                    style: const TextStyle(fontSize: 12),
                                   ),
                                 ),
                               );
@@ -206,7 +216,7 @@ class _Home_News_ScrrenState extends State<HomeNewsScreen>
                       ],
                     ));
                   } else {
-                    return Center(
+                    return const Center(
                       child: CircularProgressIndicator(),
                     );
                   }

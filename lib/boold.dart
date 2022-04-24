@@ -7,6 +7,7 @@ import 'package:medical_assistant/provider/result_provider.dart';
 
 import 'package:medical_assistant/screen/list_result.dart';
 import 'package:medical_assistant/theme.dart';
+import 'package:medical_assistant/widgets/assistant.dart';
 import 'package:medical_assistant/widgets/count_down_timer_boold.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -25,10 +26,8 @@ class BloodRate extends StatefulWidget {
 
 class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   bool _toggled = false;
-
   final List<SensorValue> _data = <SensorValue>[];
   CameraController? _controller;
-  double _alpha = 0.3;
   late AnimationController _animationController;
   double _buttonScale = 1;
   String buttonText = "Check Blood Pressure";
@@ -39,7 +38,7 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
    CameraImage? _image;
   late double _avg;
   late DateTime _now;
-  late Timer _timerImage,
+   Timer? _timerImage,
       _timer;
   int seconds = 60;
   List data = [];
@@ -63,8 +62,8 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
 
   @override
   void dispose() {
-    _timerImage.cancel();
-    _timer.cancel();
+    _timerImage?.cancel();
+    _timer?.cancel();
     _toggled = false;
     _disposeController();
     Wakelock.disable();
@@ -88,7 +87,7 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
         'Check Blood Pressure';
         int _sy = 0;
         int _di = 0;
-        _timer.cancel();
+        _timer?.cancel();
         seconds =
         60;
       });
@@ -114,7 +113,6 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
                   child: SizedBox(
                     height: 160,
                     child: Row(
-
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Expanded(
@@ -245,7 +243,6 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
                 padding: const EdgeInsets.only(bottom: 50),
                 child: Expanded(flex: 1, child: SfCartesianChart(
                   primaryXAxis: CategoryAxis(),
-                  // title: ChartTitle(text:'Half Yearly Sales Analysis'),
                   tooltipBehavior: TooltipBehavior(enable: true),
                   series: <ChartSeries<ResultModel,String>>[
                     LineSeries<ResultModel,String>(
@@ -305,7 +302,7 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
     _animationController.value = 0.0;
     setState(() {
       _toggled = false;
-      _timer.cancel();
+      _timer?.cancel();
       seconds = 60;
     });
   }
@@ -462,7 +459,6 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
             munitTime: DateTime.now().minute,
             sy: _sy,
             dy: _di,
-            //_sy.toString() + "/" + _di.toString(),
             date: DateTime.now().toString(),
             monthDate: DateTime.now().month,
             yearTime: DateTime.now().year,
@@ -470,38 +466,14 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
           ));
       Provider.of<ResultProvider>(context, listen: false).getRecord();
       debugPrint("test $value");
+      Assistant.CheckBooldPressure(systolic: _sy, diastolic: _di, context: context);
       print('');
       debugPrint(
           "The Length ${Provider.of<ResultProvider>(context, listen: false).resultList.length} $_sy / $_di,");
     } catch (e) {
       debugPrint("$e");
     }
-    //   List list = _dateTime().split(
-    //       " ");
-    //   String date = list[0].toString();
-    //   String time = list[1].toString().substring(0,
-    //       5);
-    //   final directory =
-    //   await getExternalStorageDirectory();
-    //   final file = File(
-    //       '${directory!.path}/heartRate.txt');
-    //   final text = "\n" +
-    //       date +
-    //       " " +
-    //       time +
-    //       " " +
-    //       _bpm.toString();
-    //   await file.writeAsString(text,
-    //       mode: FileMode
-    //           .append);
-    //   print('saved');
-    // }
-    //
-    // String _dateTime() {
-    //   DateTime now =  DateTime
-    //       .now();
-    //   return now
-    //       .toString();
+
   }
 
   @override

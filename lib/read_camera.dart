@@ -8,6 +8,7 @@ import 'package:medical_assistant/provider/result_provider.dart';
 import 'package:medical_assistant/screen/auth/login_screen.dart';
 import 'package:medical_assistant/screen/list_result.dart';
 import 'package:medical_assistant/theme.dart';
+import 'package:medical_assistant/widgets/assistant.dart';
 
 import 'package:medical_assistant/widgets/count_down_timer.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -31,15 +32,6 @@ class PlusRate extends StatefulWidget {
 class HomeRateView extends State<PlusRate>
     with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   bool _toggled = false;
-  final ResultProvider _resultController = ResultProvider();
-
-  // List<SalesData>datas=[
-  //   SalesData('jan', 35),
-  //   SalesData('feb', 25),
-  //   SalesData('mar', 30),
-  //   SalesData('apr', 15),
-  //   SalesData('may', 20),
-  // ];
   final List<SensorValue> _data = <SensorValue>[];
   CameraController? _controller;
   double _alpha = 0.3;
@@ -52,7 +44,7 @@ class HomeRateView extends State<PlusRate>
    CameraImage? _image;
   late double _avg;
   late DateTime _now;
-  late Timer _timerImage, _timer;
+   Timer? _timerImage, _timer;
   int seconds = 60;
   List data = [];
   bool done = true;
@@ -74,8 +66,8 @@ class HomeRateView extends State<PlusRate>
 
   @override
   void dispose() {
-    _timerImage.cancel();
-    _timer.cancel();
+    _timerImage?.cancel();
+    _timer?.cancel();
     _toggled = false;
     _disposeController();
     Wakelock.disable();
@@ -96,7 +88,7 @@ class HomeRateView extends State<PlusRate>
       setState(() {
         buttonText = 'Check Heart Rate';
         _bpm = 0;
-        _timer.cancel();
+        _timer?.cancel();
         seconds = 60;
       });
     }
@@ -107,69 +99,71 @@ class HomeRateView extends State<PlusRate>
     //if you have permission to access camera return Scaffold else return Center
     return
       Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
+          extendBodyBehindAppBar: true,
           backgroundColor: Colors.white,
-          elevation: 0,
-        ),
         body: SafeArea(
           top: true,
-          child: Column(
+          child: ListView(
+            physics: const NeverScrollableScrollPhysics(),
             children: <Widget>[
+              const SizedBox(height: 30,width: 30,),
               Expanded(
                   flex: 1,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Expanded(
-                        flex: 1,
-                        child: Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: ClipRRect(
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(18),
-                            ),
-                            child: Stack(
-                              fit: StackFit.expand,
-                              alignment: Alignment.center,
-                              children: <Widget>[
-                                _controller != null && _toggled
-                                    ? AspectRatio(
-                                        aspectRatio:
-                                            _controller!.value.aspectRatio,
-                                        child: CameraPreview(_controller!),
-                                      )
-                                    : Container(
-                                        padding: const EdgeInsets.all(12),
-                                        alignment: Alignment.center,
-                                        color: Colors.green.shade300,
-                                      ),
-                              ],
+                  child: SizedBox(
+                    height: 160,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Expanded(
+                          flex: 1,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 0),
+                            child: ClipRRect(
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(18),
+                              ),
+                              child: Stack(
+                                fit: StackFit.expand,
+                                alignment: Alignment.center,
+                                children: <Widget>[
+                                  _controller != null && _toggled
+                                      ? AspectRatio(
+                                          aspectRatio:
+                                              _controller!.value.aspectRatio,
+                                          child: CameraPreview(_controller!),
+                                        )
+                                      : Container(
+                                          padding: const EdgeInsets.all(12),
+                                          alignment: Alignment.center,
+                                          color: Colors.green.shade300,
+                                        ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Center(
-                            child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            CountDownTimer(
-                              width: 150,
-                              height: 150,
-                              bgColor: Colors.blue.shade50,
-                              color: greenClr,
-                              current: seconds,
-                              total: 60,
-                              bpm: _bpm,
-                              textColor: Colors.black,
-                            ),
-                          ],
-                        )),
-                      ),
-                    ],
+                        Expanded(
+                          flex: 1,
+                          child: Center(
+                              child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              CountDownTimer(
+                                width: 150,
+                                height: 150,
+                                bgColor: Colors.blue.shade50,
+                                color: greenClr,
+                                current: seconds,
+                                total: 60,
+                                bpm: _bpm,
+                                textColor: Colors.black,
+                              ),
+                            ],
+                          )),
+                        ),
+                      ],
+                    ),
                   )),
               const SizedBox(
                 width: 30,
@@ -223,40 +217,34 @@ class HomeRateView extends State<PlusRate>
                                           const ListResult()));
                                 }),
                           ]),
-                      const SizedBox(
-                        width: 20,
-                        height: 20,
+
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+                        child: Row(
+                          children: const[
+                            CircleAvatar(radius: 7,backgroundColor:blueClr,),
+                            SizedBox(width: 10,),
+                            Text("Blood Pressure")
+                          ],
+                        ),
                       ),
                     ],
                   ),
                 ),
               ),
-              Row(
-                children: const [
-                  CircleAvatar(
-                    radius: 2,
-                    backgroundColor: Colors.blue,
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.only(start: 20.0),
-                    child: Text("Pulse Rate"),
-                  )
-                ],
-              ),
+
               // const SizedBox(
               //   width: 20,
               //   height: 20,
               // ),
-              Expanded(
-                flex: 1,
-                child: Container(
-                  margin: const EdgeInsets.all(12),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 50),
+                child: Expanded(
+                  flex: 1,
                   child: SfCartesianChart(
-                    borderColor: greenClr,
-
+                    // borderColor: greenClr,
                     primaryXAxis: CategoryAxis(),
-                    title: ChartTitle(text: 'Heart Rate Analysis'),
-                    legend: Legend(isVisible: true),
+                    // legend: Legend(isVisible: true),
                     tooltipBehavior: TooltipBehavior(enable: true),
                     series: <ChartSeries<ResultModel, String>>[
                       LineSeries<ResultModel, String>(
@@ -271,7 +259,7 @@ class HomeRateView extends State<PlusRate>
                                   ?'${ sales.hourTime}:${sales.munitTime}': sales.dayDate.toString(),
                           yValueMapper: (ResultModel sales, _) =>
                               sales.heartRate,
-                          name: 'Rates',
+                          name: '',
                           color: greenClr,
                           dataLabelSettings:
                               const DataLabelSettings(isVisible: true))
@@ -318,7 +306,7 @@ class HomeRateView extends State<PlusRate>
     _animationController.value = 0.0;
     setState(() {
       _toggled = false;
-      _timer.cancel();
+      _timer?.cancel();
       seconds = 60;
     });
   }
@@ -408,7 +396,7 @@ class HomeRateView extends State<PlusRate>
         _bpm = _bpm / _counter;
         print("_bpm ${_bpm}");
         setState(() {
-          this._bpm = ((1 - _alpha) * this._bpm + _alpha * _bpm).toInt();
+          this._bpm =((1 - _alpha) * this._bpm + _alpha * _bpm).toInt();
         });
       }
       await Future.delayed(Duration(milliseconds: 1000 * _windowLen ~/ _fs));
@@ -449,7 +437,21 @@ class HomeRateView extends State<PlusRate>
       ));
       Provider.of<ResultProvider>(context, listen: false).getRecord();
       debugPrint("test $value");
-      print('');
+      Assistant.CheckStausBMP(Gendar: 'mael', Age: 20, Bmp: _bpm,context: context);
+      // if(_bpm==60){
+      //   showDialog(context: context, builder: (context) => AlertDialog(
+      //     title: Text("Congratulation"),
+      //     content: Text("You have a perfect heart rate"),
+      //     actions: <Widget>[
+      //       FlatButton(
+      //         child: Text("OK"),
+      //         onPressed: () {
+      //           Navigator.of(context).pop();
+      //         },
+      //       )
+      //     ],
+      //   ));
+      // }
       debugPrint(
           "The Length ${Provider.of<ResultProvider>(context, listen: false).resultList.length}  $_bpm}");
     } catch (e) {

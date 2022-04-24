@@ -1,31 +1,23 @@
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:medical_assistant/models/todo_model/doctor_todo_model.dart';
-import 'package:medical_assistant/models/todo_model/patient_todo_model.dart';
 import 'package:medical_assistant/utils/helpers.dart';
 import 'package:provider/provider.dart';
-
 import '../../provider/todo_provider/todo_doctor_provider.dart';
-import '../../provider/todo_provider/todo_patient_provider.dart';
 import '../../services/todo_Doctor_notification.dart';
-
 import '../../size_config.dart';
 import '../../theme.dart';
 import '../../widgets/todo_widget/patient_todo_widget/doctor_task_tile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 class DoctorHomeTodo extends StatefulWidget {
   const DoctorHomeTodo({Key? key}) : super(key: key);
 
   @override
   State<DoctorHomeTodo> createState() => _DoctorHomeTodoState();
 }
-
 class _DoctorHomeTodoState extends State<DoctorHomeTodo> with Helper{
   late DoctorNotificationHelper notifyHelper;
   SizeConfig size = SizeConfig();
@@ -37,12 +29,9 @@ class _DoctorHomeTodoState extends State<DoctorHomeTodo> with Helper{
     notifyHelper = DoctorNotificationHelper(context);
     notifyHelper.initializeNotification();
     notifyHelper.requestIOSPermissions();
-    Provider.of<TaskDoctorProvider>(context, listen: false).getTask();
+    Provider.of<TaskDoctorProvider>(context,listen: false).getTask();
   }
-
-  final TaskProvider _taskController = TaskProvider();
   DateTime _selectedTime = DateTime.now();
-
   @override
   Widget build(BuildContext context) {
     size.init(context);
@@ -53,7 +42,7 @@ class _DoctorHomeTodoState extends State<DoctorHomeTodo> with Helper{
       ),
       color: Colors.white,
       child: Scaffold(
-
+backgroundColor: Colors.white,
         body: FutureBuilder(
           future: _feach(),
           builder: (context, snapshot) {
@@ -182,6 +171,7 @@ class _DoctorHomeTodoState extends State<DoctorHomeTodo> with Helper{
       for (int i = 0; i < value.docs.length; i++) {
         print("for");
         if (value.docs[i].data()['idpat'] == '123') {
+          print("if");
           try {
             await Provider.of<TaskDoctorProvider>(context, listen: false).
             addTask(
@@ -208,7 +198,7 @@ class _DoctorHomeTodoState extends State<DoctorHomeTodo> with Helper{
             //   remind: value.docs[i].data()['remind'] ?? 0,
             //   repeat: value.docs[i].data()['repeat'] ?? 'Daily',
             // ));
-            print('length${Provider.of<TaskDoctorProvider>(context).listTask.length}');
+            // print('length${Provider.of<TaskDoctorProvider>(context).listTask.length}');
           } catch (e) {
             print(e);
           }

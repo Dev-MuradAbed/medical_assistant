@@ -22,7 +22,7 @@ class BNBar extends StatefulWidget {
 
 class _BNBarState extends State<BNBar> {
   final navigationKey = GlobalKey<CurvedNavigationBarState>();
-  int _index = 2;
+  int _index = 4;
 
   final item = const [
     Icon(Icons.person, size: 26, color: whitClr),

@@ -69,7 +69,7 @@ class CountDownTimer extends StatelessWidget {
       width: width,
       height: height,
       child: Padding(
-        padding: EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(8.0),
         child: Stack(
           alignment: Alignment.center,
           children: <Widget>[
@@ -95,17 +95,17 @@ class CountDownTimer extends StatelessWidget {
                     color: textColor,
                   ),
                 ),
-                Divider(),
+                const Divider(),
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   if (bpm! > 30 && bpm! < 150)
-                    Text(
+                    const Text(
                       "BPM ",
                       style: TextStyle(fontSize: 16, color: Colors.grey),
                       textAlign: TextAlign.center,
                     ),
                   Text(
                     (bpm! > 30 && bpm! < 150 ? bpm.toString() : "--"),
-                    style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
                   ),
                 ]),
               ],
