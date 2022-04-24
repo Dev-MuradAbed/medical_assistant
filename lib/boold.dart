@@ -36,7 +36,7 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
   int _di = 0;
   int _fs = 30;
   int _windowLen = 30 * 6;
-  late CameraImage _image;
+   CameraImage? _image;
   late double _avg;
   late DateTime _now;
   late Timer _timerImage,
@@ -98,6 +98,7 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -105,67 +106,74 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
         ),
         body: SafeArea(
           top: true,
-          child: Column(
+          child: ListView(
+            physics: NeverScrollableScrollPhysics(),
             children: <Widget>[
               Expanded(
                   flex: 1,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Expanded(
-                        flex: 1,
-                        child: Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: ClipRRect(
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(18),
-                            ),
-                            child: Stack(
-                              fit: StackFit.expand,
-                              alignment: Alignment.center,
-                              children: <Widget>[
-                                _controller != null && _toggled
-                                    ? AspectRatio(
-                                  aspectRatio:
-                                  _controller!.value.aspectRatio,
-                                  child: CameraPreview(_controller!),
-                                )
-                                    : Container(
-                                  padding: const EdgeInsets.all(12),
-                                  alignment: Alignment.center,
-                                  color: Colors.green.shade300,
-                                ),
-                              ],
+                  child: SizedBox(
+                    height: 100,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Expanded(
+                          flex: 1,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+                            child: ClipRRect(
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(18),
+                              ),
+                              child: Stack(
+                                fit: StackFit.expand,
+                                alignment: Alignment.center,
+                                children: <Widget>[
+                                  _controller != null && _toggled
+                                      ? AspectRatio(
+                                    aspectRatio:
+                                    _controller!.value.aspectRatio,
+                                    child: CameraPreview(_controller!),
+                                  )
+                                      : Container(
+                                    height: 300,
+                                    padding: const EdgeInsets.all(12),
+                                    alignment: Alignment.center,
+                                    color: Colors.green.shade300,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Center(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                CountDownTimer(
-                                  width: 150,
-                                  height: 150,
-                                  bgColor: Colors.blue.shade50,
-                                  color: greenClr,
-                                  current: seconds,
-                                  total: 60,
-                                  sp: _sy,
-                                  dp: _di,
-                                  textColor: Colors.black,
-                                ),
-                              ],
-                            )),
-                      ),
-                    ],
+                        Expanded(
+                          flex: 1,
+                          child: Center(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  CountDownTimer(
+                                    width: 135,
+                                    height: 135,
+                                    bgColor: Colors.blue.shade50,
+                                    color: greenClr,
+                                    current: seconds,
+                                    total: 60,
+                                    sp: _sy,
+                                    dp: _di,
+                                    textColor: Colors.black,
+                                  ),
+
+                                ],
+                              )),
+
+                        ),
+                      ],
+                    ),
                   )),
               const SizedBox(
-                width: 40,
-                height: 40,
+                width: 60,
+                height: 60,
               ),
               Expanded(
                 flex: 1,
@@ -215,46 +223,47 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
                                       const ListResult()));
                                 }),
                           ]),
-                      const SizedBox(
-                        width: 20,
-                        height: 20,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+                        child: Row(
+                          children: const[
+                            CircleAvatar(radius: 7,backgroundColor:blueClr,),
+                            SizedBox(width: 10,),
+                            Text("Blood Pressure")
+                          ],
+                        ),
                       ),
+
                     ],
                   ),
 
                 ),
               ),
-
-              Row(
-                children: const[
-                  CircleAvatar(radius: 2,backgroundColor:Colors.blue,),
-                  Text("Blood Pressure")
-                ],
-              ),
-              const SizedBox(width: 20,height: 20,),
-              Expanded(flex: 1, child: Container(
-                margin: const EdgeInsets.all(12),
-                child: SfCartesianChart(
-                  primaryXAxis: CategoryAxis(),
-                  title: ChartTitle(text:'Half Yearly Sales Analysis'),
-                  legend: Legend(isVisible: true),
-                  tooltipBehavior: TooltipBehavior(enable: true),
-                  series: <ChartSeries<ResultModel,String>>[
-                    LineSeries<ResultModel,String>(
-                        dataSource: Provider.of<ResultProvider>(context).resultList,
-                        xValueMapper: (ResultModel result,_)=>Provider.of<ResultProvider>(context,
-                            listen: false)
-                            .resultList
-                            .length <
-                            10
-                            ?'${ result.hourTime}:${result.munitTime}': result.dayDate.toString(),
-                        yValueMapper: (ResultModel result,_)=>result.sy,
-                        name: 'Blood',
-                        dataLabelSettings: const DataLabelSettings(isVisible: true)
-                    )
-                  ],
+              // const SizedBox(width: 20,height: 20,),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 50),
+                child: Expanded(flex: 1, child: Container(
+                  child: SfCartesianChart(
+                    primaryXAxis: CategoryAxis(),
+                    // title: ChartTitle(text:'Half Yearly Sales Analysis'),
+                    tooltipBehavior: TooltipBehavior(enable: true),
+                    series: <ChartSeries<ResultModel,String>>[
+                      LineSeries<ResultModel,String>(
+                          dataSource: Provider.of<ResultProvider>(context).resultList,
+                          xValueMapper: (ResultModel result,_)=>Provider.of<ResultProvider>(context,
+                              listen: false)
+                              .resultList
+                              .length <
+                              10
+                              ?'${ result.hourTime}:${result.munitTime}': result.dayDate.toString(),
+                          yValueMapper: (ResultModel result,_)=>result.sy,
+                          name: '',
+                          dataLabelSettings: const DataLabelSettings(isVisible: true)
+                      )
+                    ],
+                  ),
                 ),
-              ),
+                ),
               )
             ],
           ),
@@ -327,7 +336,7 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
   void _initTimer() {
     _timerImage = Timer.periodic(Duration(milliseconds: 1000 ~/ _fs), (timer) {
       if (_toggled) {
-        if (_image != null) _scanImage(_image);
+        if (_image != null) _scanImage(_image!);
       } else {
         timer.cancel();
       }

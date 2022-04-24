@@ -10,6 +10,7 @@ import 'package:medical_assistant/screen/list_result.dart';
 import 'package:medical_assistant/theme.dart';
 
 import 'package:medical_assistant/widgets/count_down_timer.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:wakelock/wakelock.dart';
@@ -48,7 +49,7 @@ class HomeRateView extends State<PlusRate>
   int _bpm = 0;
   int _fs = 30;
   int _windowLen = 30 * 6;
-  late CameraImage _image;
+   CameraImage? _image;
   late double _avg;
   late DateTime _now;
   late Timer _timerImage, _timer;
@@ -58,6 +59,7 @@ class HomeRateView extends State<PlusRate>
 
   @override
   void initState() {
+    Permission.camera.request();
     Provider.of<ResultProvider>(context, listen: false).getRecord();
     super.initState();
     _animationController = AnimationController(
@@ -102,7 +104,11 @@ class HomeRateView extends State<PlusRate>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    //if you have permission to access camera return Scaffold else return Center
+    return
+
+
+      Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -343,7 +349,7 @@ class HomeRateView extends State<PlusRate>
   void _initTimer() {
     _timerImage = Timer.periodic(Duration(milliseconds: 1000 ~/ _fs), (timer) {
       if (_toggled) {
-        if (_image != null) _scanImage(_image);
+        if (_image != null) _scanImage(_image!);
       } else {
         timer.cancel();
       }

@@ -1,29 +1,20 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:medical_assistant/boold.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:medical_assistant/provider/result_provider.dart';
 import 'package:medical_assistant/provider/todo_provider/todo_doctor_provider.dart';
 import 'package:medical_assistant/provider/todo_provider/todo_patient_provider.dart';
-import 'package:medical_assistant/read_camera.dart';
-
-import 'package:medical_assistant/screen/auth/change_password.dart';
-import 'package:medical_assistant/screen/auth/forget_password.dart';
-import 'package:medical_assistant/screen/auth/login_screen.dart';
-import 'package:medical_assistant/screen/auth/sginup_screen.dart';
-import 'package:medical_assistant/screen/home_screen.dart';
-
-import 'package:medical_assistant/screen/profile_screen.dart';
 import 'package:medical_assistant/screen/scann_home.dart';
-import 'package:medical_assistant/screen/todo_screen/doctor_home_todo.dart';
 import 'package:medical_assistant/theme.dart';
 import 'package:provider/provider.dart';
 import 'api/geolocator.dart';
 import 'api/places.dart';
-
+import 'bottom_navigation_bar.dart';
 import 'database/patient_db.dart';
-import 'screen/list_result.dart';
-import 'screen/lunch_screen.dart';
+import 'models/place.dart';
+
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,34 +40,34 @@ class MedicalAssist extends StatelessWidget {
     return MultiProvider(
       providers: [
 
-        // FutureProvider(
-        //   create: (context) => locatorService.getLocation(),
-        //   initialData: null,
-        // ),
-        // FutureProvider(
-        //   create: (context) {
-        //     ImageConfiguration configuration =
-        //     createLocalImageConfiguration(context);
-        //     return BitmapDescriptor.fromAssetImage(
-        //         configuration, 'assets/hospital.png');
-        //   },
-        //   initialData: null,
-        // ),
-        // ProxyProvider<Position, Future<List<Place>>>(
-        //   update: (context, position, places) {
-        //     print('main result ${position.latitude},${position.longitude}');
-        //     return placesService.getPlaces(
-        //       latt: position.latitude,
-        //       lngt: position.longitude,
-        //     );
-        //   },
-        // )
-        // ChangeNotifierProvider<TaskProvider>(
-        //   create: (context) => TaskProvider(),
-        // ),
-        // ChangeNotifierProvider<TaskDoctorProvider>(
-        //   create: (context) => TaskDoctorProvider(),
-        // ),
+        FutureProvider(
+          create: (context) => locatorService.getLocation(),
+          initialData: null,
+        ),
+        FutureProvider(
+          create: (context) {
+            ImageConfiguration configuration =
+            createLocalImageConfiguration(context);
+            return BitmapDescriptor.fromAssetImage(
+                configuration, 'assets/hospital.png');
+          },
+          initialData: null,
+        ),
+        ProxyProvider<Position, Future<List<Place>>>(
+          update: (context, position, places) {
+            print('main result ${position.latitude},${position.longitude}');
+            return placesService.getPlaces(
+              latt: position.latitude,
+              lngt: position.longitude,
+            );
+          },
+        ),
+        ChangeNotifierProvider<TaskProvider>(
+          create: (context) => TaskProvider(),
+        ),
+        ChangeNotifierProvider<TaskDoctorProvider>(
+          create: (context) => TaskDoctorProvider(),
+        ),
         ChangeNotifierProvider<ResultProvider>(
           create: (context) => ResultProvider(),
         ),
@@ -90,17 +81,18 @@ class MedicalAssist extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         //home: const DoctorHomeTodo(),
         // initialRoute: '/lunch_screen',
-home: const HomeScanned(),
-        routes: {
-          // '/lunch_screen':(context) =>  Search(),
-          '/lunch_screen': (context) => const LunchScreen(),
-          '/profile_screen': (context) => const ProfileScreen(),
-          '/login_screen': (context) => const LoginScreen(),
-          '/home_screen': (context) => const HomeScreen(),
-          '/signup_screen': (context) => const SignupScreen(),
-          '/forget_screen': (context) => const ForgetPassword(),
-          '/change_password': (context) => const ChangePassword(),
-        },
+home: const BNBar(),
+        // initialRoute: ,
+        // routes: {
+        //   // '/lunch_screen':(context) =>  Search(),
+        //   '/lunch_screen': (context) => const LunchScreen(),
+        //   '/profile_screen': (context) => const ProfileScreen(),
+        //   '/login_screen': (context) => const LoginScreen(),
+        //   '/home_screen': (context) => const HomeScreen(),
+        //   '/signup_screen': (context) => const SignupScreen(),
+        //   '/forget_screen': (context) => const ForgetPassword(),
+        //   '/change_password': (context) => const ChangePassword(),
+        // },
       ),
     );
   }
