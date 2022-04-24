@@ -14,33 +14,37 @@ class HomeScanned extends StatefulWidget {
 }
 
 class _HomeScannedState extends State<HomeScanned>with SingleTickerProviderStateMixin {
-  int selectedIndex = 0;
+
   final List<Tab> tabs = <Tab>[
     Tab(child: Center(
-      child: Container(child: Column(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Row(
-            children: [
+            children: const [
               Text('Boold Perssure',style: TextStyle(fontSize: 14),),
               SizedBox(width: 30,),
               Icon(Icons.favorite, color: Colors.black,),
             ],
           ),
-          Text('200/100 mmhg', style: TextStyle(fontSize: 12, color: Colors.black),),
+          const Text('200/100 mmhg', style: TextStyle(fontSize: 12, color: Colors.black),),
         ],
-      ),),
+      ),
     ),),
-    Tab(child: Center(
+    Tab(
+
+      child: Center(
       child: Container(child: Column(
         children: [
           Row(
-            children: [
+            children: const [
               Text('Pluse Rate',style: TextStyle(fontSize: 14),),
               SizedBox(width: 30,),
               Icon(Icons.favorite, color: Colors.black,),
             ],
           ),
-          Text('74 bpm', style: TextStyle(fontSize: 12, color: Colors.black),),
+          const Text('74 bpm', style: TextStyle(fontSize: 12, color: Colors.black),),
         ],
       ),),
     ),),
@@ -48,19 +52,20 @@ class _HomeScannedState extends State<HomeScanned>with SingleTickerProviderState
       child: Column(
         children: [
           Row(
-            children: [
+            children: const [
               Text('medical record',style: TextStyle(fontSize: 14),),
               SizedBox(width: 30,),
               Icon(Icons.favorite, color: Colors.black,),
             ],
           ),
-          Text('200/100 mmhg / 74 bpm', style: TextStyle(fontSize: 12, color: Colors.black),),
+          const Text('200/100 mmhg / 74 bpm', style: TextStyle(fontSize: 12, color: Colors.black),),
         ],
       ),
     ),),
 
   ];
   late TabController _tabController;
+  @override
   void initState() {
     super.initState();
     _tabController = TabController(length: tabs.length, vsync: this);
@@ -86,7 +91,9 @@ class _HomeScannedState extends State<HomeScanned>with SingleTickerProviderState
                       color: blueClr),
       ),
         bottom: TabBar(
-         labelPadding: EdgeInsets.symmetric(horizontal: 30,vertical: 5),
+
+
+         labelPadding: const EdgeInsets.symmetric(horizontal: 30,vertical: 5),
           controller: _tabController,
           tabs: tabs,
           indicatorColor: greenClr,

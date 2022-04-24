@@ -53,7 +53,7 @@ class _DoctorHomeTodoState extends State<DoctorHomeTodo> with Helper{
       ),
       color: Colors.white,
       child: Scaffold(
-        appBar: _appBar(),
+
         body: FutureBuilder(
           future: _feach(),
           builder: (context, snapshot) {

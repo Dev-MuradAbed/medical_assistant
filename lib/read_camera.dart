@@ -106,8 +106,6 @@ class HomeRateView extends State<PlusRate>
   Widget build(BuildContext context) {
     //if you have permission to access camera return Scaffold else return Center
     return
-
-
       Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -121,7 +119,7 @@ class HomeRateView extends State<PlusRate>
               Expanded(
                   flex: 1,
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Expanded(
                         flex: 1,
@@ -174,8 +172,8 @@ class HomeRateView extends State<PlusRate>
                     ],
                   )),
               const SizedBox(
-                width: 40,
-                height: 40,
+                width: 30,
+                height: 30
               ),
               Expanded(
                 flex: 1,
@@ -245,10 +243,10 @@ class HomeRateView extends State<PlusRate>
                   )
                 ],
               ),
-              const SizedBox(
-                width: 20,
-                height: 20,
-              ),
+              // const SizedBox(
+              //   width: 20,
+              //   height: 20,
+              // ),
               Expanded(
                 flex: 1,
                 child: Container(

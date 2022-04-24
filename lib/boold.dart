@@ -100,21 +100,22 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
     return Scaffold(
       extendBodyBehindAppBar: true,
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
-        ),
         body: SafeArea(
           top: true,
           child: ListView(
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             children: <Widget>[
+              const SizedBox(
+                  width: 30,
+                  height: 30
+              ),
               Expanded(
                   flex: 1,
                   child: SizedBox(
-                    height: 100,
+                    height: 160,
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Expanded(
                           flex: 1,
@@ -154,7 +155,7 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
                                 children: <Widget>[
                                   CountDownTimer(
                                     width: 135,
-                                    height: 135,
+                                    height: 150,
                                     bgColor: Colors.blue.shade50,
                                     color: greenClr,
                                     current: seconds,
@@ -172,8 +173,8 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
                     ),
                   )),
               const SizedBox(
-                width: 60,
-                height: 60,
+                width: 30,
+                height: 30
               ),
               Expanded(
                 flex: 1,
@@ -239,29 +240,27 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
 
                 ),
               ),
-              // const SizedBox(width: 20,height: 20,),
+
               Padding(
                 padding: const EdgeInsets.only(bottom: 50),
-                child: Expanded(flex: 1, child: Container(
-                  child: SfCartesianChart(
-                    primaryXAxis: CategoryAxis(),
-                    // title: ChartTitle(text:'Half Yearly Sales Analysis'),
-                    tooltipBehavior: TooltipBehavior(enable: true),
-                    series: <ChartSeries<ResultModel,String>>[
-                      LineSeries<ResultModel,String>(
-                          dataSource: Provider.of<ResultProvider>(context).resultList,
-                          xValueMapper: (ResultModel result,_)=>Provider.of<ResultProvider>(context,
-                              listen: false)
-                              .resultList
-                              .length <
-                              10
-                              ?'${ result.hourTime}:${result.munitTime}': result.dayDate.toString(),
-                          yValueMapper: (ResultModel result,_)=>result.sy,
-                          name: '',
-                          dataLabelSettings: const DataLabelSettings(isVisible: true)
-                      )
-                    ],
-                  ),
+                child: Expanded(flex: 1, child: SfCartesianChart(
+                  primaryXAxis: CategoryAxis(),
+                  // title: ChartTitle(text:'Half Yearly Sales Analysis'),
+                  tooltipBehavior: TooltipBehavior(enable: true),
+                  series: <ChartSeries<ResultModel,String>>[
+                    LineSeries<ResultModel,String>(
+                        dataSource: Provider.of<ResultProvider>(context).resultList,
+                        xValueMapper: (ResultModel result,_)=>Provider.of<ResultProvider>(context,
+                            listen: false)
+                            .resultList
+                            .length <
+                            10
+                            ?'${ result.hourTime}:${result.munitTime}': result.dayDate.toString(),
+                        yValueMapper: (ResultModel result,_)=>result.sy,
+                        name: '',
+                        dataLabelSettings: const DataLabelSettings(isVisible: true)
+                    )
+                  ],
                 ),
                 ),
               )

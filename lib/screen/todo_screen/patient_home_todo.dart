@@ -53,7 +53,7 @@ class _PatientHomeTodoState extends State<PatientHomeTodo> with Helper{
       color: Colors.white,
       child: Scaffold(
         backgroundColor: white,
-        appBar: _appBar(),
+     //   appBar: _appBar(),
         body: FutureProvider(
           create: (context) =>
               Provider.of<TaskProvider>(context, listen: false).getTask(),

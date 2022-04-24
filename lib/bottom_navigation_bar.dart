@@ -8,6 +8,7 @@ import 'package:medical_assistant/screen/news_details.dart';
 import 'package:medical_assistant/screen/profile_screen.dart';
 import 'package:medical_assistant/screen/scann_home.dart';
 import 'package:medical_assistant/screen/todo_screen/patient_home_todo.dart';
+import 'package:medical_assistant/screen/todo_screen/todo_home.dart';
 import 'package:medical_assistant/theme.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -37,7 +38,7 @@ class _BNBarState extends State<BNBar> {
     HomeNewsScreen(),
     // checkpermission_opencamera()
     HomeScanned(),
-    PatientHomeTodo(),
+    TodoHome(),
   ];
   // Future<Scaffold> checkpermission_opencamera() {
   //   var cameraStatus =  Permission.camera.status;
