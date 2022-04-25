@@ -36,7 +36,7 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
   int _di = 0;
   int _fs = 30;
   int _windowLen = 30 * 6;
-   CameraImage? _image;
+   var _image;
   late double _avg;
   late DateTime _now;
    Timer? _timerImage,
@@ -47,6 +47,7 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
 
   @override
   void initState() {
+//CameraImage late
     super.initState();
     Provider.of<ResultProvider>(context, listen: false).getRecord();
     _animationController =
@@ -300,7 +301,7 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
             .torch);
       });
       _controller!.startImageStream((CameraImage image) {
-        _image = image;
+        _image  = image;
       });
     } catch (Exception) {
       print(Exception);
@@ -310,7 +311,7 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
   void _initTimer() {
     _timerImage = Timer.periodic(Duration(milliseconds: 1000 ~/ _fs), (timer) {
       if (_toggled) {
-        if (_image != null) _scanImage(_image!);
+        if (_image != null) _scanImage(_image);
       } else {
         timer.cancel();
       }

@@ -21,7 +21,6 @@ class _ListResultState extends State<ListResult> with Helper {
   void initState() {
     // TODO: implement initState
     Provider.of<ResultProvider>(context, listen: false).getRecord();
-
     super.initState();
   }
 

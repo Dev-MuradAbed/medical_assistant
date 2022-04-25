@@ -41,10 +41,11 @@ class HomeRateView extends State<PlusRate>
   int _bpm = 0;
   int _fs = 30;
   int _windowLen = 30 * 6;
-  CameraImage? _image;
-  late double _avg;
-  late DateTime _now;
-  Timer? _timerImage, _timer;
+  var _image;
+   double _avg=0.0;
+  DateTime _now=DateTime.now();
+  Timer?
+  _timerImage, _timer;
   int seconds = 60;
   List data = [];
   bool done = true;
@@ -312,7 +313,7 @@ class HomeRateView extends State<PlusRate>
   void _initTimer() {
     _timerImage = Timer.periodic(Duration(milliseconds: 1000 ~/ _fs), (timer) {
       if (_toggled) {
-        if (_image != null) _scanImage(_image!);
+        if (_image != null) _scanImage(_image);
       } else {
         timer.cancel();
       }
@@ -416,8 +417,8 @@ class HomeRateView extends State<PlusRate>
       debugPrint("test $value");
       Assistant.CheckStausBMP(
           Gendar: 'mael', Age: 20, Bmp: _bpm, context: context);
-      debugPrint(
-          "The Length ${Provider.of<ResultProvider>(context, listen: false).resultList.length}  $_bpm}");
+      // debugPrint(
+      //     "The Length ${Provider.of<ResultProvider>(context, listen: false).resultList.length}  $_bpm}");
     } catch (e) {
       debugPrint("$e");
     }

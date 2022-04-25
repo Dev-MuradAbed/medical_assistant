@@ -35,46 +35,46 @@ class _HomeScanState extends State<HomeScan>
   List<Tab> tabs = <Tab>[
     Tab(
       child: Center(
-              child: Builder(
-                builder: (context) {
-                  return SizedBox(
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width * 0.42,
-                    child: Column(
+        child: Builder(
+            builder: (context) {
+              return SizedBox(
+                width: MediaQuery
+                    .of(context)
+                    .size
+                    .width * 0.42,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Boold Pressure',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                            const Icon(
-                              Icons.favorite,
-                              color: Colors.black,
-                            ),
-                          ],
-                        ),
                         const Text(
-                          '120 / 60 mmHg',
-                          style: TextStyle(fontSize: 12),
+                          'Boold Pressure',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        const Icon(
+                          Icons.favorite,
+                          color: Colors.black,
                         ),
                       ],
                     ),
-                  );
-                }
-              ),
+                    const Text(
+                      '120 / 60 mmHg',
+                      style: TextStyle(fontSize: 12),
+                    ),
+                  ],
+                ),
+              );
+            }
+        ),
 
-  ),
-  ),
+      ),
+    ),
     Tab(
       child: Center(
         child: Builder(builder: (context) {
@@ -122,14 +122,14 @@ class _HomeScanState extends State<HomeScan>
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children:const [
-                     Text(
+                    Text(
                       'Boold Pressure',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                     Icon(
+                    Icon(
                       Icons.favorite,
                       color: Colors.black,
                     ),
@@ -166,7 +166,7 @@ class _HomeScanState extends State<HomeScan>
           ),
           bottom: TabBar(
             labelPadding:
-                const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+            const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
             controller: _tabController,
             tabs: tabs,
             indicatorColor: greenClr,
@@ -180,73 +180,75 @@ class _HomeScanState extends State<HomeScan>
             ),
           ),
         ),
-        body: Scaffold(
+
             body: TabBarView(
-          controller: _tabController,
-          children: [
-            const BloodRate(),
-            const PlusRate(),
-            const ListResult(),
-          ],
-        )));
+              controller: _tabController,
+              children: const[
+                 BloodRate(),
+                 PlusRate(),
+                 ListResult(),
+              ],
+            )
+
+    );
   }
 
-  // @override
-  // Widget build(BuildContext context) {
+// @override
+// Widget build(BuildContext context) {
 
-  //   return Scaffold(
-  //     backgroundColor: Colors.white,
-  //     appBar: AppBar(
-  //       toolbarHeight: 80,
-  //       excludeHeaderSemantics: true,
-  //       backgroundColor: Colors.white,
-  //       elevation: 0,
-  //       title: const Text(
-  //         'Medical examinations',
-  //         style: TextStyle(
-  //             fontWeight: FontWeight.bold,
-  //             fontFamily: 'Candara',
-  //             fontSize: 20,
-  //             color: blueClr),
-  //       ),
-  //       // bottom: TabBar(
-  //       //   labelPadding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
-  //       //   controller: _tabController,
-  //       //   tabs: tabs,
-  //       //   indicatorColor: greenClr,
-  //       //   labelColor: Colors.black,
-  //       //   unselectedLabelColor: Colors.grey,
-  //       //   isScrollable: true,
-  //       //   indicator: BoxDecoration(
-  //       //     shape: BoxShape.rectangle,
-  //       //     borderRadius: BorderRadius.circular(50),
-  //       //     color: greenClr,
-  //       //   ),
-  //       // ),
-  //     ),
-  //     body:
-  //       Scaffold(
-  //         appBar: AppBar(
-  //           backgroundColor: Colors.white,
-  //           elevation: 0,
-  //           title: const Text(
-  //             'Medical examinations',
-  //             style: TextStyle(
-  //                 fontWeight: FontWeight.bold,
-  //                 fontFamily: 'Candara',
-  //                 fontSize: 20,
-  //                 color: blueClr),
-  //           ),
-  //         ),
-  //       )
-  //     // TabBarView(
-  //     //   controller: _tabController,
-  //     //   children: const [
-  //     //     BloodRate(),
-  //     //     PlusRate(),
-  //     //     ListResult(),
-  //     //   ],
-  //     // ),
-  //   );
-  // }
+//   return Scaffold(
+//     backgroundColor: Colors.white,
+//     appBar: AppBar(
+//       toolbarHeight: 80,
+//       excludeHeaderSemantics: true,
+//       backgroundColor: Colors.white,
+//       elevation: 0,
+//       title: const Text(
+//         'Medical examinations',
+//         style: TextStyle(
+//             fontWeight: FontWeight.bold,
+//             fontFamily: 'Candara',
+//             fontSize: 20,
+//             color: blueClr),
+//       ),
+//       // bottom: TabBar(
+//       //   labelPadding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+//       //   controller: _tabController,
+//       //   tabs: tabs,
+//       //   indicatorColor: greenClr,
+//       //   labelColor: Colors.black,
+//       //   unselectedLabelColor: Colors.grey,
+//       //   isScrollable: true,
+//       //   indicator: BoxDecoration(
+//       //     shape: BoxShape.rectangle,
+//       //     borderRadius: BorderRadius.circular(50),
+//       //     color: greenClr,
+//       //   ),
+//       // ),
+//     ),
+//     body:
+//       Scaffold(
+//         appBar: AppBar(
+//           backgroundColor: Colors.white,
+//           elevation: 0,
+//           title: const Text(
+//             'Medical examinations',
+//             style: TextStyle(
+//                 fontWeight: FontWeight.bold,
+//                 fontFamily: 'Candara',
+//                 fontSize: 20,
+//                 color: blueClr),
+//           ),
+//         ),
+//       )
+//     // TabBarView(
+//     //   controller: _tabController,
+//     //   children: const [
+//     //     BloodRate(),
+//     //     PlusRate(),
+//     //     ListResult(),
+//     //   ],
+//     // ),
+//   );
+// }
 }
