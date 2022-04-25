@@ -85,8 +85,8 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
       setState(() {
         buttonText =
         'Check Blood Pressure';
-        int _sy = 0;
-        int _di = 0;
+         _sy = 0;
+         _di = 0;
         _timer?.cancel();
         seconds =
         60;
@@ -96,174 +96,151 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-        backgroundColor: Colors.white,
-        body: SafeArea(
-          top: true,
-          child: ListView(
-            physics: const NeverScrollableScrollPhysics(),
-            children: <Widget>[
-              const SizedBox(
-                  width: 30,
-                  height: 30
-              ),
-              Expanded(
-                  flex: 1,
-                  child: SizedBox(
-                    height: 160,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Expanded(
-                          flex: 1,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-                            child: ClipRRect(
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(18),
-                              ),
-                              child: Stack(
-                                fit: StackFit.expand,
-                                alignment: Alignment.center,
-                                children: <Widget>[
-                                  _controller != null && _toggled
-                                      ? AspectRatio(
-                                    aspectRatio:
-                                    _controller!.value.aspectRatio,
-                                    child: CameraPreview(_controller!),
-                                  )
-                                      : Container(
-                                    height: 300,
-                                    padding: const EdgeInsets.all(12),
-                                    alignment: Alignment.center,
-                                    color: Colors.green.shade300,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: Center(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  CountDownTimer(
-                                    width: 135,
-                                    height: 150,
-                                    bgColor: Colors.blue.shade50,
-                                    color: greenClr,
-                                    current: seconds,
-                                    total: 60,
-                                    sp: _sy,
-                                    dp: _di,
-                                    textColor: Colors.black,
-                                  ),
+    return Column(
+      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Padding(padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 0),
+              child: ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(18)),
+                  child:SizedBox(
+                    height: 130,
+                    width: 130,
+                    child: Stack(
+                      fit: StackFit.expand,
+                      alignment: Alignment.center,
+                      children: [
+                        _controller!=null&&_toggled?AspectRatio(
+                          aspectRatio: _controller!.value.aspectRatio,
+                          child: CameraPreview(_controller!),
 
-                                ],
-                              )),
-
+                        ):Container(
+                          height: 300,
+                          padding: const EdgeInsets.all(12),
+                          alignment: Alignment.center,
+                          color: Colors.green.shade300,
                         ),
                       ],
+
                     ),
-                  )),
-              const SizedBox(
-                width: 30,
-                height: 30
+                  )
               ),
-              Expanded(
-                flex: 1,
-                child: Center(
-                  child: Column(
-                    children: [
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Transform.scale(
-                              scale: _buttonScale,
-                              child: MaterialButton(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30)),
-                                child: Text(
-                                  buttonText,
-                                  style: const TextStyle(
-                                      color: Colors.white, fontSize: 15),
-                                ),
-                                color: greenClr,
-                                onPressed: () {
-                                  if (_toggled) {
-                                    buttonText = "Check Blood Pressure";
-                                    _untoggle();
-                                  } else {
-                                    buttonText = "Stop";
-                                    _toggle();
-                                  }
-                                },
-                              ),
-                            ),
-                            MaterialButton(
-                                child: const Text(
-                                  "Records",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 15),
-                                ),
-                                color: greenClr,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30)),
-                                onPressed: () {
-                                  Provider.of<ResultProvider>(context,
-                                      listen: false)
-                                      .getRecord();
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) =>
-                                      const ListResult()));
-                                }),
-                          ]),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
-                        child: Row(
-                          children: const[
-                            CircleAvatar(radius: 7,backgroundColor:blueClr,),
-                            SizedBox(width: 10,),
-                            Text("Blood Pressure")
-                          ],
-                        ),
+            ),
+            Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  CountDownTimer(
+                    width: 135,
+                    height: 150,
+                    bgColor: Colors.blue.shade50,
+                    color: greenClr,
+                    current: seconds,
+                    total: 60,
+                    sp: _sy,
+                    dp: _di,
+                    textColor: Colors.black,
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
+        SizedBox(
+          width: 30,
+          height: 30,
+        ),
+        Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Transform.scale(
+                    scale: _buttonScale,
+                    child: MaterialButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+
                       ),
+                      child: Text(buttonText,  style: const TextStyle(
+                          color: Colors.white, fontSize: 15),
+                      ),
+                      color: greenClr,
+                      onPressed: () {
+                        if (_toggled) {
+                          buttonText = "Check Blood Pressure";
+                          _untoggle();
+                        } else {
+                          buttonText = "Stop";
+                          _toggle();
+                        }
+                      },
 
-                    ],
+                    ),
                   ),
-
-                ),
-              ),
-
-              Padding(
-                padding: const EdgeInsets.only(bottom: 50),
-                child: Expanded(flex: 1, child: SfCartesianChart(
-                  primaryXAxis: CategoryAxis(),
-                  tooltipBehavior: TooltipBehavior(enable: true),
-                  series: <ChartSeries<ResultModel,String>>[
-                    LineSeries<ResultModel,String>(
-                        dataSource: Provider.of<ResultProvider>(context).resultList,
-                        xValueMapper: (ResultModel result,_)=>Provider.of<ResultProvider>(context,
+                  MaterialButton(
+                      child: const Text(
+                        "Records",
+                        style: TextStyle(
+                            color: Colors.white, fontSize: 15),
+                      ),
+                      color: greenClr,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30)),
+                      onPressed: () {
+                        Provider.of<ResultProvider>(context,
                             listen: false)
-                            .resultList
-                            .length <
-                            10
-                            ?'${ result.hourTime}:${result.munitTime}': result.dayDate.toString(),
-                        yValueMapper: (ResultModel result,_)=>result.sy,
-                        name: '',
-                        dataLabelSettings: const DataLabelSettings(isVisible: true)
-                    )
+                            .getRecord();
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                            const ListResult()));
+                      }),
+                ],
+              ),
+              SizedBox(
+                height: 40,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 5),
+                child: Row(
+                  children: const[
+                    CircleAvatar(radius: 7,backgroundColor:blueClr,),
+                    SizedBox(width: 10,),
+                    Text("Blood Pressure")
                   ],
                 ),
-                ),
+              ),
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 50),
+          child: SfCartesianChart(
+            primaryXAxis: CategoryAxis(),
+            tooltipBehavior: TooltipBehavior(enable: true),
+            series: <ChartSeries<ResultModel,String>>[
+              LineSeries<ResultModel,String>(
+                  dataSource: Provider.of<ResultProvider>(context).resultList,
+                  xValueMapper: (ResultModel result,_)=>Provider.of<ResultProvider>(context,
+                      listen: false)
+                      .resultList
+                      .length <
+                      10
+                      ?'${ result.hourTime}:${result.munitTime}': result.dayDate.toString(),
+                  yValueMapper: (ResultModel result,_)=>result.sy,
+                  name: '',
+                  dataLabelSettings: const DataLabelSettings(isVisible: true)
               )
             ],
           ),
         )
+      ],
     );
   }
 
@@ -285,8 +262,8 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
       Wakelock.enable();
       _animationController.repeat(reverse: true);
       setState(() {
-        int _sy = 0;
-        int _di = 0;
+         _sy = 0;
+         _di = 0;
         _toggled = true;
       });
       // after is toggled
@@ -416,8 +393,8 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
           double PP =
               SV / ((0.013 * Wei - 0.007 * Agg - 0.004 * Beats) + 1.307);
           double MPP = Q * ROB;
-          _sy = (MPP + 3 / 2 * PP).toInt();
-          _di = (MPP - PP / 3).toInt();
+          this._sy = (MPP + 3 / 2 * PP).toInt();
+          this._di = (MPP - PP / 3).toInt();
         });
         print("the boold $_sy / $_di");
       }
@@ -467,7 +444,6 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
       Provider.of<ResultProvider>(context, listen: false).getRecord();
       debugPrint("test $value");
       Assistant.CheckBooldPressure(systolic: _sy, diastolic: _di, context: context);
-      print('');
       debugPrint(
           "The Length ${Provider.of<ResultProvider>(context, listen: false).resultList.length} $_sy / $_di,");
     } catch (e) {

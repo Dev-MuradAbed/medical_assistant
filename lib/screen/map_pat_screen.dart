@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:medical_assistant/api/marker.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'package:provider/provider.dart';
 
@@ -32,13 +33,14 @@ class _MapPatScreenState extends State<MapPatScreen> {
   @override
   void initState() {
     polylinePoints = PolylinePoints();
+    Permission.location.request();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final currentPosition = Provider.of<Position>(context);
-    final placesProvider = Provider.of<Future<List<Place>>>(context);
+    var currentPosition = Provider.of<Position>(context);
+    var placesProvider = Provider.of<Future<List<Place>>>(context);
     ImageConfiguration configuration = createLocalImageConfiguration(context);
     return FutureProvider(
       create: (_) => placesProvider,

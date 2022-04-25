@@ -41,10 +41,10 @@ class HomeRateView extends State<PlusRate>
   int _bpm = 0;
   int _fs = 30;
   int _windowLen = 30 * 6;
-   CameraImage? _image;
+  CameraImage? _image;
   late double _avg;
   late DateTime _now;
-   Timer? _timerImage, _timer;
+  Timer? _timerImage, _timer;
   int seconds = 60;
   List data = [];
   bool done = true;
@@ -96,180 +96,157 @@ class HomeRateView extends State<PlusRate>
 
   @override
   Widget build(BuildContext context) {
-    //if you have permission to access camera return Scaffold else return Center
-    return
-      Scaffold(
-          extendBodyBehindAppBar: true,
-          backgroundColor: Colors.white,
-        body: SafeArea(
-          top: true,
-          child: ListView(
-            physics: const NeverScrollableScrollPhysics(),
-            children: <Widget>[
-              const SizedBox(height: 30,width: 30,),
-              Expanded(
-                  flex: 1,
+    return Column(
+      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+              child: ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(18)),
                   child: SizedBox(
-                    height: 160,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Expanded(
-                          flex: 1,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 0),
-                            child: ClipRRect(
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(18),
-                              ),
-                              child: Stack(
-                                fit: StackFit.expand,
+                    height: 130,
+                    width: 130,
+                    child: Stack(
+                      fit: StackFit.expand,
+                      alignment: Alignment.center,
+                      children: [
+                        _controller != null && _toggled
+                            ? AspectRatio(
+                                aspectRatio: _controller!.value.aspectRatio,
+                                child: CameraPreview(_controller!),
+                              )
+                            : Container(
+                                height: 300,
+                                padding: const EdgeInsets.all(12),
                                 alignment: Alignment.center,
-                                children: <Widget>[
-                                  _controller != null && _toggled
-                                      ? AspectRatio(
-                                          aspectRatio:
-                                              _controller!.value.aspectRatio,
-                                          child: CameraPreview(_controller!),
-                                        )
-                                      : Container(
-                                          padding: const EdgeInsets.all(12),
-                                          alignment: Alignment.center,
-                                          color: Colors.green.shade300,
-                                        ),
-                                ],
+                                color: Colors.green.shade300,
                               ),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: Center(
-                              child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              CountDownTimer(
-                                width: 150,
-                                height: 150,
-                                bgColor: Colors.blue.shade50,
-                                color: greenClr,
-                                current: seconds,
-                                total: 60,
-                                bpm: _bpm,
-                                textColor: Colors.black,
-                              ),
-                            ],
-                          )),
-                        ),
                       ],
                     ),
                   )),
-              const SizedBox(
-                width: 30,
-                height: 30
+            ),
+            Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  CountDownTimer(
+                    width: 135,
+                    height: 150,
+                    bgColor: Colors.blue.shade50,
+                    color: greenClr,
+                    current: seconds,
+                    total: 60,
+                    bpm: _bpm,
+                    textColor: Colors.black,
+                  )
+                ],
               ),
-              Expanded(
-                flex: 1,
-                child: Center(
-                  child: Column(
-                    children: [
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Transform.scale(
-                              scale: _buttonScale,
-                              child: MaterialButton(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30)),
-                                child: Text(
-                                  buttonText,
-                                  style: const TextStyle(
-                                      color: Colors.white, fontSize: 15),
-                                ),
-                                color: greenClr,
-                                onPressed: () {
-                                  if (_toggled) {
-                                    buttonText = "Check Heart Rate";
-                                    _untoggle();
-                                  } else {
-                                    buttonText = "Stop";
-                                    _toggle();
-                                  }
-                                },
-                              ),
-                            ),
-                            MaterialButton(
-                                child: const Text(
-                                  "Records",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 15),
-                                ),
-                                color: greenClr,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30)),
-                                onPressed: () {
-                                  Provider.of<ResultProvider>(context,
-                                          listen: false)
-                                      .getRecord();
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) =>
-                                          const ListResult()));
-                                }),
-                          ]),
-
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
-                        child: Row(
-                          children: const[
-                            CircleAvatar(radius: 7,backgroundColor:blueClr,),
-                            SizedBox(width: 10,),
-                            Text("Blood Pressure")
-                          ],
-                        ),
+            )
+          ],
+        ),
+        SizedBox(
+          width: 30,
+          height: 30,
+        ),
+        Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Transform.scale(
+                    scale: _buttonScale,
+                    child: MaterialButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
                       ),
-                    ],
+                      child: Text(
+                        buttonText,
+                        style:
+                            const TextStyle(color: Colors.white, fontSize: 15),
+                      ),
+                      color: greenClr,
+                      onPressed: () {
+                        if (_toggled) {
+                          buttonText = "Check Blood Pressure";
+                          _untoggle();
+                        } else {
+                          buttonText = "Stop";
+                          _toggle();
+                        }
+                      },
+                    ),
                   ),
+                  MaterialButton(
+                      child: const Text(
+                        "Records",
+                        style: TextStyle(color: Colors.white, fontSize: 15),
+                      ),
+                      color: greenClr,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30)),
+                      onPressed: () {
+                        Provider.of<ResultProvider>(context, listen: false)
+                            .getRecord();
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const ListResult()));
+                      }),
+                ],
+              ),
+              SizedBox(
+                height: 40,
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                child: Row(
+                  children: const [
+                    CircleAvatar(
+                      radius: 7,
+                      backgroundColor: blueClr,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text("Blood Pressure")
+                  ],
                 ),
               ),
-
-              // const SizedBox(
-              //   width: 20,
-              //   height: 20,
-              // ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 50),
-                child: Expanded(
-                  flex: 1,
-                  child: SfCartesianChart(
-                    // borderColor: greenClr,
-                    primaryXAxis: CategoryAxis(),
-                    // legend: Legend(isVisible: true),
-                    tooltipBehavior: TooltipBehavior(enable: true),
-                    series: <ChartSeries<ResultModel, String>>[
-                      LineSeries<ResultModel, String>(
-                          dataSource: Provider.of<ResultProvider>(context)
-                              .resultList,
-                          xValueMapper: (ResultModel sales, _) =>
-                              Provider.of<ResultProvider>(context,
-                                              listen: false)
-                                          .resultList
-                                          .length <
-                                      10
-                                  ?'${ sales.hourTime}:${sales.munitTime}': sales.dayDate.toString(),
-                          yValueMapper: (ResultModel sales, _) =>
-                              sales.heartRate,
-                          name: '',
-                          color: greenClr,
-                          dataLabelSettings:
-                              const DataLabelSettings(isVisible: true))
-                    ],
-                  ),
-                ),
-              )
             ],
           ),
-        ));
+        ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 50),
+          child: SfCartesianChart(
+            // borderColor: greenClr,
+            primaryXAxis: CategoryAxis(),
+            // legend: Legend(isVisible: true),
+            tooltipBehavior: TooltipBehavior(enable: true),
+            series: <ChartSeries<ResultModel, String>>[
+              LineSeries<ResultModel, String>(
+                  dataSource: Provider.of<ResultProvider>(context).resultList,
+                  xValueMapper: (ResultModel sales, _) =>
+                      Provider.of<ResultProvider>(context, listen: false)
+                                  .resultList
+                                  .length <
+                              10
+                          ? '${sales.hourTime}:${sales.munitTime}'
+                          : sales.dayDate.toString(),
+                  yValueMapper: (ResultModel sales, _) => sales.heartRate,
+                  name: '',
+                  color: greenClr,
+                  dataLabelSettings: const DataLabelSettings(isVisible: true))
+            ],
+          ),
+        )
+      ],
+    );
   }
 
   void _clearData() {
@@ -396,7 +373,7 @@ class HomeRateView extends State<PlusRate>
         _bpm = _bpm / _counter;
         print("_bpm ${_bpm}");
         setState(() {
-          this._bpm =((1 - _alpha) * this._bpm + _alpha * _bpm).toInt();
+          this._bpm = ((1 - _alpha) * this._bpm + _alpha * _bpm).toInt();
         });
       }
       await Future.delayed(Duration(milliseconds: 1000 * _windowLen ~/ _fs));
@@ -433,56 +410,17 @@ class HomeRateView extends State<PlusRate>
         date: DateTime.now().toString(),
         monthDate: DateTime.now().month,
         yearTime: DateTime.now().year,
-                dayDate: DateTime.now().day,
+        dayDate: DateTime.now().day,
       ));
       Provider.of<ResultProvider>(context, listen: false).getRecord();
       debugPrint("test $value");
-      Assistant.CheckStausBMP(Gendar: 'mael', Age: 20, Bmp: _bpm,context: context);
-      // if(_bpm==60){
-      //   showDialog(context: context, builder: (context) => AlertDialog(
-      //     title: Text("Congratulation"),
-      //     content: Text("You have a perfect heart rate"),
-      //     actions: <Widget>[
-      //       FlatButton(
-      //         child: Text("OK"),
-      //         onPressed: () {
-      //           Navigator.of(context).pop();
-      //         },
-      //       )
-      //     ],
-      //   ));
-      // }
+      Assistant.CheckStausBMP(
+          Gendar: 'mael', Age: 20, Bmp: _bpm, context: context);
       debugPrint(
           "The Length ${Provider.of<ResultProvider>(context, listen: false).resultList.length}  $_bpm}");
     } catch (e) {
       debugPrint("$e");
     }
-    //   List list = _dateTime().split(
-    //       " ");
-    //   String date = list[0].toString();
-    //   String time = list[1].toString().substring(0,
-    //       5);
-    //   final directory =
-    //   await getExternalStorageDirectory();
-    //   final file = File(
-    //       '${directory!.path}/heartRate.txt');
-    //   final text = "\n" +
-    //       date +
-    //       " " +
-    //       time +
-    //       " " +
-    //       _bpm.toString();
-    //   await file.writeAsString(text,
-    //       mode: FileMode
-    //           .append);
-    //   print('saved');
-    // }
-    //
-    // String _dateTime() {
-    //   DateTime now =  DateTime
-    //       .now();
-    //   return now
-    //       .toString();
   }
 
   @override
@@ -493,10 +431,3 @@ class HomeRateView extends State<PlusRate>
     properties.add(DiagnosticsProperty<DateTime>('_now', _now));
   }
 }
-// class SalesData{
-//   final String day;
-//   final double bmp;
-//
-//   SalesData(this.day, this.bmp);
-//
-// }

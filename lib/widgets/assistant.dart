@@ -626,55 +626,622 @@ class Assistant with Helper {
     }
   }
 
-  static CheckBooldPressure({required int systolic, required int diastolic, required BuildContext context}) {
+  static CheckBooldPressure(
+      {required int systolic,
+      required int diastolic,
+      required BuildContext context}) {
     int sy = systolic;
     int dy = diastolic;
-    if (sy >= 210 && dy >= 120) {
-      ShowDilog(context: context, title: 'error', message: 'High Boold Pressure - satge 4 (Hypertension -stage 4)');
-      print('High Boold Pressure - satge 4 (Hypertension -stage 4)');
-    } else if (sy >= 180 && sy <= 210 && dy >= 110 && dy <= 120) {
-      ShowDilog(context: context, title: 'error', message: 'High Boold Pressure - satge 3 (Hypertension -stage 3)');
+    if (sy >= 40 && sy <= 105 && dy >= 40 && dy <= 60) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a NORMAL blood pressure');
+    } else if (sy >= 40 && sy <= 105 && dy >= 61 && dy <= 80) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a ABOVE AV blood pressure');
+    } else if (sy >= 40 && sy <= 105 && dy >= 81 && dy <= 90) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a AVERAGE blood pressure');
+    } else if (sy >= 40 && sy <= 105 && dy >= 91 && dy <= 100) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a BELOW AV blood pressure');
+    } else if (sy >= 40 && sy <= 105 && dy >= 101 && dy <= 110) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a POOR blood pressure');
+    }
+    if (sy >= 106 && sy <= 120 && dy >= 40 && dy <= 60) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a NORMAL blood pressure');
+    } else if (sy >= 106 && sy <= 120 && dy >= 61 && dy <= 80) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a ABOVE AV blood pressure');
+    } else if (sy >= 106 && sy <= 120 && dy >= 81 && dy <= 90) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a AVERAGE blood pressure');
+    } else if (sy >= 106 && sy <= 120 && dy >= 91 && dy <= 100) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a BELOW AV blood pressure');
+    } else if (sy >= 106 && sy <= 120 && dy >= 101 && dy <= 110) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a POOR blood pressure');
+    }
+    if (sy >= 121 && sy <= 140 && dy >= 40 && dy <= 60) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a NORMAL blood pressure');
+    } else if (sy >= 121 && sy <= 140 && dy >= 61 && dy <= 80) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a ABOVE AV blood pressure');
+    } else if (sy >= 121 && sy <= 140 && dy >= 81 && dy <= 90) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a AVERAGE blood pressure');
+    } else if (sy >= 121 && sy <= 140 && dy >= 91 && dy <= 100) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a BELOW AV blood pressure');
+    } else if (sy >= 121 && sy <= 140 && dy >= 101 && dy <= 110) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a POOR blood pressure');
+    }
+    if (sy >= 141 && sy <= 160 && dy >= 40 && dy <= 60) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a NORMAL blood pressure');
+    } else if (sy >= 141 && sy <= 160 && dy >= 61 && dy <= 80) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a ABOVE AV blood pressure');
+    } else if (sy >= 141 && sy <= 160 && dy >= 81 && dy <= 90) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a AVERAGE blood pressure');
+    } else if (sy >= 141 && sy <= 160 && dy >= 91 && dy <= 100) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a BELOW AV blood pressure');
+    } else if (sy >= 141 && sy <= 160 && dy >= 101 && dy <= 110) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a POOR blood pressure');
+    }
+    if (sy >= 161 && sy <= 180 && dy >= 40 && dy <= 60) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a NORMAL blood pressure');
+    } else if (sy >= 161 && sy <= 180 && dy >= 61 && dy <= 80) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a ABOVE AV blood pressure');
+    } else if (sy >= 161 && sy <= 180 && dy >= 81 && dy <= 90) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a AVERAGE blood pressure');
+    } else if (sy >= 161 && sy <= 180 && dy >= 91 && dy <= 100) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a BELOW AV blood pressure');
+    } else if (sy >= 161 && sy <= 180 && dy >= 101 && dy <= 110) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a POOR blood pressure');
+    }
+    if (sy >= 181 && sy <= 200 && dy >= 40 && dy <= 60) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a NORMAL blood pressure');
+    } else if (sy >= 181 && sy <= 200 && dy >= 61 && dy <= 80) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a ABOVE AV blood pressure');
+    } else if (sy >= 181 && sy <= 200 && dy >= 81 && dy <= 90) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a AVERAGE blood pressure');
+    } else if (sy >= 181 && sy <= 200 && dy >= 91 && dy <= 100) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a BELOW AV blood pressure');
+    } else if (sy >= 181 && sy <= 200 && dy >= 101 && dy <= 110) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a POOR blood pressure');
+    }
+    if (sy >= 201 && sy <= 220 && dy >= 40 && dy <= 60) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a NORMAL blood pressure');
+    } else if (sy >= 201 && sy <= 220 && dy >= 61 && dy <= 80) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a ABOVE AV blood pressure');
+    } else if (sy >= 201 && sy <= 220 && dy >= 81 && dy <= 90) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a AVERAGE blood pressure');
+    } else if (sy >= 201 && sy <= 220 && dy >= 91 && dy <= 100) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a BELOW AV blood pressure');
+    } else if (sy >= 201 && sy <= 220 && dy >= 101 && dy <= 110) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a POOR blood pressure');
+    }
 
-      print('High Boold Pressure - satge 3 (Hypertension -stage 3)');
-    } else if (sy >= 160 && sy <= 179 && dy >= 100 && dy <= 109) {
-      ShowDilog(context: context, title: 'error', message: 'High Boold Pressure - satge 2 (Hypertension -stage 2)');
+    if (sy >= 221 && sy <= 240 && dy >= 40 && dy <= 60) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a NORMAL blood pressure');
+    } else if (sy >= 221 && sy <= 240 && dy >= 61 && dy <= 80) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a ABOVE AV blood pressure');
+    } else if (sy >= 221 && sy <= 240 && dy >= 81 && dy <= 90) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a AVERAGE blood pressure');
+    } else if (sy >= 221 && sy <= 240 && dy >= 91 && dy <= 100) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a BELOW AV blood pressure');
+    } else if (sy >= 221 && sy <= 240 && dy >= 101 && dy <= 110) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a POOR blood pressure');
+    }
+    if (sy >= 241 && sy <= 260 && dy >= 40 && dy <= 60) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a NORMAL blood pressure');
+    } else if (sy >= 241 && sy <= 260 && dy >= 61 && dy <= 80) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a ABOVE AV blood pressure');
+    } else if (sy >= 241 && sy <= 260 && dy >= 81 && dy <= 90) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a AVERAGE blood pressure');
+    } else if (sy >= 241 && sy <= 260 && dy >= 91 && dy <= 100) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a BELOW AV blood pressure');
+    } else if (sy >= 241 && sy <= 260 && dy >= 101 && dy <= 110) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a POOR blood pressure');
+    }
 
-      print('High Boold Pressure - satge 2 (Hypertension -stage 2)');
-    } else if (sy >= 140 && sy <= 159 && dy >= 90 && dy <= 99) {
-      ShowDilog(context: context, title: 'error', message: 'High Boold Pressure - satge 1 (Hypertension -stage 1)');
+    if (sy >= 261 && sy <= 280 && dy >= 40 && dy <= 60) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a NORMAL blood pressure');
+    } else if (sy >= 261 && sy <= 280 && dy >= 61 && dy <= 80) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a ABOVE AV blood pressure');
+    } else if (sy >= 261 && sy <= 280 && dy >= 81 && dy <= 90) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a AVERAGE blood pressure');
+    } else if (sy >= 261 && sy <= 280 && dy >= 91 && dy <= 100) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a BELOW AV blood pressure');
+    } else if (sy >= 261 && sy <= 280 && dy >= 101 && dy <= 110) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a POOR blood pressure');
+    }
 
-      print('High Boold Pressure - satge 1 (Hypertension -stage 1)');
-    } else if (sy >= 130 && sy <= 139 && dy >= 85 && dy <= 89) {
-      ShowDilog(context: context, title: 'error', message: 'Per - Boold Pressure (Per -Hypertension)');
+    if (sy >= 281 && sy <= 300 && dy >= 40 && dy <= 60) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a NORMAL blood pressure');
+    } else if (sy >= 281 && sy <= 300 && dy >= 61 && dy <= 80) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a ABOVE AV blood pressure');
+    } else if (sy >= 281 && sy <= 300 && dy >= 81 && dy <= 90) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a AVERAGE blood pressure');
+    } else if (sy >= 281 && sy <= 300 && dy >= 91 && dy <= 100) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a BELOW AV blood pressure');
+    } else if (sy >= 281 && sy <= 300 && dy >= 101 && dy <= 110) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a POOR blood pressure');
+    }
+    if (sy >= 301 && sy <= 320 && dy >= 40 && dy <= 60) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a NORMAL blood pressure');
+    } else if (sy >= 301 && sy <= 320 && dy >= 61 && dy <= 80) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a ABOVE AV blood pressure');
+    } else if (sy >= 301 && sy <= 320 && dy >= 81 && dy <= 90) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a AVERAGE blood pressure');
+    } else if (sy >= 301 && sy <= 320 && dy >= 91 && dy <= 100) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a BELOW AV blood pressure');
+    } else if (sy >= 301 && sy <= 320 && dy >= 101 && dy <= 110) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a POOR blood pressure');
+    }
 
-      print('Per - Boold Pressure (Per -Hypertension)');
-    } else if (sy >= 121 && sy <= 129 && dy >= 81 && dy <= 84) {
-      ShowDilog(context: context, title: 'error', message: 'High Normal Boold Pressure ');
+    if (sy >= 321 && sy <= 340 && dy >= 40 && dy <= 60) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a NORMAL blood pressure');
+    } else if (sy >= 321 && sy <= 340 && dy >= 61 && dy <= 80) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a ABOVE AV blood pressure');
+    } else if (sy >= 321 && sy <= 340 && dy >= 81 && dy <= 90) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a AVERAGE blood pressure');
+    } else if (sy >= 321 && sy <= 340 && dy >= 91 && dy <= 100) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a BELOW AV blood pressure');
+    } else if (sy >= 321 && sy <= 340 && dy >= 101 && dy <= 110) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a POOR blood pressure');
+    }
 
-      print('High Normal Boold Pressure ');
-    } else if (sy >= 100 && sy <= 120 && dy >= 65 && dy <= 80) {
-      ShowDilog(context: context, title: 'error', message: 'Normal Boold Pressure (Ideal Blood Pressure)');
+    if (sy >= 341 && sy <= 360 && dy >= 40 && dy <= 60) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a NORMAL blood pressure');
+    } else if (sy >= 341 && sy <= 360 && dy >= 61 && dy <= 80) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a ABOVE AV blood pressure');
+    } else if (sy >= 341 && sy <= 360 && dy >= 81 && dy <= 90) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a AVERAGE blood pressure');
+    } else if (sy >= 341 && sy <= 360 && dy >= 91 && dy <= 100) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a BELOW AV blood pressure');
+    } else if (sy >= 341 && sy <= 360 && dy >= 101 && dy <= 110) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a POOR blood pressure');
+    }
 
-      print('Normal Boold Pressure (Ideal Blood Pressure)');
-    } else if (sy >= 90 && sy <= 99 && dy >= 60 && dy <= 64) {
-      ShowDilog(context: context, title: 'error', message: 'Low Normal Boold Pressure');
+    if (sy >= 361 && sy <= 380 && dy >= 40 && dy <= 60) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a NORMAL blood pressure');
+    } else if (sy >= 361 && sy <= 380 && dy >= 61 && dy <= 80) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a ABOVE AV blood pressure');
+    } else if (sy >= 361 && sy <= 380 && dy >= 81 && dy <= 90) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a AVERAGE blood pressure');
+    } else if (sy >= 361 && sy <= 380 && dy >= 91 && dy <= 100) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a BELOW AV blood pressure');
+    } else if (sy >= 361 && sy <= 380 && dy >= 101 && dy <= 110) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a POOR blood pressure');
+    }
+    if (sy >= 381 && sy <= 400 && dy >= 40 && dy <= 60) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a NORMAL blood pressure');
+    } else if (sy >= 381 && sy <= 400 && dy >= 61 && dy <= 80) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a ABOVE AV blood pressure');
+    } else if (sy >= 381 && sy <= 400 && dy >= 81 && dy <= 90) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a AVERAGE blood pressure');
+    } else if (sy >= 381 && sy <= 400 && dy >= 91 && dy <= 100) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a BELOW AV blood pressure');
+    } else if (sy >= 381 && sy <= 400 && dy >= 101 && dy <= 110) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a POOR blood pressure');
+    }
 
-      print('Low Normal Boold Pressure');
-    } else if (sy >= 70 && sy <= 89 && dy >= 40 && dy <= 59) {
-      ShowDilog(context: context, title: 'error', message: 'Low Normal Boold Pressure (Moderate Hypotension)');
+    if (sy >= 401 && sy <= 420 && dy >= 40 && dy <= 60) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a NORMAL blood pressure');
+    } else if (sy >= 401 && sy <= 420 && dy >= 61 && dy <= 80) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a ABOVE AV blood pressure');
+    } else if (sy >= 401 && sy <= 420 && dy >= 81 && dy <= 90) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a AVERAGE blood pressure');
+    } else if (sy >= 401 && sy <= 420 && dy >= 91 && dy <= 100) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a BELOW AV blood pressure');
+    } else if (sy >= 401 && sy <= 420 && dy >= 101 && dy <= 110) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a POOR blood pressure');
+    }
 
-      print('Low Normal Boold Pressure (Moderate Hypotension)');
-    } else if (sy >= 50 && sy <= 69 && dy >= 35 && dy <= 39) {
-      ShowDilog(context: context, title: 'error', message: 'Too Low Normal Boold Pressure (Severe Hypotension)');
+    if (sy >= 421 && sy <= 440 && dy >= 40 && dy <= 60) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a NORMAL blood pressure');
+    } else if (sy >= 421 && sy <= 440 && dy >= 61 && dy <= 80) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a ABOVE AV blood pressure');
+    } else if (sy >= 421 && sy <= 440 && dy >= 81 && dy <= 90) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a AVERAGE blood pressure');
+    } else if (sy >= 421 && sy <= 440 && dy >= 91 && dy <= 100) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a BELOW AV blood pressure');
+    } else if (sy >= 421 && sy <= 440 && dy >= 101 && dy <= 110) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a POOR blood pressure');
+    }
 
-      print('Too Low Normal Boold Pressure (Severe Hypotension)');
-    } else if (sy <= 50 && dy <= 35) {
-      ShowDilog(context: context, title: 'error', message: 'Extremely Low Normal Boold Pressure (Extremely Severe Hypotension)');
+    if (sy >= 441 && sy <= 460 && dy >= 40 && dy <= 60) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a NORMAL blood pressure');
+    } else if (sy >= 441 && sy <= 460 && dy >= 61 && dy <= 80) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a ABOVE AV blood pressure');
+    } else if (sy >= 441 && sy <= 460 && dy >= 81 && dy <= 90) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a AVERAGE blood pressure');
+    } else if (sy >= 441 && sy <= 460 && dy >= 91 && dy <= 100) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a BELOW AV blood pressure');
+    } else if (sy >= 441 && sy <= 460 && dy >= 101 && dy <= 110) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a POOR blood pressure');
+    }
 
-      print(
-          'Extremely Low Normal Boold Pressure (Extremely Severe Hypotension)');
-    } else {
-      print('error');
+    if (sy >= 461 && sy <= 480 && dy >= 40 && dy <= 60) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a NORMAL blood pressure');
+    } else if (sy >= 461 && sy <= 480 && dy >= 61 && dy <= 80) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a ABOVE AV blood pressure');
+    } else if (sy >= 461 && sy <= 480 && dy >= 81 && dy <= 90) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a AVERAGE blood pressure');
+    } else if (sy >= 461 && sy <= 480 && dy >= 91 && dy <= 100) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a BELOW AV blood pressure');
+    } else if (sy >= 461 && sy <= 480 && dy >= 101 && dy <= 110) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a POOR blood pressure');
+    }
+
+    if (sy >= 481 && sy <= 500 && dy >= 40 && dy <= 60) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a NORMAL blood pressure');
+    } else if (sy >= 481 && sy <= 500 && dy >= 61 && dy <= 80) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a ABOVE AV blood pressure');
+    } else if (sy >= 481 && sy <= 500 && dy >= 81 && dy <= 90) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a AVERAGE blood pressure');
+    } else if (sy >= 481 && sy <= 500 && dy >= 91 && dy <= 100) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a BELOW AV blood pressure');
+    } else if (sy >= 481 && sy <= 500 && dy >= 101 && dy <= 110) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a POOR blood pressure');
+    }
+
+    if (sy >= 501 && sy <= 520 && dy >= 40 && dy <= 60) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a NORMAL blood pressure');
+    } else if (sy >= 501 && sy <= 520 && dy >= 61 && dy <= 80) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a ABOVE AV blood pressure');
+    } else if (sy >= 501 && sy <= 520 && dy >= 81 && dy <= 90) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a AVERAGE blood pressure');
+    } else if (sy >= 501 && sy <= 520 && dy >= 91 && dy <= 100) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a BELOW AV blood pressure');
+    } else if (sy >= 501 && sy <= 520 && dy >= 101 && dy <= 110) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a POOR blood pressure');
+    }
+
+    if (sy >= 521 && sy <= 540 && dy >= 40 && dy <= 60) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a NORMAL blood pressure');
+    } else if (sy >= 521 && sy <= 540 && dy >= 61 && dy <= 80) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a ABOVE AV blood pressure');
+    } else if (sy >= 521 && sy <= 540 && dy >= 81 && dy <= 90) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a AVERAGE blood pressure');
+    } else if (sy >= 521 && sy <= 540 && dy >= 91 && dy <= 100) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a BELOW AV blood pressure');
+    } else if (sy >= 521 && sy <= 540 && dy >= 101 && dy <= 110) {
+      ShowDilog(
+          context: context,
+          title: 'Congratulation',
+          message: 'You have a POOR blood pressure');
     }
   }
 }

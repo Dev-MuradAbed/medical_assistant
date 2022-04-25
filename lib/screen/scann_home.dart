@@ -1,9 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:medical_assistant/read_camera.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../boold.dart';
 import '../theme.dart';
+
 import 'list_result.dart';
 
 class HomeScanned extends StatefulWidget {
@@ -68,6 +70,7 @@ class _HomeScannedState extends State<HomeScanned>with SingleTickerProviderState
   @override
   void initState() {
     super.initState();
+    Permission.microphone.request();
     _tabController = TabController(length: tabs.length, vsync: this);
   }
   @override

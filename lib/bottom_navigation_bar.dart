@@ -31,37 +31,19 @@ class _BNBarState extends State<BNBar> {
     Icon(Icons.favorite, size: 26, color: whitClr),
     Icon(Icons.event_note_outlined, size: 26, color: whitClr)
   ];
+@override
+  void initState() {
 
+    super.initState();
+    Permission.camera.request();
+  }
   final screens = [
     ProfileScreen(),
     MapPatScreen(),
     HomeNewsScreen(),
-    // checkpermission_opencamera()
     HomeScanned(),
     TodoHome(),
   ];
-  // Future<Scaffold> checkpermission_opencamera() {
-  //   var cameraStatus =  Permission.camera.status;
-  //   var microphoneStatus =  Permission.microphone.status;
-  //   print(cameraStatus);
-  //   print(microphoneStatus);
-  //   if (!cameraStatus.isGranted)
-  //     await Permission.camera.request();
-  //   if (!microphoneStatus.isGranted)
-  //     await Permission.microphone.request();
-  //
-  //   if(await Permission.camera.isGranted){
-  //       return Scaffold();
-  //   }else{
-  //     return Scaffold(
-  //       body: Center(
-  //         child: Text("You need to allow camera and microphone permission to use this app"),
-  //       ),
-  //     );
-  //     // showToast("Provide Camera permission to use camera.", position: ToastPosition.bottom);
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -81,23 +63,30 @@ class _BNBarState extends State<BNBar> {
               items: item,
               index: _index,
               onTap: (index) {
-                setState(() async{
-                  if(await Permission.camera.isGranted&&await Permission.location.isGranted&&await Permission.microphone.isGranted){
-                    setState(() {
-                      _index = index;
-                    });
-                  }else {
-                  await  Permission.microphone.request();
-                  await Permission.camera.request();
-                  await Permission.location.request();
-                    setState(() {
-                      _index = index;
-                    });
-                    showToast("Provide Camera, Location and Microphone permission to use this app", position: ToastPosition.bottom);
-                  }
-
-                  // _index = index;
+                setState(() {
+                  _index = index;
                 });
+
+                //   if(await Permission.camera.isGranted&&await Permission.location.isGranted&&await Permission.microphone.isGranted){
+                //     setState(() {
+                //       _index = index;
+                //     });
+                //   }else {
+                //     await  Permission.microphone.request();
+                //     await Permission.camera.request();
+                //     await Permission.location.request();
+                //     if(await Permission.camera.isGranted){
+                //       setState(() {
+                //         _index = index;
+                //       });
+                //     }
+                //
+                //
+                //     showToast("Provide Camera, Location and Microphone permission to use this app", position: ToastPosition.bottom);
+                //   }
+                //
+                //   // _index = index;
+                // });
                 // setState(() => this.index = index);
               },
               //  letIndexChange: ,
