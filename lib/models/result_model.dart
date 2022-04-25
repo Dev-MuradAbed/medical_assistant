@@ -39,6 +39,8 @@ class ResultModel {
   ResultModel.fromJson(Map<String,dynamic>json){
     id=json['id'];
     heartRate=json['heartRate'];
+    sy=json['sy'];
+    dy=json['dy'];
     date=json['date'];
     hourTime=json['hourTime'];
     munitTime=json['munitTime'];

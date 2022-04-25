@@ -6,6 +6,7 @@ import 'package:medical_assistant/models/result_model.dart';
 import 'package:medical_assistant/provider/result_provider.dart';
 
 import 'package:medical_assistant/screen/list_result.dart';
+import 'package:medical_assistant/screen/scann_home.dart';
 import 'package:medical_assistant/theme.dart';
 import 'package:medical_assistant/widgets/assistant.dart';
 import 'package:medical_assistant/widgets/count_down_timer_boold.dart';
@@ -443,6 +444,7 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
           ));
       Provider.of<ResultProvider>(context, listen: false).getRecord();
       debugPrint("test $value");
+
       Assistant.CheckBooldPressure(systolic: _sy, diastolic: _di, context: context);
       debugPrint(
           "The Length ${Provider.of<ResultProvider>(context, listen: false).resultList.length} $_sy / $_di,");

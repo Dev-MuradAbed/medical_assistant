@@ -29,7 +29,8 @@ class ListRate extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children:  [
-              Text(model.heartRate==null?'${model.sy}/${model.dy} mmHg':'${model.heartRate}',),
+              model.heartRate==null?Text('${model.sy}/${model.dy} mmHg'):
+              Text('${model.heartRate} bmp',),
               const Spacer(),
               const Text("Normal Rate"),
               const Spacer()

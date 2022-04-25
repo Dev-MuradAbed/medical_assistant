@@ -51,14 +51,6 @@ backgroundColor: Colors.white,
                 child: CircularProgressIndicator(),
               );
             } else {
-              return FutureBuilder(
-                future: _feach(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else {
                     return FutureProvider(
                       create: (context) =>
                           Provider.of<TaskDoctorProvider>(context, listen: false)
@@ -76,13 +68,15 @@ backgroundColor: Colors.white,
                     );
                   }
                 },
+    ),
+      ),
               );
             }
-          },
-        ),
-      ),
-    );
-  }
+
+
+
+
+
 
   AppBar _appBar() => AppBar(
         backgroundColor: Colors.white,

@@ -33,7 +33,6 @@ class _BNBarState extends State<BNBar> {
   ];
 @override
   void initState() {
-
     super.initState();
     Permission.camera.request();
   }
@@ -41,7 +40,7 @@ class _BNBarState extends State<BNBar> {
     ProfileScreen(),
     MapPatScreen(),
     HomeNewsScreen(),
-    HomeScanned(),
+    HomeScan(),
     TodoHome(),
   ];
   @override

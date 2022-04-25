@@ -7,7 +7,8 @@ import '../patient_db.dart';
 class ResultController{
   Database database = DbController().database;
   Future<int> insert(ResultModel task) async {
-    print('insert function code');
+    print('insert function code ${task.sy}');
+    print(task.toJson());
     return await database.insert('result', task.toJson());
   }
 
