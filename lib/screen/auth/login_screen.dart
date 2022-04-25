@@ -1,30 +1,28 @@
-import 'dart:math';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:local_auth/local_auth.dart';
-import 'package:medical_assistant/api/local_auth_api.dart';
+
+
 
 import 'package:medical_assistant/screen/profile_screen.dart';
 
 
 import '../../theme.dart';
+import '../../utils/helpers.dart';
 import '../../widgets/button_widget.dart';
 import '../../widgets/choose_job.dart';
 import '../../widgets/text_field.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends StatefulWidget  {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends State<LoginScreen>with Helper {
   bool isPassword = true;
-  final _formkey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
 
@@ -68,33 +66,31 @@ class _LoginScreenState extends State<LoginScreen> {
             alignment: Alignment.center,
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
             child: Form(
-              key: _formkey,
+              key: _formKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const ChooseJob(),
-                  const SizedBox(height: 39),
                   TextInput(
-                      label: 'Enter Email',
-                      controller: _emailController,
-                      keyboardType: TextInputType.emailAddress,
-                      widgetIcon: const Icon(
-                        Icons.person,
-                        color: greenClr,
-                        size: 22,
-                      ),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Email cannot be empty";
-                    }
-                    if (!RegExp(
-                        "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
-                        .hasMatch(value)) {
-                      return ("Please enter a valid email");
-                    } else {
-                      return null;
-                    }
-                  },
+                    label: 'Enter Email',
+                    controller: _emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    widgetIcon: const Icon(
+                      Icons.person,
+                      color: greenClr,
+                      size: 22,
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "Email cannot be empty";
+                      }
+                      if (!RegExp(
+                          "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
+                          .hasMatch(value)) {
+                        return ("Please enter a valid email");
+                      } else {
+                        return null;
+                      }
+                    },
                     onSaved: (value) {
                       _emailController.text = value!;
                     },
@@ -119,12 +115,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       onPressed: () {
                         setState(() {
                           isPassword = !isPassword;
-                          print(isPassword);
+
                         });
                       },
                     ),
                     validator:  (value) {
-                      RegExp regex = new RegExp(r'^.{6,}$');
+                      RegExp regex = RegExp(r'^.{6,}$');
                       if (value!.isEmpty) {
                         return "Password cannot be empty";
                       }
@@ -137,74 +133,44 @@ class _LoginScreenState extends State<LoginScreen> {
                     onSaved: (value) {
                       _passwordController.text = value!;
                     },
-                    ),
-                   Padding(
-                    padding: const EdgeInsetsDirectional.only(end: 20.0),
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
-                        onPressed: ()=>Navigator.pushNamed(context, '/forget_screen'),
-                        child: const Text('FORGET PASSWORD ?',
-                        style:  TextStyle(
-                          fontFamily: 'Candara',
-                          color: blueClr,
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  )),
-                  const SizedBox(height: 20),
-                  ButtonWidget(text: "LOG IN", onPressed: ()=>signIn(_emailController.text,_passwordController.text)),
-                  const SizedBox(height: 10),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        'YOU DON\'T HAVE ANY ACCOUNT ? ',
-                        style: TextStyle(
-                          fontFamily: 'Candara',
-                          color: greenClr,
-                          fontSize: 8,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      TextButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/signup_screen');
-                          },
-                          child: const Text(
-                            'SGIN UP.',
-                            style: TextStyle(
+                  ),
+                  Padding(
+                      padding: const EdgeInsetsDirectional.only(end: 20.0),
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          onPressed: ()=>Navigator.pushNamed(context, '/forget_screen'),
+                          child: const Text('FORGET PASSWORD ?',
+                            style:  TextStyle(
                               fontFamily: 'Candara',
-                              color: greenClr,
-                              fontSize: 8,
+                              color: blueClr,
+                              fontSize: 12,
                               fontWeight: FontWeight.bold,
                             ),
-                          ))
-                    ],
-                  ),
+                          ),
+                        ),
+                      )),
                   const SizedBox(height: 20),
-                  const Text(
-                    '- OR - ',
-                    style: TextStyle(
-                      fontFamily: 'Candara',
-                      color: blueClr,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 35),
-                  // buildAuthenticate(context),
-                  // buildAvailability(context),
-                  GestureDetector(
-                      onTap: () async {
-                        final isAuthenticated = await LocalAuthApi.authenticate();
+                  ButtonWidget(text: "LOG IN",
+                      onPressed: ()=>signIn(_emailController.text,_passwordController.text)),
+                  const SizedBox(height: 10),
 
-                        if (isAuthenticated) login();
-                      },
-                      child: SvgPicture.asset('assets/images/fig.svg'))
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/signup_screen');
+                    },
+                    child:const Text ('YOU DON\'T HAVE ANY ACCOUNT ? SGIN UP.',
+                      style: TextStyle(
+                        fontFamily: 'Candara',
+                        color: greenClr,
+                        fontSize: 8,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+
+
+                  ),
+
                 ],
               ),
             ),
@@ -213,81 +179,8 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-
-  loginPer() {
-    if (check()) {
-      login();
-    }
-  }
-
-  bool check() {
-    if (_emailController.text.isNotEmpty &&
-        _emailController.text.isNotEmpty &&
-        _passwordController.text.isNotEmpty) {
-      return true;
-    }
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: const Text('Enter Valid ID and Password'),
-        backgroundColor: Colors.red,
-        behavior: SnackBarBehavior.floating,
-        duration: const Duration(seconds: 2),
-        margin: const EdgeInsets.all(30),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-      ),
-    );
-    return false;
-  }
-
-  login() {
-    // FirebaseAuth.instance.signInWithEmailAndPassword(
-    //     email: 'ni@t.come',
-    //     password: 'test123');
-    Navigator.pushReplacementNamed(context, '/profile_screen');
-  }
-
-  Widget buildAvailability(BuildContext context) => buildButton(
-        text: 'Check Availability',
-        icon: Icons.event_available,
-        onClicked: () async {
-          final isAvailable = await LocalAuthApi.hasBiometrics();
-          final biometrics = await LocalAuthApi.getBiometrics();
-
-          final hasFingerprint = biometrics.contains(BiometricType.fingerprint);
-
-          showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-              title: const Text('Availability'),
-              content: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  buildText('Biometrics', isAvailable),
-                  buildText('Fingerprint', hasFingerprint),
-                ],
-              ),
-            ),
-          );
-        },
-      );
-
-  Widget buildText(String text, bool checked) => Container(
-        margin: const EdgeInsets.symmetric(vertical: 8),
-        child: Row(
-          children: [
-            checked
-                ? const Icon(Icons.check, color: Colors.green, size: 24)
-                : const Icon(Icons.close, color: Colors.red, size: 24),
-            const SizedBox(width: 12),
-            Text(text, style: const TextStyle(fontSize: 24)),
-          ],
-        ),
-      );
   void signIn(String email, String password) async {
-    if (_formkey.currentState!.validate()) {
+    if (_formKey.currentState!.validate()) {
       try {
         UserCredential userCredential =
         await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -297,14 +190,15 @@ class _LoginScreenState extends State<LoginScreen> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => ProfileScreen(),
+            builder: (context) => const ProfileScreen(),
           ),
         );
+
       } on FirebaseAuthException catch (e) {
         if (e.code == 'user-not-found') {
-          print('No user found for that email.');
+          showSnackBar(context, message: 'User Not Found', error: true);
         } else if (e.code == 'wrong-password') {
-          print('Wrong password provided for that user.');
+          showSnackBar(context, message: 'Wrong Password', error: true);
         }
       }
     }

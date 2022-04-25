@@ -32,6 +32,8 @@ class _MapPatScreenState extends State<MapPatScreen> {
   double shortlongtude = 34.359642;
   @override
   void initState() {
+    Provider.of<Position>(context,listen: false);
+    Provider.of<Future<List<Place>>>(context,listen: false);
     polylinePoints = PolylinePoints();
     Permission.location.request();
     super.initState();

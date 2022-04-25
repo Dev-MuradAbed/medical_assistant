@@ -1,7 +1,8 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:medical_assistant/provider/result_provider.dart';
 import 'package:medical_assistant/read_camera.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 
 import '../boold.dart';
 import '../theme.dart';
@@ -15,69 +16,129 @@ class HomeScanned extends StatefulWidget {
   State<HomeScanned> createState() => _HomeScannedState();
 }
 
-class _HomeScannedState extends State<HomeScanned>with SingleTickerProviderStateMixin {
-
+class _HomeScannedState extends State<HomeScanned>
+    with SingleTickerProviderStateMixin {
   final List<Tab> tabs = <Tab>[
-    Tab(child: Center(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Row(
-            children: const [
-              Text('Boold Perssure',style: TextStyle(fontSize: 14),),
-              SizedBox(width: 30,),
-              Icon(Icons.favorite, color: Colors.black,),
-            ],
-          ),
-          const Text('200/100 mmhg', style: TextStyle(fontSize: 12, color: Colors.black),),
-        ],
-      ),
-    ),),
     Tab(
-
       child: Center(
-      child: Container(child: Column(
-        children: [
-          Row(
-            children: const [
-              Text('Pluse Rate',style: TextStyle(fontSize: 14),),
-              SizedBox(width: 30,),
-              Icon(Icons.favorite, color: Colors.black,),
+        child: Builder(builder: (context) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Row(
+                children: const [
+                  Text(
+                    'Boold Perssure',
+                    style: TextStyle(fontSize: 14),
+                  ),
+                  SizedBox(
+                    width: 30,
+                  ),
+                  Icon(
+                    Icons.favorite,
+                    color: Colors.black,
+                  ),
+                ],
+              ),
+              Text(
+                Provider.of<ResultProvider>(context, listen: false)
+                    .resultList
+                    .last
+                    .sy !=
+                    null
+                    ? '${Provider.of<ResultProvider>(context).resultList.last.sy}/${Provider.of<ResultProvider>(context).resultList.last.dy} mmHg'
+                    : '120/100 mmHg',
+                style: const TextStyle(fontSize: 12),
+              ),
             ],
-          ),
-          const Text('74 bpm', style: TextStyle(fontSize: 12, color: Colors.black),),
-        ],
-      ),),
-    ),),
-    Tab(child: Center(
-      child: Column(
-        children: [
-          Row(
-            children: const [
-              Text('medical record',style: TextStyle(fontSize: 14),),
-              SizedBox(width: 30,),
-              Icon(Icons.favorite, color: Colors.black,),
-            ],
-          ),
-          const Text('200/100 mmhg / 74 bpm', style: TextStyle(fontSize: 12, color: Colors.black),),
-        ],
+          );
+        }),
       ),
-    ),),
+    ),
+    Tab(
+      child: Center(
+        child: Column(
+          children: [
+            Row(
+              children: const [
+                Text(
+                  'Plus Rate',
+                  style: TextStyle(fontSize: 14),
+                ),
+                SizedBox(
+                  width: 30,
+                ),
+                Icon(
+                  Icons.favorite,
+                  color: Colors.black,
+                ),
+              ],
+            ),
+            Text(
+              '',
+              style: TextStyle(fontSize: 12, color: Colors.black),
+            ),
+          ],
+        ),
+      ),
+    ),
+    Tab(
+      child: Center(
+        child: Builder(
+          builder: (context) {
+            return Column(
+              children: [
+                Row(
+                  children: const [
+                    Text(
+                      'medical record',
+                      style: TextStyle(fontSize: 14),
+                    ),
+                    SizedBox(
+                      width: 30,
+                    ),
+                    Icon(
+                      Icons.favorite,
+                      color: Colors.black,
+                    ),
+                  ],
+                ),
+                 Text(
+                   '${Provider.of<ResultProvider>(context).resultList.last.sy??'120'}/${Provider.of<ResultProvider>(context).resultList.last.dy??'70'} mmHg / ${Provider.of<ResultProvider>(context).resultList.last.heartRate??'60'}',
+                     // Provider.of<ResultProvider>(context, listen: false)
+                     //     .resultList
+                     //     .last
+                     //     .sy !=
+                     //     null
+                     //     ? '${Provider.of<ResultProvider>(context).resultList.last.sy}/${Provider.of<ResultProvider>(context).resultList.last.dy} mmHg'
+                     //     : '120/100 mmHg ',
 
+                  style: TextStyle(fontSize: 12, color: Colors.black),
+                ),
+              ],
+            );
+          }
+        ),
+      ),
+    ),
   ];
   late TabController _tabController;
+
   @override
   void initState() {
     super.initState();
+    Provider.of<ResultProvider>(context, listen: false).getRecord();
     Permission.microphone.request();
     _tabController = TabController(length: tabs.length, vsync: this);
   }
+
   @override
   void dispose() {
     _tabController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,16 +148,16 @@ class _HomeScannedState extends State<HomeScanned>with SingleTickerProviderState
         excludeHeaderSemantics: true,
         backgroundColor: Colors.white,
         elevation: 0,
-        title: const Text('Medical examinations',style:  TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Candara',
-                      fontSize: 20,
-                      color: blueClr),
-      ),
+        title: const Text(
+          'Medical examinations',
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Candara',
+              fontSize: 20,
+              color: blueClr),
+        ),
         bottom: TabBar(
-
-
-         labelPadding: const EdgeInsets.symmetric(horizontal: 30,vertical: 5),
+          labelPadding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
           controller: _tabController,
           tabs: tabs,
           indicatorColor: greenClr,
@@ -110,86 +171,14 @@ class _HomeScannedState extends State<HomeScanned>with SingleTickerProviderState
           ),
         ),
       ),
-      body:  TabBarView(
+      body: TabBarView(
         controller: _tabController,
-        children:const [
+        children: const [
           BloodRate(),
           PlusRate(),
           ListResult(),
         ],
       ),
-      // body: SafeArea(
-      //   child: Container(
-      //     padding: const EdgeInsets.symmetric(
-      //       horizontal: 25,
-      //     ),
-      //     child: Column(
-      //       crossAxisAlignment: CrossAxisAlignment.start,
-      //       children:  [
-      //         const Text(
-      //           'Medical examinations',
-      //           style:  TextStyle(
-      //               fontWeight: FontWeight.bold,
-      //               fontFamily: 'Candara',
-      //               fontSize: 20,
-      //               color: blueClr),
-      //         ),
-      //         const SizedBox(height: 20),
-      //         SingleChildScrollView(
-      //           scrollDirection: Axis.horizontal,
-      //           child: Row(
-      //             children: List.generate(3, (index) => GestureDetector(
-      //               onTap: () {
-      //                 setState(() {
-      //                   selectedIndex = index;
-      //                  print(selectedIndex);
-      //
-      //                 });
-      //               },
-      //               child: Container(
-      //                 margin: const EdgeInsets.only(right: 10),
-      //                 width: 160,
-      //                 decoration: BoxDecoration(
-      //                   borderRadius: BorderRadius.circular(25),
-      //                   color: selectedIndex==index?Color(0XFF19A049): const Color(0XFFF3F3F3),
-      //                 ),
-      //                 child:
-      //                 ListTile(
-      //                   title: Text(
-      //                     index==0?'Blood Pressure':index==1?'Heart Rate':'Medical Records',
-      //                     style: const TextStyle(
-      //                         fontWeight: FontWeight.bold,color: Colors.black, fontSize: 11, fontFamily: 'Candara'),
-      //                   ),
-      //                   trailing:index==0
-      //                       ?  Icon(Icons.favorite,color: selectedIndex==index?white:greenClr)
-      //                       : index==1
-      //                       ? Icon(Icons.monitor_heart_rounded,color: selectedIndex==index?white:greenClr)
-      //                       : Icon(Icons.list_alt_sharp,color: selectedIndex==index?white:greenClr),
-      //                   subtitle:  Text(
-      //                    index==0?'120/80 mmHg':index==1?'74 bpm':'120/80mmHg/74bpm'
-      //                     ,style:  TextStyle(
-      //                         color: selectedIndex==index?white:greenClr,
-      //                         fontSize: 9,
-      //                         fontFamily: 'Candara',
-      //                         fontWeight: FontWeight.bold),
-      //                   ),
-      //                 ),
-      //               ),
-      //             )),
-      //           ),
-      //         ),
-      //         Expanded(
-      //           child: ListView(
-      //             children: [
-      //               selectedIndex==0?BloodRate():selectedIndex==1?PlusRate():ListResult(),
-      //             ],
-      //           ),
-      //         )
-      //       ],
-      //     ),
-      //   ),
-      // ),
     );
   }
 }
-

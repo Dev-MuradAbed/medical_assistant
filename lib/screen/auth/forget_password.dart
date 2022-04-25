@@ -15,10 +15,10 @@ class ForgetPassword extends StatefulWidget {
 
 class _ForgetPasswordState extends State<ForgetPassword> {
   final _auth = FirebaseAuth.instance;
-  final _formkey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   late TextEditingController _emailController;
   late TextEditingController _phoneController;
-  String verificationIdReceieved='';
+  String verificationIdReceived='';
   @override
   void initState() {
     super.initState();
@@ -48,16 +48,16 @@ class _ForgetPasswordState extends State<ForgetPassword> {
           },
         ),
         title: const Text('Forget Password',style:
-          TextStyle(
-            color: blueClr,
-            fontSize: 25,
-            fontFamily: 'Candara',
-            fontWeight: FontWeight.bold,
-          ),),
+        TextStyle(
+          color: blueClr,
+          fontSize: 25,
+          fontFamily: 'Candara',
+          fontWeight: FontWeight.bold,
+        ),),
         centerTitle: true,
       ),
       body: Form(
-        key: _formkey,
+        key: _formKey,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -79,9 +79,8 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 fontWeight: FontWeight.w400,
               ),
             ),
-            const SizedBox(height: 15),
+            const SizedBox(height: 30),
 
-            const SizedBox(height: 15),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40,vertical: 10),
 
@@ -95,7 +94,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   size: 22,
                 ),
                 validator: (value) {
-                  if (value!.length == 0) {
+                  if (value!.isEmpty) {
                     return "Email cannot be empty";
                   }
                   if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
@@ -121,11 +120,11 @@ class _ForgetPasswordState extends State<ForgetPassword> {
     );
   }
   void _sendPasswordResetEmail(String email)async{
-    if(_formkey.currentState!.validate()){
+    if(_formKey.currentState!.validate()){
       await _auth.sendPasswordResetEmail(email: email).then((value) =>{
         Navigator.pushNamed(context, '/forget_screen')
       }).catchError((e){
-        print(e);
+
       });
     }
   }

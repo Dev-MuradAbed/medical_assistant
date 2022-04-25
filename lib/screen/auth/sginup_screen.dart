@@ -12,13 +12,13 @@ class SignupScreen extends StatefulWidget {
   const SignupScreen({Key? key}) : super(key: key);
 
   @override
-  State<SignupScreen> createState() => _Sginup_ScreenState();
+  State<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _Sginup_ScreenState extends State<SignupScreen>{
+class _SignupScreenState extends State<SignupScreen>{
   String _selectGender = 'Meal';
 
-  // List of items in our dropdown menu
+
   List genderList = [
     'Meal',
     'Female',
@@ -113,9 +113,9 @@ class _Sginup_ScreenState extends State<SignupScreen>{
                 ),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  //borderRadius: BorderRadius.all(Radius.circular(10)),
+
                   border: Border.all(color: greenClr, width: 2),
-                  //color: greenClr,
+
                   shape: BoxShape.circle,
                 ),
               ),
@@ -179,8 +179,8 @@ class _Sginup_ScreenState extends State<SignupScreen>{
                     iconSize: 30,
                     items: genderList
                         .map<DropdownMenuItem<String>>((value) =>
-                            DropdownMenuItem<String>(
-                                value: value.toString(), child: Text('$value')))
+                        DropdownMenuItem<String>(
+                            value: value.toString(), child: Text('$value')))
                         .toList(),
                     onChanged: (String? newValue) {
                       setState(() {
@@ -225,29 +225,29 @@ class _Sginup_ScreenState extends State<SignupScreen>{
     DateTime date = DateTime(1900);
     FocusScope.of(context).requestFocus(FocusNode());
     date = (await showDatePicker(
-          builder: (BuildContext context, Widget? child) {
-            return Theme(
-              data: ThemeData(
-                primarySwatch: Colors.grey,
-                splashColor: Colors.black,
-                textTheme: const TextTheme(
-                  subtitle1: TextStyle(color: Colors.black),
-                  button: TextStyle(color: Colors.black),
-                ),
-                colorScheme: const ColorScheme.light(
-                  primary: greenClr,
-                  secondary: blueClr,
-                ),
-                dialogBackgroundColor: Colors.white,
-              ),
-              child: child ?? Text(""),
-            );
-          },
-          context: context,
-          initialDate: DateTime.now(),
-          firstDate: DateTime(1900),
-          lastDate: DateTime(2100),
-        )) ??
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData(
+            primarySwatch: Colors.grey,
+            splashColor: Colors.black,
+            textTheme: const TextTheme(
+              subtitle1: TextStyle(color: Colors.black),
+              button: TextStyle(color: Colors.black),
+            ),
+            colorScheme: const ColorScheme.light(
+              primary: greenClr,
+              secondary: blueClr,
+            ),
+            dialogBackgroundColor: Colors.white,
+          ),
+          child: child ?? const Text(""),
+        );
+      },
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2100),
+    )) ??
         DateTime.now();
     setState(() {
       birthController.text = '${date.day}/${date.month}/${date.year}';
@@ -273,7 +273,7 @@ class _Sginup_ScreenState extends State<SignupScreen>{
         _idController.text.isNotEmpty &&
         phoneController.text.isNotEmpty &&
         otherPhoneController.text.isNotEmpty &&
-        // emailController.text.isNotEmpty &&
+
         _idController.text.isNotEmpty) {
       _firebaseAuth.createUserWithEmailAndPassword(
           email: emailController.text,
