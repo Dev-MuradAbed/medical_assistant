@@ -54,7 +54,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           children: [
             const SizedBox(height: 2),
             Container(
-              // padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
               height: 150,
               width: 150,
               child: Stack(
@@ -267,17 +266,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
 _fetch()async{
     final firebaseUser =  FirebaseAuth.instance.currentUser;
     if(firebaseUser!=null){
-      await FirebaseFirestore.instance.collection('NotesDoctor').
-  doc('Xu6LjBwQPHj6QmKDcjpl').get().then((ds){
-    idCardFirebase=ds.data()!['startTime'];
-    // nameFirebase=ds.data()!['name'];
-    //   birthFirebase =ds.data()!['birth'];
-    //   EmailFirebase =ds.data()!['email'];
-    //   genderFirebase =ds.data()!['gender'];
-    //   heightFirebase =ds.data()!['height'];
-    //   OtherPhoneFirebase =ds.data()!['otherPhone'];
-    //   PhoneFirebase =ds.data()!['phone'];
-    //   WeightFirebase =ds.data()!['weight'];
+      await FirebaseFirestore.instance.collection('UserData').
+  doc(FirebaseAuth.instance.currentUser!.uid).get().then((ds){
+    print(ds.data()!['name']);
+    idCardFirebase=ds.data()!['idCard'];
+    nameFirebase=ds.data()!['name'];
+      birthFirebase =ds.data()!['birth'];
+      EmailFirebase =ds.data()!['email'];
+      genderFirebase =ds.data()!['gender'];
+      heightFirebase =ds.data()!['height'];
+      OtherPhoneFirebase =ds.data()!['otherPhone'];
+      PhoneFirebase =ds.data()!['phone'];
+      WeightFirebase =ds.data()!['weight'];
       // if(ds.data()!['role']=='admain'){
       //   return print('User');
       // }else{

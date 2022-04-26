@@ -10,7 +10,7 @@ class TextInput extends StatefulWidget {
     this.sufWidget,
      this.hint,
      this.readOnly = false,
-    required this.label,
+     this.label,
      this.controller,
     this.obscureText = false,
      this.keyboardType=TextInputType.text,
@@ -19,7 +19,7 @@ class TextInput extends StatefulWidget {
   }) : super(key: key);
    // VoidCallback? onPressed;
    VoidCallback? onTap;
-  final String label;
+  final String? label;
   final Widget? widgetIcon;
   final Widget? sufWidget;
   final TextEditingController? controller;
@@ -34,7 +34,6 @@ class TextInput extends StatefulWidget {
 }
 
 class _TextInputState extends State<TextInput> {
-  String _selectGender = 'Meal';
 
   // List of items in our dropdown menu
   List genderList = [
@@ -56,7 +55,8 @@ class _TextInputState extends State<TextInput> {
         prefixIcon: widget.widgetIcon,
 
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        label: Container(
+        label:widget.label!=null?
+        Container(
           alignment: Alignment.center,
           width: 130,
           height: 35,
@@ -65,13 +65,13 @@ class _TextInputState extends State<TextInput> {
             borderRadius: BorderRadius.circular(15),
           ),
           child: Text(
-            widget.label,
+            '${widget.label}',
             style: const TextStyle(
               color: blueClr,
               fontSize: 12,
             ),
           ),
-        ),
+        ):null,
         hintText: widget.hint,
 
         enabledBorder: OutlineInputBorder(

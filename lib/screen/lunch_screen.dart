@@ -2,8 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medical_assistant/bottom_navigation_bar.dart';
-
-
 import '../widgets/grident_text.dart';
 import 'auth/login_screen.dart';
 
@@ -22,7 +20,6 @@ class _LunchScreenState extends State<LunchScreen> {
   @override
   void initState() {
     Future.delayed(const Duration(seconds:3), () async{
-
       FirebaseAuth.instance.authStateChanges().listen((user) {
         if (user != null) {
           Navigator.push(context, MaterialPageRoute(builder: (context) => BNBar()));
@@ -34,7 +31,6 @@ class _LunchScreenState extends State<LunchScreen> {
 
     });
 
-    // TODO: implement initState
     super.initState();
   }
 
