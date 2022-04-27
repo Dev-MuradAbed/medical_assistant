@@ -22,10 +22,10 @@ class _LunchScreenState extends State<LunchScreen> {
     Future.delayed(const Duration(seconds:3), () async{
       FirebaseAuth.instance.authStateChanges().listen((user) {
         if (user != null) {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => BNBar()));
+          Navigator.pushReplacementNamed(context, '/button_navigator_bar');
 
         }else{
-          Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+          Navigator.pushReplacementNamed(context, '/login_screen');
         }
       });
 

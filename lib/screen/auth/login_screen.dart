@@ -106,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> with Helper {
                               controller: _passwordController,
                               keyboardType: TextInputType.emailAddress,
                               widgetIcon: const Icon(
-                                Icons.person,
+                                Icons.lock,
                                 color: greenClr,
                                 size: 22,
                               ),

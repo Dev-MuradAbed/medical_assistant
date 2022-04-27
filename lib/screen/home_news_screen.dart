@@ -19,57 +19,25 @@ class HomeNewsScreen extends StatefulWidget {
 class _Home_News_ScrrenState extends State<HomeNewsScreen>
     with SingleTickerProviderStateMixin {
   String imagenull="https://www.aljazeera.net/wp-content/uploads/2021/09/GettyImages-521329128.jpg?resize=770%2C513";
-  final List<Tab> tabs = <Tab>[
-    const Tab(text: 'General'),
-    const Tab(text: 'Techonology'),
-    const Tab(text: 'Sports'),
-    const Tab(text: 'Business'),
-    const Tab(text: 'Entertainment'),
-    const Tab(text: 'Health'),
-  ];
-  late TabController _tabController;
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: tabs.length, vsync: this);
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
+          iconTheme: IconThemeData(color: Colors.black),
+
           elevation: 0,
           backgroundColor: Colors.white,
           title: const Text(
             'Medical Assistant',
             style: TextStyle(color: blueClr),
-          ),
-          bottom: TabBar(
-            isScrollable: true,
-            unselectedLabelColor: Colors.grey,
-            labelColor: Colors.white,
-            indicatorSize: TabBarIndicatorSize.tab,
-            indicator: const BubbleTabIndicator(
-              indicatorHeight: 25.0,
-              indicatorColor: Colors.teal,
-              tabBarIndicatorSize: TabBarIndicatorSize.tab,
-            ),
-            tabs: tabs,
-            controller: _tabController,
+            textAlign: TextAlign.start,
           ),
         ),
-        body: TabBarView(
-          controller: _tabController,
-          children: tabs.map((tab) {
-            return FutureBuilder(
-                future: feachNewsByCategory(tab.text!),
+        body:
+             FutureBuilder(
+                future: feachNewsByCategory('Health'),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     return Center(
@@ -99,6 +67,7 @@ class _Home_News_ScrrenState extends State<HomeNewsScreen>
                     return SafeArea(
                         child: Column(
                       children: [
+                        SizedBox(height: 10,),
                         CarouselSlider(
                           options: CarouselOptions(
                               aspectRatio: 16 / 9,
@@ -220,8 +189,8 @@ class _Home_News_ScrrenState extends State<HomeNewsScreen>
                       child: CircularProgressIndicator(),
                     );
                   }
-                });
-          }).toList(),
-        ));
+                })
+
+        );
   }
 }

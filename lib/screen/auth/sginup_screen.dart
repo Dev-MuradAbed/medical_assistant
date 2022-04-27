@@ -1,12 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:medical_assistant/utils/helpers.dart';
 
-
+import '../../database/storage_fire.dart';
 import '../../theme.dart';
 import '../../widgets/button_widget.dart';
 import '../../widgets/text_field.dart';
-
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({Key? key}) : super(key: key);
@@ -15,15 +16,16 @@ class SignupScreen extends StatefulWidget {
   State<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _SignupScreenState extends State<SignupScreen>{
+class _SignupScreenState extends State<SignupScreen> with Helper{
   String _selectGender = 'Meal';
-
-
+  bool isPassword = true;
+  final Storage storage = Storage();
+  final ValueNotifier<String> _imageUrl = ValueNotifier('');
   List genderList = [
     'Meal',
     'Female',
   ];
-  late TextEditingController _idController;
+  // late TextEditingController _idController;
   late TextEditingController _passwordController;
   late TextEditingController _passwordConfirmController;
   late TextEditingController nameController;
@@ -34,11 +36,12 @@ class _SignupScreenState extends State<SignupScreen>{
   late TextEditingController genderController;
   late TextEditingController heightController;
   late TextEditingController weightController;
+
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   @override
   void initState() {
     // TODO: implement initState
-    _idController = TextEditingController();
+    // _idController = TextEditingController();
     _passwordController = TextEditingController();
     _passwordConfirmController = TextEditingController();
     otherPhoneController = TextEditingController();
@@ -57,7 +60,7 @@ class _SignupScreenState extends State<SignupScreen>{
   void dispose() {
     // TODO: implement dispose
     _passwordConfirmController.dispose();
-    _idController.dispose();
+    // _idController.dispose();
     _passwordController.dispose();
     otherPhoneController.dispose();
     nameController.dispose();
@@ -103,27 +106,51 @@ class _SignupScreenState extends State<SignupScreen>{
           child: Column(
             children: [
               const SizedBox(height: 2),
-              Container(
-                height: 100,
-                width: 100,
-                child: const Icon(
-                  Icons.camera_alt_outlined,
-                  size: 36,
-                  color: blueClr,
-                ),
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
+              ValueListenableBuilder(
+                  valueListenable: _imageUrl,
+                  builder: (context, value, child) {
+                    return Container(
+                      height: 100,
+                      width: 100,
+                      child: IconButton(
+                        onPressed: () async {
+                          final result = await FilePicker.platform.pickFiles(
+                            allowMultiple: false,
+                            type: FileType.custom,
+                            allowedExtensions: ['jpg', 'png', 'jpeg'],
+                          );
+                          if (result == null) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text('No filere Selected')));
+                            return null;
+                          }
+                          final path = result.files.single.path!;
+                          final filename = result.files.single.name;
+                          print(filename);
+                          print(path);
 
-                  border: Border.all(color: greenClr, width: 2),
-
-                  shape: BoxShape.circle,
-                ),
-              ),
+                          _imageUrl.value = await storage.getImage(filename);
+                          print(_imageUrl);
+                        },
+                        icon: const Icon(
+                          Icons.camera_alt_outlined,
+                          size: 36,
+                          color: blueClr,
+                        ),
+                      ),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(value.toString()),
+                          fit: BoxFit.cover,
+                        ),
+                        border: Border.all(color: greenClr, width: 2),
+                        shape: BoxShape.circle,
+                      ),
+                    );
+                  }),
               const SizedBox(height: 20),
-              TextInput(
-                  label: 'User ID',
-                  controller: _idController,
-                  keyboardType: TextInputType.number),
               const SizedBox(height: 30),
               TextInput(
                 label: 'User Name',
@@ -179,8 +206,8 @@ class _SignupScreenState extends State<SignupScreen>{
                     iconSize: 30,
                     items: genderList
                         .map<DropdownMenuItem<String>>((value) =>
-                        DropdownMenuItem<String>(
-                            value: value.toString(), child: Text('$value')))
+                            DropdownMenuItem<String>(
+                                value: value.toString(), child: Text('$value')))
                         .toList(),
                     onChanged: (String? newValue) {
                       setState(() {
@@ -203,14 +230,76 @@ class _SignupScreenState extends State<SignupScreen>{
                   keyboardType: TextInputType.number),
               const SizedBox(height: 30),
               TextInput(
-                  label: 'Password',
-                  controller: _passwordController,
-                  keyboardType: TextInputType.number),
+                label: 'Enter Password',
+                controller: _passwordController,
+                keyboardType: TextInputType.emailAddress,
+
+                obscureText: isPassword,
+                sufWidget: IconButton(
+                  icon: Icon(
+                    isPassword
+                        ? Icons.visibility_off_outlined
+                        : Icons.visibility_outlined,
+                    color: greenClr,
+                    size: 22,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      isPassword = !isPassword;
+                    });
+                  },
+                ),
+                validator: (value) {
+                  RegExp regex = RegExp(r'^.{6,}$');
+                  if (value!.isEmpty) {
+                    return "Password cannot be empty";
+                  }
+                  if (!regex.hasMatch(value)) {
+                    return ("please enter valid password min. 6 character");
+                  } else {
+                    return null;
+                  }
+                },
+                onSaved: (value) {
+                  _passwordController.text = value!;
+                },
+              ),
               const SizedBox(height: 30),
               TextInput(
-                  label: 'confirm Password',
-                  controller: _passwordConfirmController,
-                  keyboardType: TextInputType.number),
+                // label: 'password',
+                label: 'Confirm Password',
+                controller: _passwordConfirmController,
+                keyboardType: TextInputType.emailAddress,
+                obscureText: isPassword,
+                sufWidget: IconButton(
+                  icon: Icon(
+                    isPassword
+                        ? Icons.visibility_off_outlined
+                        : Icons.visibility_outlined,
+                    color: greenClr,
+                    size: 22,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      isPassword = !isPassword;
+                    });
+                  },
+                ),
+                validator: (value) {
+                  RegExp regex = RegExp(r'^.{6,}$');
+                  if (value!.isEmpty) {
+                    return "Password cannot be empty";
+                  }
+                  if (!regex.hasMatch(value)) {
+                    return ("please enter valid password min. 6 character");
+                  } else {
+                    return null;
+                  }
+                },
+                onSaved: (value) {
+                  _passwordController.text = value!;
+                },
+              ),
               const SizedBox(height: 30),
               ButtonWidget(text: "Create", onPressed: perSingUp),
               const SizedBox(height: 30),
@@ -225,29 +314,29 @@ class _SignupScreenState extends State<SignupScreen>{
     DateTime date = DateTime(1900);
     FocusScope.of(context).requestFocus(FocusNode());
     date = (await showDatePicker(
-      builder: (BuildContext context, Widget? child) {
-        return Theme(
-          data: ThemeData(
-            primarySwatch: Colors.grey,
-            splashColor: Colors.black,
-            textTheme: const TextTheme(
-              subtitle1: TextStyle(color: Colors.black),
-              button: TextStyle(color: Colors.black),
-            ),
-            colorScheme: const ColorScheme.light(
-              primary: greenClr,
-              secondary: blueClr,
-            ),
-            dialogBackgroundColor: Colors.white,
-          ),
-          child: child ?? const Text(""),
-        );
-      },
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime(2100),
-    )) ??
+          builder: (BuildContext context, Widget? child) {
+            return Theme(
+              data: ThemeData(
+                primarySwatch: Colors.grey,
+                splashColor: Colors.black,
+                textTheme: const TextTheme(
+                  subtitle1: TextStyle(color: Colors.black),
+                  button: TextStyle(color: Colors.black),
+                ),
+                colorScheme: const ColorScheme.light(
+                  primary: greenClr,
+                  secondary: blueClr,
+                ),
+                dialogBackgroundColor: Colors.white,
+              ),
+              child: child ?? const Text(""),
+            );
+          },
+          context: context,
+          initialDate: DateTime.now(),
+          firstDate: DateTime(1900),
+          lastDate: DateTime(2100),
+        )) ??
         DateTime.now();
     setState(() {
       birthController.text = '${date.day}/${date.month}/${date.year}';
@@ -255,14 +344,14 @@ class _SignupScreenState extends State<SignupScreen>{
   }
 
   void perSingUp() {
-
-    if(checkSignup()){
+    if (checkSignup()) {
       singUp();
     }
   }
 
-  bool checkSignup() {
-    if (nameController.text.isNotEmpty &&
+  checkSignup() async {
+    if (
+        nameController.text.isNotEmpty &&
         birthController.text.isNotEmpty &&
         genderController.text.isNotEmpty &&
         heightController.text.isNotEmpty &&
@@ -270,29 +359,75 @@ class _SignupScreenState extends State<SignupScreen>{
         _passwordController.text.isNotEmpty &&
         _passwordConfirmController.text.isNotEmpty &&
         _passwordController.text == _passwordConfirmController.text &&
-        _idController.text.isNotEmpty &&
         phoneController.text.isNotEmpty &&
-        otherPhoneController.text.isNotEmpty &&
+        otherPhoneController.text.isNotEmpty
+    ) {
+      try{
+        _firebaseAuth
+            .createUserWithEmailAndPassword(
+            email: emailController.text, password: _passwordController.text)
+            .then((value) async {
+              //TODO: add generated id to user
+          await FirebaseFirestore.instance
+              .collection('UserUid')
+              .doc('123963'
+              // _idController.text
+          )
+              .set({'id': value.user!.uid});
 
-        _idController.text.isNotEmpty) {
-      _firebaseAuth.createUserWithEmailAndPassword(
-          email: emailController.text,
-          password: _passwordController.text).then((value){
-        FirebaseFirestore.instance.collection("UserData").
-        doc(value.user!.uid).set({
-          'email':emailController.text,
-          'name':nameController.text,
-          'birth':birthController.text,
-          'gender':genderController.text,
-          'phone':phoneController.text,
-          'otherPhone':otherPhoneController.text,
-          'height':heightController.text,
-          'weight':weightController.text,
-          'idCard':_idController.text,
-          'role':'user',
+        await FirebaseFirestore.instance
+            .collection("UserData")
+            .doc(
+            value.user!.uid
+        )
+            .set({
+          'image':_imageUrl.value,
+          'name': nameController.text,
+          'birth': birthController.text,
+          'email': emailController.text,
+          'name': nameController.text,
+          'birth': birthController.text,
+          'gender': genderController.text,
+          'phone': phoneController.text,
+          'otherPhone': otherPhoneController.text,
+          'height': heightController.text,
+          'weight': weightController.text,
+          'role': 'user',
         });
-      });
-      return true;
+        });
+       /* await FirebaseFirestore.instance
+            .collection('UserUid')
+            .doc(
+          '123963'
+            // _idController.text
+        )
+            .get()
+            .then((val) async {
+          await FirebaseFirestore.instance
+              .collection("UserData")
+              .doc(
+              val.data()!['id']
+          )
+              .set({
+            'image':_imageUrl.value,
+            'name': nameController.text,
+            'birth': birthController.text,
+            'email': emailController.text,
+            'name': nameController.text,
+            'birth': birthController.text,
+            'gender': genderController.text,
+            'phone': phoneController.text,
+            'otherPhone': otherPhoneController.text,
+            'height': heightController.text,
+            'weight': weightController.text,
+            'idCard': _idController.text,
+            'role': 'user',
+          });
+        });*/
+      }  on FirebaseAuthException catch (e) {
+    showSnackBar(context, message: e.code, error: true);
+      }
+
     }
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -310,6 +445,6 @@ class _SignupScreenState extends State<SignupScreen>{
   }
 
   singUp() {
-    Navigator.pushReplacementNamed(context, '/home_screen');
+    Navigator.pushReplacementNamed(context, '/button_navigator_bar');
   }
 }

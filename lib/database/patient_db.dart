@@ -60,6 +60,20 @@ class DbController {
         'yearTime STRING, '
         'monthTime STRING)',
       );
+      db.execute(
+        'CREATE TABLE profile ('
+            'id INTEGER PRIMARY KEY AUTOINCREMENT, '
+            'name STRING, '
+            'email STRING, '
+            'phone STRING, '
+            'other STRING, '
+            'gender STRING, '
+            'height STRING, '
+            'wight STRING, '
+            'birthday STRING, '
+            'image STRING, '
+            'type STRING)',
+      );
     });
     print('Database created');
   }

@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:medical_assistant/provider/profile_provider.dart';
 import 'package:medical_assistant/provider/result_provider.dart';
 import 'package:medical_assistant/provider/todo_provider/todo_doctor_provider.dart';
 import 'package:medical_assistant/provider/todo_provider/todo_patient_provider.dart';
+import 'package:medical_assistant/s.dart';
 import 'package:medical_assistant/screen/auth/forget_password.dart';
 import 'package:medical_assistant/screen/auth/login_screen.dart';
 import 'package:medical_assistant/screen/auth/sginup_screen.dart';
@@ -25,7 +27,7 @@ Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await DbController().initDatabase();
-  // await DbDoctorController().initDatabase();
+  customErroerScreens();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -72,6 +74,9 @@ class MedicalAssist extends StatelessWidget {
         ),
         ChangeNotifierProvider<TaskDoctorProvider>(
           create: (context) => TaskDoctorProvider(),
+        ),
+        ChangeNotifierProvider<ProfileProvider>(
+          create: (context) => ProfileProvider(),
         ),
         ChangeNotifierProvider<ResultProvider>(
           create: (context) => ResultProvider(),
