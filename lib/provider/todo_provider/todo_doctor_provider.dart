@@ -23,17 +23,21 @@ class TaskDoctorProvider extends ChangeNotifier {
   //   }
   // }
 
-// create addnote provider if note not null and id note not equal 0 and not exixt in sql add in list
-  addTask({required DoctorTask task,required String idnote})async{
-    bool check = await _taskController.FutureCheckId(idnote);
-    if(check == false){
-      await _taskController.insert(task);
-      listTask.add(task);
-      notifyListeners();
+  Future<int> addTask({required DoctorTask task,required String idNote}) async {
+    var check=await _taskController.FutureCheckId(idNote);
+    int newRow = await _taskController.insert(task);
+    if(check==false){
+      print("addTask");
+      if (newRow != 0) {
+        listTask.add(task);
+        notifyListeners();
+      }
+    }else{
+      print('idNote is exist');
     }
-    else{
-      print('id note is exixt');
-    }
+
+
+    return newRow;
   }
 
   Future<void>getTask() async {

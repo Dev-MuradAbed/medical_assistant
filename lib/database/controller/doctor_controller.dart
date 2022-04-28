@@ -6,8 +6,14 @@ import '../patient_db.dart';
 class TaskDoctorController{
   Database database = DbController().database;
   Future<int> insert(DoctorTask task) async {
+    print("inserting task${task.idNote}");
     print('insert function code doctorTasks');
-    return await database.insert('doctor', task.toJson());
+     await database.insert('doctor', task.toJson());
+     return await database.query('doctor').then((value) {
+       print('value is $value');
+       return value.length;
+     });
+
   }
 
   Future<int> delete(int id) async {
@@ -32,21 +38,20 @@ class TaskDoctorController{
     WHERE id = ?  
     ''', [1, id]);
   }
-  Future<bool> FutureCheckId(String id) async {
-    //FlBs7s9qc83cCmQflWN9
+  Future<bool> FutureCheckId(String idNote) async {
     print('check id function code');
     var c= await database.rawQuery('''
     SELECT * 
     FROM doctor 
-    WHERE id = ?  
-    ''', [id]);
-if(c.contains(id) ){
+    WHERE idNote = ?  
+    ''', [idNote]);
+if(c.contains(idNote)&&c.isEmpty){
   print("check     ${c.length}");
-  return true;
+  return false;
 }else
 {
   print("check  fa    ${c.length}");
-  return false;
+  return true;
 }
   }
 }

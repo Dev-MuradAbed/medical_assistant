@@ -247,7 +247,7 @@ class Assistant with Helper {
               context: context,
               title: 'Congratulation',
               message: 'You have a GOOD heart rate');
-          print('GOOD');
+
           print('GOOD');
         } else if (bmp >= 68 && bmp <= 71) {
           ShowDilog(

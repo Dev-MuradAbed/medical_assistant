@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class DoctorTask {
   int? id;
   String? idNote;

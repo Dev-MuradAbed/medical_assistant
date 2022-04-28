@@ -417,8 +417,7 @@ class HomeRateView extends State<PlusRate>
       debugPrint("test $value");
       Assistant.CheckStausBMP(
           Gendar: 'mael', Age: 20, Bmp: _bpm, context: context);
-      // debugPrint(
-      //     "The Length ${Provider.of<ResultProvider>(context, listen: false).resultList.length}  $_bpm}");
+
     } catch (e) {
       debugPrint("$e");
     }
