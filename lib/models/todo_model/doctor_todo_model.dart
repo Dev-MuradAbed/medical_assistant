@@ -2,6 +2,7 @@ import 'dart:convert';
 
 class DoctorTask {
   int? id;
+  String? idNote;
   String? title;
   String? note;
   int? isCompleted;
@@ -23,11 +24,14 @@ class DoctorTask {
     this.color,
     this.remind,
     this.repeat,
+    this.idNote
   });
 
   Map<String, dynamic> toJson() {
+    print('DoctorTask toJson');
     return {
       'id': id,
+      'idNote':idNote,
       'title': title,
       'note': note,
       'isCompleted': isCompleted,
@@ -41,6 +45,7 @@ class DoctorTask {
   }
 
   DoctorTask.fromJson(Map<String, dynamic> json) {
+    print('DoctorTask fromJson');
     id = json['id'];
     title = json['title'];
     note = json['note'];
@@ -51,5 +56,6 @@ class DoctorTask {
     color = json['color'];
     remind = json['remind'];
     repeat = json['repeat'];
+    idNote=json['idNote'];
   }
 }

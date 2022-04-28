@@ -43,6 +43,7 @@ class DbController {
         'color INTEGER, '
         'startTime STRING, '
         'endTime STRING, '
+        'idNote STRING, '
         'date INTEGER, '
         'remind INTEGER, '
         'repeat STRING)',

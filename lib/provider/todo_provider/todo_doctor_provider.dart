@@ -12,6 +12,7 @@ class TaskDoctorProvider extends ChangeNotifier {
   List<DoctorTask> listTask = <DoctorTask>[];
 
   Future<int> addTask({required DoctorTask task}) async {
+    print('task: ${task.title}');
     int newRow = await _taskController.insert(task);
     if (newRow != 0) {
       listTask.add(task);
@@ -21,6 +22,7 @@ class TaskDoctorProvider extends ChangeNotifier {
   }
 
   Future<void>getTask() async {
+    print('getTask');
     final List<Map<String, dynamic>> tasks = await _taskController.query();
     listTask = tasks.map((Map<String, dynamic> task) => DoctorTask.fromJson(task)).toList();
     notifyListeners();
