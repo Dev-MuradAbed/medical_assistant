@@ -10,15 +10,30 @@ import '../../models/todo_model/patient_todo_model.dart';
 class TaskDoctorProvider extends ChangeNotifier {
   final TaskDoctorController _taskController = TaskDoctorController();
   List<DoctorTask> listTask = <DoctorTask>[];
+/*
+* create addDoctor from model DoctorTask check model idNote if new row not equal 0 and id note in sql not frequatity add in list
+* */
 
-  Future<int> addTask({required DoctorTask task}) async {
-    print('task: ${task.title}');
-    int newRow = await _taskController.insert(task);
-    if (newRow != 0) {
+  // addTask({required DoctorTask task}) async {
+  //   print('addTask');
+  //   if (task.idNote != 0 && task.idNote != null) {
+  //     await _taskController.insert(task);
+  //     listTask.add(task);
+  //     notifyListeners();
+  //   }
+  // }
+
+// create addnote provider if note not null and id note not equal 0 and not exixt in sql add in list
+  addTask({required DoctorTask task,required String idnote})async{
+    bool check = await _taskController.FutureCheckId(idnote);
+    if(check == false){
+      await _taskController.insert(task);
       listTask.add(task);
       notifyListeners();
     }
-    return newRow;
+    else{
+      print('id note is exixt');
+    }
   }
 
   Future<void>getTask() async {

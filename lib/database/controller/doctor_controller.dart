@@ -32,16 +32,21 @@ class TaskDoctorController{
     WHERE id = ?  
     ''', [1, id]);
   }
-  Future<bool> FutureCheckId(int id) async {
+  Future<bool> FutureCheckId(String id) async {
+    //FlBs7s9qc83cCmQflWN9
     print('check id function code');
     var c= await database.rawQuery('''
     SELECT * 
     FROM doctor 
     WHERE id = ?  
     ''', [id]);
-    if(c.isEmpty){
-      return false;
-    }
-    return true;
+if(c.contains(id) ){
+  print("check     ${c.length}");
+  return true;
+}else
+{
+  print("check  fa    ${c.length}");
+  return false;
+}
   }
 }

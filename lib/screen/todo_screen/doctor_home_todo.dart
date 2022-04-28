@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:medical_assistant/database/controller/doctor_controller.dart';
 import 'package:medical_assistant/models/todo_model/doctor_todo_model.dart';
 import 'package:medical_assistant/utils/helpers.dart';
 import 'package:provider/provider.dart';
@@ -13,13 +14,15 @@ import '../../size_config.dart';
 import '../../theme.dart';
 import '../../widgets/todo_widget/patient_todo_widget/doctor_task_tile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 class DoctorHomeTodo extends StatefulWidget {
   const DoctorHomeTodo({Key? key}) : super(key: key);
 
   @override
   State<DoctorHomeTodo> createState() => _DoctorHomeTodoState();
 }
-class _DoctorHomeTodoState extends State<DoctorHomeTodo> with Helper{
+
+class _DoctorHomeTodoState extends State<DoctorHomeTodo> with Helper {
   late DoctorNotificationHelper notifyHelper;
   SizeConfig size = SizeConfig();
 
@@ -30,8 +33,9 @@ class _DoctorHomeTodoState extends State<DoctorHomeTodo> with Helper{
     notifyHelper = DoctorNotificationHelper(context);
     notifyHelper.initializeNotification();
     notifyHelper.requestIOSPermissions();
-    Provider.of<TaskDoctorProvider>(context,listen: false).getTask();
+    Provider.of<TaskDoctorProvider>(context, listen: false).getTask();
   }
+
   DateTime _selectedTime = DateTime.now();
   @override
   Widget build(BuildContext context) {
@@ -59,11 +63,10 @@ class _DoctorHomeTodoState extends State<DoctorHomeTodo> with Helper{
                 initialData: [],
                 child: Consumer<TaskDoctorProvider>(
                   builder: (context, taskProvider, child) {
-                    return Column(
-                        children: [
-                          _addDateTask(),
-                          _showTask(),
-                        ]);
+                    return Column(children: [
+                      _addDateTask(),
+                      _showTask(),
+                    ]);
                   },
                 ),
               );
@@ -74,131 +77,115 @@ class _DoctorHomeTodoState extends State<DoctorHomeTodo> with Helper{
     );
   }
 
-
-
-
-
-
   AppBar _appBar() => AppBar(
-    backgroundColor: Colors.white,
-    elevation: 0,
-    leading: const CircleAvatar(
-      radius: 20,
-      backgroundImage: AssetImage('assets/images/person.jpeg'),
-    ),
-    actions: [
-      IconButton(
-        color: Colors.black,
-        icon: const Icon(
-          Icons.cleaning_services_outlined,
-          size: 24,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: const CircleAvatar(
+          radius: 20,
+          backgroundImage: AssetImage('assets/images/person.jpeg'),
         ),
-        onPressed: () {
-          notifyHelper.flutterLocalNotificationsPlugin.cancelAll();
-          Provider.of<TaskDoctorProvider>(context, listen: false)
-              .deleteAllTask();
-        },
-      ),
-      const SizedBox(width: 10)
-    ],
-  );
+        actions: [
+          IconButton(
+            color: Colors.black,
+            icon: const Icon(
+              Icons.cleaning_services_outlined,
+              size: 24,
+            ),
+            onPressed: () {
+              notifyHelper.flutterLocalNotificationsPlugin.cancelAll();
+              Provider.of<TaskDoctorProvider>(context, listen: false)
+                  .deleteAllTask();
+            },
+          ),
+          const SizedBox(width: 10)
+        ],
+      );
 
   _showTask() {
     return Expanded(
         child: Provider.of<TaskDoctorProvider>(context).listTask.isEmpty
-            ?noTask(_onRefresh,
-            "Don't have any Task\nAdd new Task to make your Day productive")
+            ? noTask(_onRefresh,
+                "Don't have any Task\nAdd new Task to make your Day productive")
             : RefreshIndicator(
-          onRefresh: _onRefresh,
-          child: ListView.builder(
-            scrollDirection:
-            SizeConfig.orientation == Orientation.landscape
-                ? Axis.horizontal
-                : Axis.vertical,
-            itemCount: Provider.of<TaskDoctorProvider>(context).listTask.length,
-            itemBuilder: (BuildContext context, int index) {
-              var task =
-              Provider.of<TaskDoctorProvider>(context).listTask[index];
+                onRefresh: _onRefresh,
+                child: ListView.builder(
+                  scrollDirection:
+                      SizeConfig.orientation == Orientation.landscape
+                          ? Axis.horizontal
+                          : Axis.vertical,
+                  itemCount:
+                      Provider.of<TaskDoctorProvider>(context).listTask.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    var task = Provider.of<TaskDoctorProvider>(context)
+                        .listTask[index];
 
-              if (task.repeat == 'Delay' ||
-                  task.date == DateFormat.yMd().format(_selectedTime) ||
-                  (task.repeat == 'Weekly' &&
-                      _selectedTime
-                          .difference(
-                          DateFormat.yMd().parse(task.date!))
-                          .inDays %
-                          7 ==
-                          0) ||
-                  (task.repeat == 'Monthly' &&
-                      DateFormat.yMd().parse(task.date!).day ==
-                          _selectedTime.day)) {
-                var date =
-                DateFormat.Hm().parse(task.startTime.toString());
-                var myTime = DateFormat('HH:mm').format(date);
-                DoctorNotificationHelper(context).scheduledNotification(
-                    int.parse(myTime.toString().split(':')[0]),
-                    int.parse(myTime.toString().split(':')[1]),
-                    task);
-                return AnimationConfiguration.staggeredList(
-                  position: index,
-                  duration: const Duration(milliseconds: 1500),
-                  child: SlideAnimation(
-                    horizontalOffset: 300,
-                    child: FadeInAnimation(
-                      child: DoctorTaskTile(task),
-                    ),
-                  ),
-                );
-              } else {
-                return Container();
-              }
-            },
-          ),
-        ));
+                    if (task.repeat == 'Delay' ||
+                        task.date == DateFormat.yMd().format(_selectedTime) ||
+                        (task.repeat == 'Weekly' &&
+                            _selectedTime
+                                        .difference(
+                                            DateFormat.yMd().parse(task.date!))
+                                        .inDays %
+                                    7 ==
+                                0) ||
+                        (task.repeat == 'Monthly' &&
+                            DateFormat.yMd().parse(task.date!).day ==
+                                _selectedTime.day)) {
+                      var date =
+                          DateFormat.Hm().parse(task.startTime.toString());
+                      var myTime = DateFormat('HH:mm').format(date);
+                      DoctorNotificationHelper(context).scheduledNotification(
+                          int.parse(myTime.toString().split(':')[0]),
+                          int.parse(myTime.toString().split(':')[1]),
+                          task);
+                      return AnimationConfiguration.staggeredList(
+                        position: index,
+                        duration: const Duration(milliseconds: 1500),
+                        child: SlideAnimation(
+                          horizontalOffset: 300,
+                          child: FadeInAnimation(
+                            child: DoctorTaskTile(task),
+                          ),
+                        ),
+                      );
+                    } else {
+                      return Container();
+                    }
+                  },
+                ),
+              ));
   }
 
   _feach() async {
+    List<DoctorTask> map = [];
     final firebaseUser = FirebaseAuth.instance.currentUser;
-    await  FirebaseFirestore.instance.
-    collection('UserData').
-    doc(firebaseUser!.uid).collection("DoctorNote").get().then((value){
-var note =Provider.of<TaskDoctorProvider>(context, listen: false);
-        for(var element in value.docs){
-          if(Provider.of<TaskDoctorProvider>(context).listTask.isEmpty||!note.listTask.contains(element.id)){
+    await FirebaseFirestore.instance
+        .collection('UserData')
+        .doc(firebaseUser!.uid)
+        .collection("DoctorNote")
+        .get()
+        .then((value) {
+      var note = Provider.of<TaskDoctorProvider>(context, listen: false);
+      for (var element in value.docs) {
+        print("fore ele");
+        TaskDoctorController().insert(DoctorTask(
 
-note.addTask(
-      task: DoctorTask(
-        title: element['title'],
-        remind: element['remind'],
-        note: element['note'],
-        date: element['date'],
-        startTime: element['startTime'],
-        endTime: element['endTime'],
-        repeat: element['repeat'],
-        isCompleted: element['isCompleted'],
-        color: element['color'],
-      ) );
-
-          }
-          // print("add Task${Provider.of<TaskDoctorProvider>(context, listen: false).listTask.length}");
-
-            // .addTask(
-            //   task: DoctorTask(
-            //     title: element['title'],
-            //     remind: element['remind'],
-            //     note: element['note'],
-            //     date: element['date'],
-            //     startTime: element['startTime'],
-            //     endTime: element['endTime'],
-            //     repeat: element['repeat'],
-            //     isCompleted: element['isCompleted'],
-            //     color: element['color'],
-            //   )
-          // );
-
-
-          print(element['note']);
-        }
+        ));
+        note.addTask(
+          idnote: element.id,
+            task: DoctorTask(
+                title: element['title'].toString(),
+                note: element['note'].toString(),
+                date: element['date'].toString(),
+                remind: element['remind'],
+                startTime: element['remind'].toString(),
+                endTime: element['endTime'].toString(),
+                isCompleted: element['isCompleted'],
+                repeat: element['repeat'].toString(),
+                color: element['color'],
+                idNote: element.id.toString()));
+        print(element.id);
+      }
 
       print(value.docs.length);
     });
@@ -215,25 +202,24 @@ note.addTask(
 
     // });
 
-
-      // try{
-      //   print("Here");
-      //   print(note.data()!['title']);
-      //   await Provider.of<TaskDoctorProvider>(context, listen: false).addTask(task:DoctorTask(
-      //     title: note.data()!['title'],
-      //     note: note.data()!['note'],
-      //     color: note.data()!['color'],
-      //     isCompleted: note.data()!['isCompleted'],
-      //     startTime: note.data()!['startTime'],
-      //     endTime: note.data()!['endTime'],
-      //     date: note.data()!['date'],
-      //     remind: note.data()!['remind'],
-      //     repeat: note.data()!['repeat'],
-      //   ));
-      //   print("End");
-      // }catch(e){
-      //   print(e);
-      // }
+    // try{
+    //   print("Here");
+    //   print(note.data()!['title']);
+    //   await Provider.of<TaskDoctorProvider>(context, listen: false).addTask(task:DoctorTask(
+    //     title: note.data()!['title'],
+    //     note: note.data()!['note'],
+    //     color: note.data()!['color'],
+    //     isCompleted: note.data()!['isCompleted'],
+    //     startTime: note.data()!['startTime'],
+    //     endTime: note.data()!['endTime'],
+    //     date: note.data()!['date'],
+    //     remind: note.data()!['remind'],
+    //     repeat: note.data()!['repeat'],
+    //   ));
+    //   print("End");
+    // }catch(e){
+    //   print(e);
+    // }
 
     // await FirebaseFirestore.instance.collection('NotesDoctor').get().then((value) async {
     //   print(value.docs.length);
@@ -303,7 +289,6 @@ note.addTask(
       ),
     );
   }
-
 
   Future<void> _onRefresh() async {
     Provider.of<TaskDoctorProvider>(context).getTask();
