@@ -3,29 +3,24 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:medical_assistant/utils/helpers.dart';
-
 import '../../database/storage_fire.dart';
 import '../../theme.dart';
 import '../../widgets/button_widget.dart';
 import '../../widgets/text_field.dart';
-
 class SignupScreen extends StatefulWidget {
   const SignupScreen({Key? key}) : super(key: key);
-
   @override
   State<SignupScreen> createState() => _SignupScreenState();
 }
-
-class _SignupScreenState extends State<SignupScreen> with Helper{
+class _SignupScreenState extends State<SignupScreen> with Helper {
   String _selectGender = 'Meal';
   bool isPassword = true;
   final Storage storage = Storage();
-  final ValueNotifier<String> _imageUrl = ValueNotifier('');
+  final ValueNotifier<String> _imageUrl = ValueNotifier('assets/images/logo_png.png');
   List genderList = [
     'Meal',
     'Female',
   ];
-  // late TextEditingController _idController;
   late TextEditingController _passwordController;
   late TextEditingController _passwordConfirmController;
   late TextEditingController nameController;
@@ -36,12 +31,9 @@ class _SignupScreenState extends State<SignupScreen> with Helper{
   late TextEditingController genderController;
   late TextEditingController heightController;
   late TextEditingController weightController;
-
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   @override
   void initState() {
-    // TODO: implement initState
-    // _idController = TextEditingController();
     _passwordController = TextEditingController();
     _passwordConfirmController = TextEditingController();
     otherPhoneController = TextEditingController();
@@ -52,15 +44,11 @@ class _SignupScreenState extends State<SignupScreen> with Helper{
     genderController = TextEditingController();
     heightController = TextEditingController();
     weightController = TextEditingController();
-
     super.initState();
   }
-
   @override
   void dispose() {
-    // TODO: implement dispose
     _passwordConfirmController.dispose();
-    // _idController.dispose();
     _passwordController.dispose();
     otherPhoneController.dispose();
     nameController.dispose();
@@ -72,7 +60,6 @@ class _SignupScreenState extends State<SignupScreen> with Helper{
     weightController.dispose();
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -127,11 +114,7 @@ class _SignupScreenState extends State<SignupScreen> with Helper{
                           }
                           final path = result.files.single.path!;
                           final filename = result.files.single.name;
-                          print(filename);
-                          print(path);
-
                           _imageUrl.value = await storage.getImage(filename);
-                          print(_imageUrl);
                         },
                         icon: const Icon(
                           Icons.camera_alt_outlined,
@@ -233,7 +216,6 @@ class _SignupScreenState extends State<SignupScreen> with Helper{
                 label: 'Enter Password',
                 controller: _passwordController,
                 keyboardType: TextInputType.emailAddress,
-
                 obscureText: isPassword,
                 sufWidget: IconButton(
                   icon: Icon(
@@ -301,7 +283,7 @@ class _SignupScreenState extends State<SignupScreen> with Helper{
                 },
               ),
               const SizedBox(height: 30),
-              ButtonWidget(text: "Create", onPressed: perSingUp),
+              ButtonWidget(text: "Create", onPressed:  perSingUp),
               const SizedBox(height: 30),
             ],
           ),
@@ -343,107 +325,84 @@ class _SignupScreenState extends State<SignupScreen> with Helper{
     });
   }
 
-  void perSingUp() {
-    if (checkSignup()) {
+   perSingUp()  {
+    print("perSingUp");
+    if ( checkSignup()) {
       singUp();
     }
   }
 
-  checkSignup() async {
-    if (
-        nameController.text.isNotEmpty &&
+   checkSignup()  {
+    if (nameController.text.isNotEmpty &&
         birthController.text.isNotEmpty &&
         genderController.text.isNotEmpty &&
         heightController.text.isNotEmpty &&
         weightController.text.isNotEmpty &&
         _passwordController.text.isNotEmpty &&
         _passwordConfirmController.text.isNotEmpty &&
-        _passwordController.text == _passwordConfirmController.text &&
         phoneController.text.isNotEmpty &&
-        otherPhoneController.text.isNotEmpty
-    ) {
-      try{
-        _firebaseAuth
-            .createUserWithEmailAndPassword(
-            email: emailController.text, password: _passwordController.text)
-            .then((value) async {
-              //TODO: add generated id to user
-          await FirebaseFirestore.instance
-              .collection('UserUid')
-              .doc('123963'
-              // _idController.text
-          )
-              .set({'id': value.user!.uid});
-
-        await FirebaseFirestore.instance
-            .collection("UserData")
-            .doc(
-            value.user!.uid
-        )
-            .set({
-          'image':_imageUrl.value,
-          'name': nameController.text,
-          'birth': birthController.text,
-          'email': emailController.text,
-          'name': nameController.text,
-          'birth': birthController.text,
-          'gender': genderController.text,
-          'phone': phoneController.text,
-          'otherPhone': otherPhoneController.text,
-          'height': heightController.text,
-          'weight': weightController.text,
-          'role': 'user',
-        });
-        });
-       /* await FirebaseFirestore.instance
-            .collection('UserUid')
-            .doc(
-          '123963'
-            // _idController.text
-        )
-            .get()
-            .then((val) async {
-          await FirebaseFirestore.instance
-              .collection("UserData")
-              .doc(
-              val.data()!['id']
-          )
-              .set({
-            'image':_imageUrl.value,
+        otherPhoneController.text.isNotEmpty &&
+        emailController.text.isNotEmpty &&
+        emailController.text.contains('@') &&
+        emailController.text.contains('.') &&
+        _passwordController.text.length >= 6 &&
+        _passwordConfirmController.text.length >= 6 &&
+        _passwordController.text == _passwordConfirmController.text) {
+      try {
+        _firebaseAuth.createUserWithEmailAndPassword(email: emailController.text, password: _passwordController.text).then((value) async {
+          await FirebaseFirestore.instance.collection('UserUid').doc('123963').set({'id': value.user!.uid});
+          // FirebaseFirestore.instance.collection('UserData').doc(FirebaseAuth.instance.currentUser!.uid).collection("DoctorNote").doc();
+          await FirebaseFirestore.instance.collection("UserData").doc(value.user!.uid).set({
+            'image': _imageUrl.value,
             'name': nameController.text,
-            'birth': birthController.text,
+            'birth': birthController,
             'email': emailController.text,
             'name': nameController.text,
-            'birth': birthController.text,
             'gender': genderController.text,
             'phone': phoneController.text,
             'otherPhone': otherPhoneController.text,
             'height': heightController.text,
             'weight': weightController.text,
-            'idCard': _idController.text,
             'role': 'user',
           });
-        });*/
-      }  on FirebaseAuthException catch (e) {
-    showSnackBar(context, message: e.code, error: true);
+        });
+        return true;
+      } on FirebaseAuthException catch (e) {
+        showSnackBar(context, message: e.code, error: true);
       }
-
     }
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: const Text('Please fill all the fields'),
-        backgroundColor: Colors.red,
-        behavior: SnackBarBehavior.floating,
-        duration: const Duration(seconds: 2),
-        margin: const EdgeInsets.all(30),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-      ),
-    );
+    if (nameController.text.isEmpty) {
+      showSnackBar(context,
+          message: 'Please enter your User Name', error: true);
+    } else if (emailController.text.isEmpty) {
+      showSnackBar(context, message: 'Please enter your Email', error: true);
+    } else if (!emailController.text.contains('@') ||
+        !emailController.text.contains('.')) {
+      showSnackBar(context, message: 'Email is not valid', error: true);
+    } else if (birthController.text.isEmpty) {
+      showSnackBar(context, message: 'Please enter your Birth', error: true);
+    } else if (phoneController.text.isEmpty) {
+      showSnackBar(context, message: 'Please enter your Phone', error: true);
+    } else if (otherPhoneController.text.isEmpty) {
+      showSnackBar(context,
+          message: 'Please enter your Other Phone', error: true);
+    } else if (genderController.text.isEmpty) {
+      showSnackBar(context, message: 'Please enter your ', error: true);
+    } else if (heightController.text.isEmpty) {
+      showSnackBar(context, message: 'Please enter your Height', error: true);
+    } else if (weightController.text.isEmpty) {
+      showSnackBar(context, message: 'Please enter your Weight', error: true);
+    } else if (_passwordController.text.length < 6 ||
+        _passwordConfirmController.text.length < 6) {
+      showSnackBar(context,
+          message: 'Password must be at least 6 characters', error: true);
+    } else if (_passwordController.text != _passwordConfirmController.text) {
+      showSnackBar(context, message: 'Password does not match', error: true);
+    }else{
+      showSnackBar(context, message: 'email already exist', error: true);
+    }
     return false;
   }
-
   singUp() {
     Navigator.pushReplacementNamed(context, '/button_navigator_bar');
   }

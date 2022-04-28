@@ -1,4 +1,5 @@
 import 'package:date_picker_timeline/date_picker_timeline.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -157,48 +158,67 @@ backgroundColor: Colors.white,
   }
 
   _feach() async {
-    await FirebaseFirestore.instance
-        .collection('NotesDoctor')
-        .get()
-        .then((value) async {
-      print(value.docs.length);
-      for (int i = 0; i < value.docs.length; i++) {
-        print("for");
-        if (value.docs[i].data()['idpat'] == '123') {
-          print("if");
-          try {
-            await Provider.of<TaskDoctorProvider>(context, listen: false).
-            addTask(
-                task: DoctorTask(
-                title: value.docs[i].data()['title'] ?? 'title',
-                note: value.docs[i].data()['note'] ?? 'title',
-                color: value.docs[i].data()['color'] ?? 'title',
-                isCompleted: value.docs[i].data()['isCompleted'] ?? 1,
-                startTime: value.docs[i].data()['startTime'] ?? '00:00',
-                endTime: value.docs[i].data()['endTime'] ?? '00:00',
-                date: value.docs[i].data()['date'] ?? '00/00/0000',
-                remind: value.docs[i].data()['remind'] ?? 0,
-                repeat: value.docs[i].data()['repeat'] ?? 'Daily',
-              ));
-            // await _taskController.addTask(
-            //     task: Task(
-            //   title: value.docs[i].data()['title'] ?? 'title',
-            //   note: value.docs[i].data()['note'] ?? 'title',
-            //   color: value.docs[i].data()['color'] ?? 'title',
-            //   isCompleted: value.docs[i].data()['isCompleted'] ?? 1,
-            //   startTime: value.docs[i].data()['startTime'] ?? '00:00',
-            //   endTime: value.docs[i].data()['endTime'] ?? '00:00',
-            //   date: value.docs[i].data()['date'] ?? '00/00/0000',
-            //   remind: value.docs[i].data()['remind'] ?? 0,
-            //   repeat: value.docs[i].data()['repeat'] ?? 'Daily',
-            // ));
-            // print('length${Provider.of<TaskDoctorProvider>(context).listTask.length}');
-          } catch (e) {
-            print(e);
-          }
+    final firebaseUser = FirebaseAuth.instance.currentUser;
+  await  FirebaseFirestore.instance.collection('UserData').doc(firebaseUser!.uid)
+      .collection("DoctorNote").doc().get().then((note)async {
+        try{
+          print("Here");
+          print(note.data()!['title']);
+          await Provider.of<TaskDoctorProvider>(context, listen: false).addTask(task:DoctorTask(
+            title: note.data()!['title'],
+            note: note.data()!['note'],
+            color: note.data()!['color'],
+            isCompleted: note.data()!['isCompleted'],
+            startTime: note.data()!['startTime'],
+            endTime: note.data()!['endTime'],
+            date: note.data()!['date'],
+            remind: note.data()!['remind'],
+            repeat: note.data()!['repeat'],
+          ));
+          print("End");
+        }catch(e){
+          print(e);
         }
-      }
-    });
+  });
+    // await FirebaseFirestore.instance.collection('NotesDoctor').get().then((value) async {
+    //   print(value.docs.length);
+    //   for (int i = 0; i < value.docs.length; i++) {
+    //     print("for");
+    //     if (value.docs[i].data()['idpat'] == '123') {
+    //       print("if");
+    //       try {
+    //         await Provider.of<TaskDoctorProvider>(context, listen: false).
+    //         addTask(
+    //             task: DoctorTask(
+    //             title: value.docs[i].data()['title'] ?? 'title',
+    //             note: value.docs[i].data()['note'] ?? 'title',
+    //             color: value.docs[i].data()['color'] ?? 'title',
+    //             isCompleted: value.docs[i].data()['isCompleted'] ?? 1,
+    //             startTime: value.docs[i].data()['startTime'] ?? '00:00',
+    //             endTime: value.docs[i].data()['endTime'] ?? '00:00',
+    //             date: value.docs[i].data()['date'] ?? '00/00/0000',
+    //             remind: value.docs[i].data()['remind'] ?? 0,
+    //             repeat: value.docs[i].data()['repeat'] ?? 'Daily',
+    //           ));
+    //         // await _taskController.addTask(
+    //         //     task: Task(
+    //         //   title: value.docs[i].data()['title'] ?? 'title',
+    //         //   note: value.docs[i].data()['note'] ?? 'title',
+    //         //   color: value.docs[i].data()['color'] ?? 'title',
+    //         //   isCompleted: value.docs[i].data()['isCompleted'] ?? 1,
+    //         //   startTime: value.docs[i].data()['startTime'] ?? '00:00',
+    //         //   endTime: value.docs[i].data()['endTime'] ?? '00:00',
+    //         //   date: value.docs[i].data()['date'] ?? '00/00/0000',
+    //         //   remind: value.docs[i].data()['remind'] ?? 0,
+    //         //   repeat: value.docs[i].data()['repeat'] ?? 'Daily',
+    //         // ));
+    //         // print('length${Provider.of<TaskDoctorProvider>(context).listTask.length}');
+    //       } catch (e) {
+    //         print(e);
+    //       }
+    //     }
+    //   }
+    // });
   }
 
   _addDateTask() {

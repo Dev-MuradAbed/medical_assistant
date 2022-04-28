@@ -19,14 +19,14 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   final Storage storage = Storage();
-  final ValueNotifier<String> _imageUrl = ValueNotifier('https://avatars.githubusercontent.com/u/93073520?s=400&u=8b466ff9fe1b27a7d4ff441f84b2289484422a76&v=4');
+  final ValueNotifier<String> _imageUrl = ValueNotifier('assets/images/logo_png.png');
   bool visible = false;
   bool readonly = true;
   late TextEditingController phoneController;
   late TextEditingController otherPhoneController;
   late TextEditingController heightController;
   late TextEditingController weightController;
-  String image='https://avatars.githubusercontent.com/u/93073520?s=400&u=8b466ff9fe1b27a7d4ff441f84b2289484422a76&v=4';
+  String image = '';
   @override
   void initState() {
     // TODO: implement initState
@@ -37,6 +37,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     Provider.of<ProfileProvider>(context, listen: false).getTask();
     super.initState();
   }
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -60,97 +61,93 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 if (snapshot.connectionState == ConnectionState.done) {
                   return FutureProvider(
                       initialData: [],
-                      create: (context) =>
-                          Provider.of<ProfileProvider>(context, listen: false)
-                              .getTask(),
+                      create: (context) =>Provider.of<ProfileProvider>(context, listen: false).getTask(),
                       child: Consumer<ProfileProvider>(
                         builder: (context, task, child) {
-                          return Builder(builder: (context) {
-                            var profile =
-                                Provider.of<ProfileProvider>(context).listTask;
-                            // print(profile.image.toString());
+                            var profile =Provider.of<ProfileProvider>(context).listTask;
                             return Column(
                               children: [
                                 const SizedBox(height: 2),
-                                Builder(builder: (context) {
-                                  return ValueListenableBuilder(
-                                    valueListenable: _imageUrl,
-                                    builder: (context,value,child){
-                                      return Container(
-                                        height: 150,
-                                        width: 150,
-                                        child: Stack(children: [
-                                          Align(
-                                            alignment: Alignment.bottomRight,
-                                            child: Visibility(
-                                              visible: visible,
+                                   ValueListenableBuilder(
+                                      valueListenable: _imageUrl,
+                                      builder: (context, String? value, child) {
+                                        return Container(
+                                          height: 150,
+                                          width: 150,
+                                          child: Visibility(
+                                            visible: visible,
+                                            child: Align(
+                                              alignment: Alignment.bottomRight,
                                               child: Container(
-                                                padding: const EdgeInsets.symmetric(
-                                                    horizontal: 10, vertical: 5),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 5,
+                                                        vertical: 5),
                                                 decoration: BoxDecoration(
                                                   color: Colors.white,
                                                   shape: BoxShape.circle,
                                                   border: Border.all(
-                                                      color: greenClr, width: 2),
+                                                      color: greenClr,
+                                                      width: 2),
                                                 ),
-
-
-
                                                 child: IconButton(
                                                   onPressed: () async {
-                                                    final result = await FilePicker.platform.pickFiles(
+                                                    final result =
+                                                        await FilePicker
+                                                            .platform
+                                                            .pickFiles(
                                                       allowMultiple: false,
                                                       type: FileType.custom,
-                                                      allowedExtensions: ['jpg', 'png', 'jpeg'],
+                                                      allowedExtensions: [
+                                                        'jpg',
+                                                        'png',
+                                                        'jpeg'
+                                                      ],
                                                     );
                                                     if (result == null) {
-                                                      ScaffoldMessenger.of(context).showSnackBar(
-                                                          const SnackBar(
-                                                              content: Text('No filere Selected')));
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(
+                                                              const SnackBar(
+                                                                  content: Text(
+                                                                      'No filere Selected')));
                                                       return null;
                                                     }
-                                                    final path = result.files.single.path!;
-                                                    final filename = result.files.single.name;
-                                                    storage.uploadImage(path, filename);
-                                                    _imageUrl.value=await storage.getImage(filename) ;
+                                                    final path = result
+                                                        .files.single.path!;
+                                                    final filename = result
+                                                        .files.single.name;
+                                                    _imageUrl.value =
+                                                        await storage
+                                                            .getImage(filename);
                                                     setState(() {
-                                                      image=_imageUrl.value;
+                                                      image = _imageUrl.value;
                                                     });
-
-
-
-
                                                   },
                                                   icon: const Icon(
                                                     Icons.camera_alt_outlined,
-                                                    size: 24,
-                                                    color: greenClr,
+                                                    size: 36,
+                                                    color: blueClr,
                                                   ),
                                                 ),
-
                                               ),
                                             ),
-                                          )
-                                        ]),
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                            image: NetworkImage(
-                                              profile[0].image ??
-                                                  'https://avatars.githubusercontent.com/u/93073520?v=4',
-                                            ),
-                                            fit: BoxFit.cover,
                                           ),
-                                          border:
-                                          Border.all(color: greenClr, width: 2),
-                                          //color: greenClr,
-                                          shape: BoxShape.circle,
-                                        ),
-                                      );
-                                    },
+                                          alignment: Alignment.center,
+                                          decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                              image: NetworkImage(
+                                                profile[0].image.toString(),
+                                              ),
+                                              fit: BoxFit.cover,
+                                            ),
+                                            border: Border.all(
+                                                color: greenClr, width: 2),
+                                            shape: BoxShape.circle,
+                                          ),
+                                        );
+                                      }),
 
-                                  );
-                                }),
                                 const SizedBox(height: 30),
                                 TextInput(
                                     readOnly: true,
@@ -179,16 +176,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   controller: phoneController,
                                   readOnly: !visible,
                                   label: 'Phone Number',
-                                  hint: profile[0].phone ,
+                                  hint: profile[0].phone.toString(),
                                   keyboardType: TextInputType.number,
                                   sufWidget: Visibility(
                                     visible: visible,
                                     child: IconButton(
                                       icon: (Icon(Icons.edit)),
                                       onPressed: () {
-                                         phoneController.text=profile[0].phone.toString();
+                                        phoneController.text =
+                                            profile[0].phone.toString();
                                       },
-                                      // onPressed: ()=>_updateProfile(),
                                     ),
                                   ),
                                 ),
@@ -196,7 +193,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 TextInput(
                                   controller: otherPhoneController,
                                   label: 'Other Phone',
-                                  hint:  profile[0].other,
+                                  hint: profile[0].other.toString(),
                                   readOnly: !visible,
                                   keyboardType: TextInputType.number,
                                   sufWidget: Visibility(
@@ -205,7 +202,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       icon: (Icon(Icons.edit)),
                                       onPressed: () {
                                         setState(() {
-                                          otherPhoneController.text=profile[0].other.toString();
+                                          otherPhoneController.text =
+                                              profile[0].other.toString();
                                         });
                                       },
                                       // onPressed: ()=>_updateProfile(),
@@ -216,15 +214,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 TextInput(
                                     label: 'Gender',
                                     readOnly: true,
-                                    hint: profile[0].gender
-                                    //  controller: genderController,
-//error
-                                    ),
+                                    hint: profile[0].gender),
                                 const SizedBox(height: 30),
                                 TextInput(
                                   controller: heightController,
                                   label: 'Height',
-                                  hint:  profile[0].height,
+                                  hint: profile[0].height.toString(),
                                   readOnly: !visible,
                                   keyboardType: TextInputType.number,
                                   sufWidget: Visibility(
@@ -238,12 +233,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     ),
                                   ),
                                 ),
-
                                 const SizedBox(height: 30),
                                 TextInput(
                                   controller: weightController,
                                   label: 'Weight',
-                                  hint:  profile[0].height,
+                                  hint: profile[0].height.toString(),
                                   readOnly: !visible,
                                   keyboardType: TextInputType.number,
                                   sufWidget: Visibility(
@@ -257,120 +251,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     ),
                                   ),
                                 ),
-
                                 const SizedBox(height: 25),
                                 ButtonWidget(
                                     text: visible == false
-                                        ? "Edit Profile"
-                                        : "Save",
+                                        ? "Update Profile"
+                                        : "Save Profile",
                                     onPressed: () {
-                                      setState(() {
-                                        _updateProfile(height: heightController.text, otherPhone: otherPhoneController.text, phone: phoneController.text, weight: weightController.text,image:
-                                        image);
-                                        visible = !visible;
-                                      });
-
-                                      // FirebaseAuth.instance.signOut();
+                                      visible == false
+                                          ? setState(() {
+                                              visible = !visible;
+                                            })
+                                          : setState(() {
+                                              visible = !visible;
+                                              _updateProfile(
+                                                  height: heightController.text,
+                                                  otherPhone:
+                                                      otherPhoneController.text,
+                                                  phone: phoneController.text,
+                                                  weight: weightController.text,
+                                                  image: image);
+                                            });
                                     }),
                                 const SizedBox(height: 60),
                               ],
                             );
-                          });
+
                         },
                       ));
                 }
-                return const Center(child: const CircularProgressIndicator());
-                // },
-                //         child: Column(
-                //           children: [
-                //             const SizedBox(height: 2),
-                //             Container(
-                //              // padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
-                //               height: 150,
-                //               width: 150,
-                //               child: Stack(
-                //                   children: [
-                //                 Image.asset('assets/images/woman.png'),
-                //                 Align(
-                //                   alignment: Alignment.bottomRight,
-                //                   child: Container(
-                //                     padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
-                //                     decoration: BoxDecoration(
-                //                       color: Colors.white,
-                //                       shape: BoxShape.circle,
-                //                       border: Border.all(color: greenClr, width: 2),
-                //                     ),
-                //                     child: const Icon(
-                //                       Icons.camera_alt_outlined,
-                //                       size: 24,
-                //                       color: greenClr,
-                //                     ),
-                //                   ),
-                //                 )
-                //               ]),
-                //               alignment: Alignment.center,
-                //               decoration: BoxDecoration(
-                //                 //borderRadius: BorderRadius.all(Radius.circular(10)),
-                //                 border: Border.all(color: greenClr, width: 2),
-                //                 //color: greenClr,
-                //                 shape: BoxShape.circle,
-                //               ),
-                //             ),
-                //             const SizedBox(height: 30),
-                //             TextInput(
-                //
-                //                 label: '$EmailFirebase',
-                //                 //controller: _idController,
-                //                 hint: '489354785462',
-                //                 keyboardType: TextInputType.number),
-                //             const SizedBox(height: 30),
-                //             TextInput(
-                //               label: 'User Name',
-                //               hint: 'Julia',
-                //               //controller: nameController,
-                //             ),
-                //             const SizedBox(height: 30),
-                //             TextInput(
-                //               label: 'Birthday',
-                //               readOnly: true,
-                //               hint: '15/9/1999',
-                //               //controller: birthController,
-                //               // onTap: () async => _getDate(),
-                //             ),
-                //             const SizedBox(height: 30),
-                //             TextInput(
-                //                 label: 'Phone Number',
-                //                 hint: '0599748528',
-                //                 //    controller: phoneController,
-                //                 keyboardType: TextInputType.number),
-                //             const SizedBox(height: 30),
-                //             TextInput(
-                //                 label: 'Other Phone',
-                //                 hint: '0599481245',
-                //                 // controller: otherPhoneController,
-                //                 keyboardType: TextInputType.number),
-                //             const SizedBox(height: 30),
-                //             TextInput(label: 'Gender', readOnly: true, hint: 'female'
-                //                 //  controller: genderController,
-                //
-                //                 ),
-                //             const SizedBox(height: 30),
-                //             TextInput(
-                //                 label: 'Height',
-                //                 hint: '165',
-                //                 //controller: heightController,
-                //                 keyboardType: TextInputType.number),
-                //             const SizedBox(height: 30),
-                //             TextInput(
-                //                 label: 'Weight',
-                //                 hint: '55',
-                //                 //controller: weightController,
-                //                 keyboardType: TextInputType.number),
-                //             const SizedBox(height: 25),
-                //             ButtonWidget(text: "Edit Profile", onPressed: () {}),
-                //             const SizedBox(height: 30),
-                //           ],
-                //         ),
+                return const Center(child: CircularProgressIndicator());
               }),
         ),
       ),
@@ -378,25 +287,52 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   _updateProfile(
-      {required String height,required String otherPhone,required String phone,required String weight,required String image}) async {
-    print('update profile');
-    print('h $height');
-    print('h$otherPhone');
-    print('p$phone');
-    print('p$image');
-    print('p$image');
-    print(weight);
+      {required String height,
+      required String otherPhone,
+      required String phone,
+      required String weight,
+      required String image}) async {
     final firebaseUser = FirebaseAuth.instance.currentUser;
-    if (firebaseUser != null) {
+    if (height != null) {
       await FirebaseFirestore.instance
           .collection('UserData')
-          .doc(firebaseUser.uid)
+          .doc(firebaseUser!.uid)
           .update({
         'height': height,
+      });
+    }
+    if (otherPhone != null) {
+      await FirebaseFirestore.instance
+          .collection('UserData')
+          .doc(firebaseUser!.uid)
+          .update({
         'otherPhone': otherPhone,
+      });
+    }
+
+    if (phone != null) {
+      await FirebaseFirestore.instance
+          .collection('UserData')
+          .doc(firebaseUser!.uid)
+          .update({
         'phone': phone,
+      });
+    }
+    if (weight != null) {
+      await FirebaseFirestore.instance
+          .collection('UserData')
+          .doc(firebaseUser!.uid)
+          .update({
         'weight': weight,
-        'image':image
+      });
+    }
+
+    if (image != null) {
+      await FirebaseFirestore.instance
+          .collection('UserData')
+          .doc(firebaseUser!.uid)
+          .update({
+        'image': image,
       });
     }
   }
@@ -404,7 +340,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   _fetch() async {
     final firebaseUser = FirebaseAuth.instance.currentUser;
     if (firebaseUser != null) {
-      print(FirebaseAuth.instance.currentUser!.uid);
       await FirebaseFirestore.instance
           .collection('UserData')
           .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -425,37 +360,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             phone: ds.data()!['phone'],
             wight: ds.data()!['weight'],
           ));
-        } catch (e) {
-          print(e);
-        }
-      }).catchError((e) {
-        print(e);
-      });
+        } catch (e) {}
+      }).catchError((e) {});
     }
   }
 }
-// final firebaseUser = FirebaseAuth.instance.currentUser;
-// if (firebaseUser != null) {
-//   print(FirebaseAuth.instance.currentUser!.uid);
-//   await FirebaseFirestore.instance
-//       .collection('UserData')
-//       .doc(FirebaseAuth.instance.currentUser!.uid)
-//       .get()
-//       .then((ds) {
-//     print(ds.data()!['name']);
-//     idCardFirebase = ds.data()!['idCard'];
-//     nameFirebase = ds.data()!['name'];
-//     birthFirebase = ds.data()!['birth'];
-//     EmailFirebase = ds.data()!['email'];
-//     genderFirebase = ds.data()!['gender'];
-//     heightFirebase = ds.data()!['height'];
-//     OtherPhoneFirebase = ds.data()!['otherPhone'];
-//     PhoneFirebase = ds.data()!['phone'];
-//     WeightFirebase = ds.data()!['weight'];
-//     // if(ds.data()!['role']=='admain'){
-//     //   return print('User');
-//     // }else{
-//     //   return print('else');
-//     // }
-//
-//     print(EmailFirebase);
