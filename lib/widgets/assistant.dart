@@ -1,17 +1,90 @@
 import 'package:flutter/material.dart';
 
-import '../utils/helpers.dart';
+import '../theme.dart';
 
-class Assistant with Helper {
+
+class Assistant {
   static ShowDilog(
       {required BuildContext context,
-      required String title,
-      required String message}) {
+        required String Name,
+      required String image,
+        required String rate,
+      }) {
     showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text(title),
+            title: Container(
+              child: Column(
+                children: <Widget>[
+                  Container(
+                      height: 150,
+                      width: 150,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        image:  DecorationImage(
+                          image: NetworkImage(
+                           image,
+                          ),
+                          fit: BoxFit.cover,
+                        ),
+                        border: Border.all(
+                            color: greenClr, width: 2),
+                        shape: BoxShape.circle,
+                      )),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                   Text(
+                    Name,
+                    style: TextStyle(color: blueClr, fontSize: 20),
+                  ),
+                            const SizedBox(
+                    height: 10,
+                  ),
+                            const Text(
+                            'I wish you could stay away from any danger soon and rest somewhere far from the sun.',
+                            textAlign: TextAlign.center,
+                            style:  TextStyle(color: blueClr, fontSize: 20),
+                        ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                   Text(
+                    rate,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(color: blueClr, fontSize: 20),
+                  ),
+
+                ],
+              ),
+            ),
+
+            actions: <Widget>[
+              TextButton(
+                child: const Text("ok", style: TextStyle(color: blueClr)),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+
+              TextButton(
+                child: const Text("send", style: const TextStyle(color: blueClr)),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              )
+            ],
+          );
+        });
+  }
+  static ShowDilogNormal(
+      {required BuildContext context,
+        required String message}) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
             content: Text(message),
             actions: <Widget>[
               TextButton(
@@ -24,52 +97,44 @@ class Assistant with Helper {
           );
         });
   }
-
-  static CheckStausBMP(
-      {required String Gendar,
-      required int Age,
-      required int Bmp,
-      required BuildContext context}) {
+  static CheckStausBMP({required String Gendar, required int Age, required int Bmp,required String Name, required BuildContext context}) {
     String gendar = Gendar;
     int age = Age;
     int bmp = Bmp;
     if (gendar == 'mael') {
       if (age >= 18 && age <= 25) {
         if (bmp >= 49 && bmp <= 55) {
-          ShowDilog(
+          ShowDilogNormal(
               context: context,
-              title: 'Congratulation',
               message: 'You have a ATHLETE heart rate');
           print("ATHLETE");
         } else if (bmp >= 56 && bmp <= 61) {
-          ShowDilog(
+          ShowDilogNormal(
               context: context,
-              title: 'Congratulation',
               message: 'You have a EXCEL\'T heart rate');
           print('EXCEL\'T');
         } else if (bmp >= 62 && bmp <= 65) {
-          ShowDilog(
+          ShowDilogNormal(
               context: context,
-              title: 'Congratulation',
               message: 'You have a GOOD heart rate');
           print('GOOD');
         } else if (bmp >= 66 && bmp <= 69) {
-          ShowDilog(
+          ShowDilogNormal(
               context: context,
-              title: 'Congratulation',
               message: 'You have a ABOVE AV heart rate');
           print('ABOVE AV');
         } else if (bmp >= 70 && bmp <= 73) {
-          ShowDilog(
+          ShowDilogNormal(
               context: context,
-              title: 'Congratulation',
               message: 'You have a AVERAGE heart rate');
           print('AVERAGE');
         } else if (bmp >= 74 && bmp <= 81) {
-          ShowDilog(
-              context: context,
-              title: 'Congratulation',
-              message: 'You have a BELOW AV heart rate');
+          // ShowDilog(
+          //   image:"" ,
+          //     Name: "Murad KH Abed",
+          //     rate: bmp.toString(),
+          //     context: context),
+
         } else if (bmp >= 82) {
           ShowDilog(
               context: context,
