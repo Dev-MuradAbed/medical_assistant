@@ -4,7 +4,7 @@ import '../theme.dart';
 
 
 class Assistant {
-  static ShowDilog(
+  static ShowDilogD(
       {required BuildContext context,
         required String Name,
       required String image,
@@ -97,12 +97,28 @@ class Assistant {
           );
         });
   }
-  static CheckStausBMP({required String Gendar, required int Age, required int Bmp,required String Name, required BuildContext context}) {
+  static CheckStausBMP({required String Gendar, required int Age, required int Bmp,required String name,required String image, required BuildContext context}) {
     String gendar = Gendar;
     int age = Age;
     int bmp = Bmp;
+
+
+
+
     if (gendar == 'mael') {
+
+
+
+
+
       if (age >= 18 && age <= 25) {
+
+
+
+
+
+
+
         if (bmp >= 49 && bmp <= 55) {
           ShowDilogNormal(
               context: context,
@@ -129,22 +145,38 @@ class Assistant {
               message: 'You have a AVERAGE heart rate');
           print('AVERAGE');
         } else if (bmp >= 74 && bmp <= 81) {
-          // ShowDilog(
-          //   image:"" ,
-          //     Name: "Murad KH Abed",
-          //     rate: bmp.toString(),
-          //     context: context),
 
-        } else if (bmp >= 82) {
-          ShowDilog(
+          ShowDilogD(
               context: context,
-              title: 'Congratulation',
-              message: 'You have a POOR heart rate');
+              Name: name,
+              image:image,
+              rate: bmp.toString()
+          );
+        } else if (bmp >= 82) {
+          ShowDilogD(
+              context: context,
+            Name: name,
+            image:image,
+            rate: bmp.toString()
+          );
           print('POOR');
         } else {
-          ShowDilog(context: context, title: 'error', message: '');
+          ShowDilogNormal(context: context, message: 'Error try again');
           print('error');
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
       } else if (age >= 26 && age <= 35) {
         if (bmp >= 49 && bmp <= 54) {
           ShowDilog(
