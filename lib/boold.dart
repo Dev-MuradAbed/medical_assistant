@@ -192,7 +192,9 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
                                   buttonText = "Stop";
                                   _toggle(
                                       age: DateTime.now().year-dateTime.year,
-                                      name: profile[0].name.toString(),gender: profile[0].gender.toString());
+                                      name: profile[0].name.toString(),gender: profile[0].gender.toString(),
+                                  image: profile[0].image.toString()
+                                  );
                                 }
                               },
 
@@ -274,8 +276,8 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
     }
   }
 
-  void _toggle({required String name, required String gender,required int age}) {
-    startTimer(gender: gender,name: name,age: age);
+  void _toggle({required String name, required String gender,required int age,required String image}) {
+    startTimer(gender: gender,name: name,age: age,image: image);
     _clearData();
     _initController().then((onValue) {
       Wakelock.enable();
@@ -349,12 +351,6 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
   }
 
   void _updateBPM() async {
-    // Bear in mind that the method used to calculate the BPM is very rudimentar
-    // feel free to improve it :)
-
-    // Since this function doesn't need to be so "exact" regarding the time it executes,
-    // I only used the a Future.delay to repeat it from time to time.
-    // Ofc you can also use a Timer object to time the callback of this function
     List<SensorValue> _values;
     double _avg;
     int _n;
@@ -423,7 +419,7 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
     }
   }
 
-  void startTimer({required String name, required String gender,required int age}) {
+  void startTimer({required String name, required String gender,required int age,required String image}) {
     const onesec =
     Duration(seconds: 1);
     _timer = Timer.periodic(onesec, (Timer timer) {
@@ -435,7 +431,7 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
           _untoggle();
           buttonText =
           "Check Blood Pressure";
-          _save(gender: gender,name: name,age: age);
+          _save(gender: gender,name: name,age: age,image:image );
         });
       } else {
         setState(() {
@@ -446,7 +442,7 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
     });
   }
 
-  _save({required String name, required String gender,required int age}) async {
+  _save({required String name, required String gender,required int age,required String image}) async {
     try {
       int value =
       await Provider.of<ResultProvider>(context, listen: false).addRecord(
@@ -463,7 +459,7 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
       Provider.of<ResultProvider>(context, listen: false).getRecord();
       debugPrint("test $value");
 
-      Assistant.CheckBooldPressure(systolic: _sy, diastolic: _di, context: context);
+      Assistant.CheckBooldPressure(systolic: _sy, diastolic: _di,image:image ,name: name, context: context,);
       debugPrint(
           "The Length ${Provider.of<ResultProvider>(context, listen: false).resultList.length} $_sy / $_di,");
     } catch (e) {

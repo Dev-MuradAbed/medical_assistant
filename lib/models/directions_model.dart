@@ -3,16 +3,16 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 
 class Directions {
-  final LatLngBounds bounds;
-  final List<PointLatLng> polylinePoint;
-  final String totalDistance;
-  final String totalDuration;
+  late LatLngBounds? bounds;
+  late List<PointLatLng>? polylinePoint;
+  late String? totalDistance;
+  late String? totalDuration;
 
   Directions(
-      {required this.bounds,
-      required this.polylinePoint,
-      required this.totalDistance,
-      required this.totalDuration});
+      {this.bounds,
+      this.polylinePoint,
+      this.totalDistance,
+      this.totalDuration});
   factory Directions.fromMap(Map<String, dynamic> map) {
     if ((map['routes'] as List).isEmpty)
       return throw 'You don\'t have any data';

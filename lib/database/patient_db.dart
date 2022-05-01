@@ -9,7 +9,6 @@ class DbController {
   factory DbController() {
     return _instance;
   }
-
   DbController._();
 
   late Database _database;

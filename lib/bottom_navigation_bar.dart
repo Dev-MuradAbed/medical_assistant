@@ -38,7 +38,8 @@ class _BNBarState extends State<BNBar> {
   }
   final screens = [
     ProfileScreen(),
-    MapPatScreen(),
+    MapView(),
+    // MapPatScreen(),
     HomeNewsScreen(),
     HomeScan(),
     TodoHome(),

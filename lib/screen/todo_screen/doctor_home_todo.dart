@@ -164,6 +164,7 @@ var fireStronsSub=FirebaseFirestore.instance.collection('UserData').doc(uuidUser
 var pr=Provider.of<TaskDoctorProvider>(context,listen: false);
 fireStronsSub.collection("DoctorNote").snapshots().listen((data) {
   data.docs.forEach((doc) async{
+    print(doc.id);
   if(pr.listTask.where((element)=>element.idNote!=doc.id).isEmpty){
     print("not empty");
  await pr.addTask(

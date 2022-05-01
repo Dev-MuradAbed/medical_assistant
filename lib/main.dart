@@ -61,9 +61,9 @@ class MedicalAssist extends StatelessWidget {
           },
           initialData: null,
         ),
-        ProxyProvider<Position, Future<List<Place>>>(
+        ProxyProvider<Position?, Future<List<Place>>?>(
           update: (context, position, places) {
-            print('main result ${position.latitude},${position.longitude}');
+            print('main result ${position!.latitude},${position.longitude}');
             return placesService.getPlaces(
               latt: position.latitude,
               lngt: position.longitude,

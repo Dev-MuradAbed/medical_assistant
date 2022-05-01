@@ -7,16 +7,15 @@ class Markersa{
     List<Marker> markers = [];
     places!.forEach((Place) {
       Marker marker = Marker(
-          markerId: MarkerId(Place.name),
+          markerId: MarkerId(Place.name.toString()),
           draggable: false,
-          // icon: Place.icon,
-          // icon:,
-          infoWindow: InfoWindow(
-            title: Place.name,
-            snippet: Place.vicinity,
-          ),
+          infoWindow: InfoWindow(title: Place.name,snippet: Place.vicinity, ),
           position:
-          LatLng(Place.geometry.location.lat, Place.geometry.location.lng));
+          LatLng(Place.geometry!.location!.lat, Place.geometry!.location!.lng),
+      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueYellow)
+      );
+
+
       markers.add(marker);
     });
     // print(markers);

@@ -192,7 +192,7 @@ class HomeRateView extends State<PlusRate>
                                 buttonText = "Stop";
                                 _toggle(
                                     age: DateTime.now().year-dateTime.year,
-                                    name: profile[0].name.toString(),gender: profile[0].gender.toString());
+                                    name: profile[0].name.toString(),gender: profile[0].gender.toString(),image: profile[0].image.toString());
                               }
                             },
                           ),
@@ -279,8 +279,8 @@ class HomeRateView extends State<PlusRate>
     }
   }
 
-  void _toggle({required String name, required String gender,required int age}) {
-    startTimer(gender: gender,name: name,age: age);
+  void _toggle({required String name, required String gender,required int age,required String image}) {
+    startTimer(gender: gender,name: name,age: age,image: image);
     _clearData();
     _initController().then((onValue) {
       Wakelock.enable();
@@ -399,7 +399,7 @@ class HomeRateView extends State<PlusRate>
     }
   }
 
-  void startTimer({required String name, required String gender,required int age}) {
+  void startTimer({required String name, required String gender,required int age,required String image}) {
     const onesec = Duration(seconds: 1);
     _timer = Timer.periodic(onesec, (Timer timer) {
       if (seconds == 0) {
@@ -408,7 +408,7 @@ class HomeRateView extends State<PlusRate>
           seconds = 60;
           _untoggle();
           buttonText = "Check Heart Rate";
-          _save(gender: gender,name: name,age: age);
+          _save(gender: gender,name: name,age: age,image: image);
         });
       } else {
         setState(() {
@@ -418,7 +418,7 @@ class HomeRateView extends State<PlusRate>
     });
   }
 
-  _save({required String name, required String gender,required int age}) async {
+  _save({required String name, required String gender,required int age,required String image}) async {
     try {
       int value =
           await Provider.of<ResultProvider>(context, listen: false).addRecord(
@@ -433,7 +433,7 @@ class HomeRateView extends State<PlusRate>
       ));
       Provider.of<ResultProvider>(context, listen: false).getRecord();
       debugPrint("test $value");
-      Assistant.CheckStausBMP(Gendar: gender, Age: age, Bmp: _bpm,Name: name, context: context);
+      Assistant.CheckStausBMP(Gendar: gender, Age: age, Bmp: _bpm,name: name,image:  image,context: context);
 
     } catch (e) {
       debugPrint("$e");

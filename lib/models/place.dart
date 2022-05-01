@@ -1,18 +1,18 @@
 import 'geometry.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 class Place{
-  final String name;
-  final num rating;
-  final num userRatingCount;
-  final String? vicinity;
-  final Geometry geometry;
+  late String? name;
+  late num? rating;
+  late num? userRatingCount;
+  late String? vicinity;
+  late Geometry? geometry;
 
   Place(
-      {required this.name,
-      required this.rating,
-      required this.userRatingCount,
-      required this.vicinity,
-      required this.geometry});
+      { this.name,
+       this.rating,
+       this.userRatingCount,
+       this.vicinity,
+       this.geometry});
 
   factory Place.fromJson(Map<dynamic, dynamic> parsedJson,) {
     return Place(

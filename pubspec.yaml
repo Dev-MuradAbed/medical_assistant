@@ -11,6 +11,7 @@ dependencies:
   flutter_custom_clippers: ^2.0.0
   firebase_storage: ^10.2.13
   file_picker: ^4.5.1
+  geocoding: ^2.0.4
   wakelock: ^0.6.1+2
   camera: ^0.9.4+19
   path_provider: ^2.0.9
