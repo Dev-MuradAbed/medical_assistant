@@ -19,7 +19,7 @@ class _LunchScreenState extends State<LunchScreen> {
 
   @override
   void initState() {
-    Future.delayed(const Duration(seconds:3), () async{
+    Future.delayed(const Duration(milliseconds: 500), () async{
       FirebaseAuth.instance.authStateChanges().listen((user) {
         if (user != null) {
           Navigator.pushReplacementNamed(context, '/button_navigator_bar');

@@ -60,10 +60,6 @@ class _TodoHomeState extends State<TodoHome>
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text(
-              DateFormat.yMMMMd().format(DateTime.now()),
-              style: subheading,
-            ),
         backgroundColor: Colors.white,
         elevation: 0,
         bottom: TabBar(

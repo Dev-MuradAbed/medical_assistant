@@ -44,7 +44,7 @@ class HomeRateView extends State<PlusRate>
   int _fs = 30;
   int _windowLen = 30 * 6;
   var _image;
-   double _avg=0.0;
+  double _avg=0.0;
   DateTime _now=DateTime.now();
   Timer?
   _timerImage, _timer;
@@ -187,7 +187,7 @@ class HomeRateView extends State<PlusRate>
                                 buttonText = "Check Blood Pressure";
                                 _untoggle();
                               } else {
-                                DateFormat dateFormat = DateFormat("yyyy-MM-dd");
+                                DateFormat dateFormat = DateFormat("dd/MM/yyyy");
                                 DateTime dateTime = dateFormat.parse(profile[0].birthday.toString());
                                 buttonText = "Stop";
                                 _toggle(
@@ -421,16 +421,16 @@ class HomeRateView extends State<PlusRate>
   _save({required String name, required String gender,required int age,required String image}) async {
     try {
       int value =
-          await Provider.of<ResultProvider>(context, listen: false).addRecord(
-              task: ResultModel(
-        hourTime: DateTime.now().hour,
-        munitTime: DateTime.now().minute,
-        heartRate: _bpm,
-        date: DateTime.now().toString(),
-        monthDate: DateTime.now().month,
-        yearTime: DateTime.now().year,
-        dayDate: DateTime.now().day,
-      ));
+      await Provider.of<ResultProvider>(context, listen: false).addRecord(
+          task: ResultModel(
+            hourTime: DateTime.now().hour,
+            munitTime: DateTime.now().minute,
+            heartRate: _bpm,
+            date: DateTime.now().toString(),
+            monthDate: DateTime.now().month,
+            yearTime: DateTime.now().year,
+            dayDate: DateTime.now().day,
+          ));
       Provider.of<ResultProvider>(context, listen: false).getRecord();
       debugPrint("test $value");
       Assistant.CheckStausBMP(Gendar: gender, Age: age, Bmp: _bpm,name: name,image:  image,context: context);

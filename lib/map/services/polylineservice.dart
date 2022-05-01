@@ -1,9 +1,10 @@
 import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class PolylineS {
+class PolylineServise {
   Future<Polyline> drawPolyline(LatLng from, LatLng to) async {
     List<LatLng> polylineCoordinates = [];
     PolylinePoints polylinePoints = PolylinePoints();
@@ -31,6 +32,7 @@ class PolylineS {
         polylineCoordinates[i + 1].longitude,
       );
     }
+     print ("distance = =============================================${totalDistance.toStringAsFixed(2)} km");
   }
 
   void _calcDistance(List<LatLng> polylineCoordinates) {
@@ -43,6 +45,8 @@ class PolylineS {
         polylineCoordinates[i + 1].longitude,
       );
     }
+    print(
+        "distance = =============================================${totalDistance.toStringAsFixed(2)} km");
   }
 
   double _coordineCoordinates(lat1, lng1, lat2, lng2) {

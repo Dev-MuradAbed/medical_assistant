@@ -13,15 +13,16 @@ import 'package:medical_assistant/screen/auth/forget_password.dart';
 import 'package:medical_assistant/screen/auth/login_screen.dart';
 import 'package:medical_assistant/screen/auth/sginup_screen.dart';
 import 'package:medical_assistant/screen/lunch_screen.dart';
-import 'package:medical_assistant/screen/profile_screen.dart';
-import 'package:medical_assistant/screen/scann_home.dart';
 import 'package:medical_assistant/theme.dart';
 import 'package:provider/provider.dart';
-import 'api/geolocator.dart';
-import 'api/places.dart';
+
+
 import 'bottom_navigation_bar.dart';
 import 'database/patient_db.dart';
-import 'models/place.dart';
+import 'map/models/place.dart';
+import 'map/services/geolocator_service.dart';
+import 'map/services/places.dart';
+
 
 
 Future main() async {
@@ -38,8 +39,8 @@ Future main() async {
 }
 
 class MedicalAssist extends StatelessWidget {
-  final locatorService = GeoLocator();
-  final placesService = PlaceS();
+  final locatorService = GeoLocatorServise();
+  final placesService = PlacesService();
 
   MedicalAssist({Key? key}) : super(key: key);
 
@@ -61,13 +62,10 @@ class MedicalAssist extends StatelessWidget {
           },
           initialData: null,
         ),
-        ProxyProvider<Position?, Future<List<Place>>?>(
+        ProxyProvider<Position, Future<List<Place>>>(
           update: (context, position, places) {
-            print('main result ${position!.latitude},${position.longitude}');
-            return placesService.getPlaces(
-              latt: position.latitude,
-              lngt: position.longitude,
-            );
+            print('main result ${position.latitude},${position.longitude}');
+            return placesService.getPlaces(latt: position.latitude, lngt: position.longitude);
           },
         ),
         ChangeNotifierProvider<TaskProvider>(

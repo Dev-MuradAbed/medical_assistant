@@ -21,6 +21,7 @@ class ProfileProvider extends ChangeNotifier {
   Future<void>getTask() async {
     final List<Map<String, dynamic>> tasks = await _taskController.query();
     listTask = tasks.map((Map<String, dynamic> task) => Profile.fromJson(task)).toList();
+    print('listTask: $listTask');
     notifyListeners();
   }
   void delete(Task task) async {

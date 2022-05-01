@@ -59,6 +59,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/gif/waiting.gif
 
   fonts:
     - family: Candara

@@ -1,4 +1,5 @@
 import 'package:date_picker_timeline/date_picker_timeline.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -25,7 +26,7 @@ class PatientHomeTodo extends StatefulWidget {
   State<PatientHomeTodo> createState() => _PatientHomeTodoState();
 }
 
-class _PatientHomeTodoState extends State<PatientHomeTodo> with Helper{
+class _PatientHomeTodoState extends State<PatientHomeTodo> with Helper {
   late PatientNotificationHelper notifyHelper;
   SizeConfig size = SizeConfig();
 
@@ -38,6 +39,7 @@ class _PatientHomeTodoState extends State<PatientHomeTodo> with Helper{
     notifyHelper.requestIOSPermissions();
     Provider.of<TaskProvider>(context, listen: false).getTask();
   }
+
   DateTime _selectedTime = DateTime.now();
 
   @override
@@ -58,12 +60,22 @@ class _PatientHomeTodoState extends State<PatientHomeTodo> with Helper{
           child: Consumer<TaskProvider>(
             builder: (context, taskProvider, child) {
               return Column(children: [
+                _addTask(),
                 _addDateTask(),
                 _showTask(),
+
               ]);
             },
           ),
         ),
+floatingActionButtonLocation:FloatingActionButtonLocation.endTop ,
+// floatingActionButton: FloatingActionButton.extended(
+//
+//
+//   onPressed: () {
+//
+//     }, label: Text("Add Task"),
+//       ),
       ),
     );
   }
@@ -95,7 +107,7 @@ class _PatientHomeTodoState extends State<PatientHomeTodo> with Helper{
     return Expanded(
         child: Provider.of<TaskProvider>(context).listTask.isEmpty
             ? noTask(_onRefresh,
-            "Don't have any Task\nAdd new Task to make your Day productive")
+                "Don't have any Task\nAdd new Task to make your Day productive")
             : RefreshIndicator(
                 onRefresh: _onRefresh,
                 child: ListView.builder(
@@ -111,9 +123,15 @@ class _PatientHomeTodoState extends State<PatientHomeTodo> with Helper{
                     if (task.repeat == 'Delay' ||
                         task.date == DateFormat.yMd().format(_selectedTime) ||
                         (task.repeat == 'Weekly' &&
-                            _selectedTime.difference(DateFormat.yMd().parse(task.date!)).inDays % 7 == 0) ||
+                            _selectedTime
+                                        .difference(
+                                            DateFormat.yMd().parse(task.date!))
+                                        .inDays %
+                                    7 ==
+                                0) ||
                         (task.repeat == 'Monthly' &&
-                            DateFormat.yMd().parse(task.date!).day == _selectedTime.day)) {
+                            DateFormat.yMd().parse(task.date!).day ==
+                                _selectedTime.day)) {
                       var date =
                           DateFormat.jm().parse(task.startTime.toString());
                       var myTime = DateFormat('HH:mm').format(date);
@@ -205,7 +223,6 @@ class _PatientHomeTodoState extends State<PatientHomeTodo> with Helper{
       ),
     );
   }
-
 
   showBottomSheet(BuildContext context, Task task) {
     showModalBottomSheet(

@@ -1,6 +1,5 @@
 import 'package:medical_assistant/models/profile_model.dart';
 import 'package:sqflite/sqflite.dart';
-import '../../models/todo_model/patient_todo_model.dart';
 import '../patient_db.dart';
 
 class profileController{
@@ -37,6 +36,7 @@ class profileController{
     var c= await database.rawQuery('''
     SELECT * 
     FROM profile 
+   
     WHERE id = ?  
     ''', [id]);
     if(c.isEmpty){

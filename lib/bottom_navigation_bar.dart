@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:medical_assistant/map/Screens/search.dart';
+import 'package:medical_assistant/provider/todo_provider/todo_patient_provider.dart';
 import 'package:medical_assistant/read_camera.dart';
 import 'package:medical_assistant/screen/home_news_screen.dart';
 import 'package:medical_assistant/screen/map_pat_screen.dart';
 import 'package:medical_assistant/screen/news_details.dart';
 import 'package:medical_assistant/screen/profile_screen.dart';
 import 'package:medical_assistant/screen/scann_home.dart';
+import 'package:medical_assistant/screen/todo_screen/patient_add_task.dart';
 import 'package:medical_assistant/screen/todo_screen/patient_home_todo.dart';
 import 'package:medical_assistant/screen/todo_screen/todo_home.dart';
 import 'package:medical_assistant/theme.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 
 class BNBar extends StatefulWidget {
   const BNBar({Key? key}) : super(key: key);
@@ -38,12 +42,12 @@ class _BNBarState extends State<BNBar> {
   }
   final screens = [
     ProfileScreen(),
-    MapView(),
-    // MapPatScreen(),
+    Search(),
     HomeNewsScreen(),
     HomeScan(),
-    TodoHome(),
+    TodoHome( ),
   ];
+  bool visibility=false;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -55,6 +59,23 @@ class _BNBarState extends State<BNBar> {
             backgroundColor: Colors.white,
             extendBody: true,
             body: screens[_index],
+            // floatingActionButton: Visibility(
+            //   visible: visibility,
+            //   child:FloatingActionButton(
+            //
+            //     onPressed: () async {
+            //       Navigator.push(
+            //           context,
+            //           MaterialPageRoute(
+            //             builder: (context) => const AddTaskPage(),
+            //           ));
+            //       Provider.of<TaskProvider>(context, listen: false).getTask();
+            //       // Get.to(const AddTaskPage());
+            //       //_taskController.getTasks();
+            //     },
+            //     child: Icon(Icons.add),
+            //   )
+            // ),
             bottomNavigationBar: CurvedNavigationBar(
               key: navigationKey,
               backgroundColor: Colors.transparent,
