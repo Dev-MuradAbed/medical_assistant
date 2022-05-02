@@ -20,7 +20,7 @@ class ListRate extends StatelessWidget {
         child: ListTile(
           leading: const Icon(Icons.timer_outlined,color: greenClr,),
 
-          trailing:  Icon(model.heartRate==null?Icons.monitor_heart_rounded:Icons.favorite,color: greenClr,),
+          trailing:  Icon(model.heartRate==null?Icons.bloodtype_outlined:Icons.monitor_heart_outlined,color: greenClr,),
           title:  Padding(
             padding:   const EdgeInsets.only(bottom: 10),
             child:  Text('${model.dayDate} ,${model.monthDate} ,${model.yearTime} ${model.hourTime}:${model.munitTime}'),

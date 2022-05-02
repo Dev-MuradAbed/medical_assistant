@@ -41,26 +41,28 @@ class _HomeScanState extends State<HomeScan>
                 width: MediaQuery
                     .of(context)
                     .size
-                    .width * 0.42,
+                    .width * 0.37,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Boold Pressure',
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: const[
+                         Text(
+                          'Blood Pressure',
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 16,
                             fontWeight: FontWeight.bold,
+                            color: Colors.black,
                           ),
                         ),
-                        const SizedBox(width: 10),
-                        const Icon(
-                          Icons.favorite,
-                          color: Colors.black,
+                         SizedBox(width: 20),
+                         Expanded(
+                           child: Icon(
+                            Icons.bloodtype_outlined,
                         ),
+                         ),
                       ],
                     ),
                     const Text(
@@ -79,24 +81,27 @@ class _HomeScanState extends State<HomeScan>
       child: Center(
         child: Builder(builder: (context) {
           return SizedBox(
-            width: MediaQuery.of(context).size.width * 0.42,
+            width: MediaQuery.of(context).size.width * 0.37,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Boold Pressure',
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Text(
+                      'Heart Rate',
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
+                        color: Colors.black
                       ),
                     ),
-                    const Icon(
-                      Icons.favorite,
-                      color: Colors.black,
+                    SizedBox(width: 20),
+                    Expanded(
+                      child: Icon(
+                        Icons.monitor_heart_outlined ,
+                      ),
                     ),
                   ],
                 ),
@@ -114,24 +119,27 @@ class _HomeScanState extends State<HomeScan>
       child: Center(
         child: Builder(builder: (context) {
           return SizedBox(
-            width: MediaQuery.of(context).size.width * 0.42,
+            width: MediaQuery.of(context).size.width * 0.37,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children:const [
                     Text(
-                      'Boold Pressure',
+                      'Medical Record',
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
+                        color: Colors.black
                       ),
                     ),
-                    Icon(
-                      Icons.favorite,
-                      color: Colors.black,
+                    SizedBox(width: 20),
+                    Expanded(
+                      child: Icon(
+                        Icons.topic_outlined,
+                      ),
                     ),
                   ],
                 ),
@@ -170,12 +178,12 @@ class _HomeScanState extends State<HomeScan>
             controller: _tabController,
             tabs: tabs,
             indicatorColor: greenClr,
-            labelColor: Colors.black,
-            unselectedLabelColor: Colors.grey,
+            labelColor: Colors.white,
+            unselectedLabelColor: blueClr,
             isScrollable: true,
             indicator: BoxDecoration(
               shape: BoxShape.rectangle,
-              borderRadius: BorderRadius.circular(50),
+              borderRadius: BorderRadius.circular(30),
               color: greenClr,
             ),
           ),

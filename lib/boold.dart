@@ -51,7 +51,7 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
   void initState() {
 //CameraImage late
     super.initState();
-    _chartData=getChartData();
+   ;
     _tooltipBehavior=TooltipBehavior(enable: true);
     Provider.of<ResultProvider>(context, listen: false).getRecord();
     _animationController =
@@ -99,19 +99,7 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
       });
     }
   }
-  late List<ExpenseDta> _chartData;
   late TooltipBehavior  _tooltipBehavior;
-List<ExpenseDta>getChartData(){
-    final List<ExpenseDta> data = [
-      ExpenseDta('food', 55, 40, 45, 48),
-      ExpenseDta('Transport', 33, 45, 54, 28),
-      ExpenseDta('Medical', 43, 23, 20, 34),
-      ExpenseDta('Clothes', 32, 54, 32, 54),
-      ExpenseDta('Books', 56, 18, 43, 55),
-      ExpenseDta('other', 23, 54, 33, 56),
-    ];
-    return data;
-}
   @override
   Widget build(BuildContext context) {
     return FutureProvider(
@@ -167,14 +155,14 @@ List<ExpenseDta>getChartData(){
                             total: 60,
                             sp: _sy,
                             dp: _di,
-                            textColor: Colors.black,
+                            textColor: blueClr,
                           )
                         ],
                       ),
                     )
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 30,
                   height: 30,
                 ),
@@ -190,7 +178,6 @@ List<ExpenseDta>getChartData(){
                             child: MaterialButton(
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),
-
                               ),
                               child: Text(buttonText,  style: const TextStyle(
                                   color: Colors.white, fontSize: 15),
@@ -233,7 +220,7 @@ List<ExpenseDta>getChartData(){
                               }),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 40,
                       ),
                       Padding(
@@ -255,20 +242,30 @@ List<ExpenseDta>getChartData(){
                     legend: Legend(isVisible: true),
                     tooltipBehavior: _tooltipBehavior,
                     series: <ChartSeries>[
-                      StackedLineSeries<ExpenseDta,String>(
-                          dataSource: _chartData,
-                          xValueMapper: (ExpenseDta exp,_)=>exp.expensesCategory,
-                          yValueMapper: (ExpenseDta exp,_)=>exp.father,
-                        name: "Father",
-                        markerSettings: MarkerSettings(isVisible: true),
+                      StackedLineSeries<ResultModel,String>(
+                          dataSource: Provider.of<ResultProvider>(context).resultList,
+                          xValueMapper: (ResultModel exp,_)=>Provider.of<ResultProvider>(context, listen: false)
+                              .resultList
+                              .length <
+                              10
+                              ? '${exp.hourTime}:${exp.munitTime}'
+                              : exp.dayDate.toString(),
+                          yValueMapper: (ResultModel exp,_)=>exp.dy,
+                        name: "Sy",
+                        markerSettings: const MarkerSettings(isVisible: true),
 
                       ),
-                      StackedLineSeries<ExpenseDta,String>(
-                          dataSource: _chartData,
-                          xValueMapper: (ExpenseDta exp,_)=>exp.expensesCategory,
-                          yValueMapper: (ExpenseDta exp,_)=>exp.mother,
-                      name: "Mother",
-                        markerSettings: MarkerSettings(isVisible: true),
+                      StackedLineSeries<ResultModel,String>(
+                          dataSource: Provider.of<ResultProvider>(context).resultList,
+                          xValueMapper: (ResultModel exp,_)=>Provider.of<ResultProvider>(context, listen: false)
+                              .resultList
+                              .length <
+                              10
+                              ? '${exp.hourTime}:${exp.munitTime}'
+                              : exp.dayDate.toString(),
+                          yValueMapper: (ResultModel exp,_)=>exp.sy,
+                      name: "Dy",
+                        markerSettings: const MarkerSettings(isVisible: true),
                       ),
                     ],
                     primaryXAxis: CategoryAxis(),
@@ -495,15 +492,4 @@ List<ExpenseDta>getChartData(){
     properties.add(DiagnosticsProperty<DateTime>('_now', _now));
     properties.add(DiagnosticsProperty<DateTime>('_now', _now));
   }
-}
-class ExpenseDta{
-  final String expensesCategory;
-  final num father;
-  final num mother;
-  final num son;
-  final num daughter;
-
-  ExpenseDta(this.expensesCategory, this.father, this.mother, this.son, this.daughter);
-
-
 }
