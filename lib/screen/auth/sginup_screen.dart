@@ -114,7 +114,11 @@ class _SignupScreenState extends State<SignupScreen> with Helper {
                           }
                           final path = result.files.single.path!;
                           final filename = result.files.single.name;
+                          storage.uploadImage(path, filename);
                           _imageUrl.value = await storage.getImage(filename);
+                          setState(() {
+                            print(value.toString());
+                          });
                         },
                         icon: const Icon(
                           Icons.camera_alt_outlined,

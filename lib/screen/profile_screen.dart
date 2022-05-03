@@ -26,7 +26,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   late TextEditingController otherPhoneController;
   late TextEditingController heightController;
   late TextEditingController weightController;
-  String image = '';
+   String image='';
   @override
   void initState() {
     // TODO: implement initState
@@ -47,7 +47,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     heightController.dispose();
     weightController.dispose();
   }
-
+  final firebaseUser = FirebaseAuth.instance.currentUser;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,16 +92,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                 ),
                                                 child: IconButton(
                                                   onPressed: () async {
-                                                    final result =
-                                                        await FilePicker
-                                                            .platform
+                                                    final result = await FilePicker.platform
                                                             .pickFiles(
                                                       allowMultiple: false,
                                                       type: FileType.custom,
                                                       allowedExtensions: [
                                                         'jpg',
                                                         'png',
-                                                        'jpeg'
+                                                        'jpeg',
                                                       ],
                                                     );
                                                     if (result == null) {
@@ -113,16 +111,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                                       'No filere Selected')));
                                                       return null;
                                                     }
-                                                    final path = result
-                                                        .files.single.path!;
-                                                    final filename = result
-                                                        .files.single.name;
-                                                    _imageUrl.value =
-                                                        await storage
-                                                            .getImage(filename);
-                                                    setState(() {
-                                                      image = _imageUrl.value;
-                                                    });
+                                                    final path = result.files.single.path!;
+                                                    final filename = result.files.single.name;
+                                                    storage.uploadImage(path,filename).then((value) => print("Done"));
+
+                                                   storage.getImage(filename).then((value) =>setState(() {
+                                                     _imageUrl.value = image;
+                                                     print("Image URL: $image");
+
+                                                   })
+                                                   );
                                                   },
                                                   icon: const Icon(
                                                     Icons.camera_alt_outlined,
@@ -137,7 +135,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           decoration: BoxDecoration(
                                             image: DecorationImage(
                                               image: NetworkImage(
-                                                profile[0].image.toString(),
+                                                 profile[0].image.toString(),
                                               ),
                                               fit: BoxFit.cover,
                                             ),
@@ -263,13 +261,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             })
                                           : setState(() {
                                               visible = !visible;
-                                              _updateProfile(
-                                                  height: heightController.text,
-                                                  otherPhone:
-                                                      otherPhoneController.text,
-                                                  phone: phoneController.text,
-                                                  weight: weightController.text,
-                                                  image: image);
+                                              // _updateProfile(
+                                              //   profile: profile[0],
+                                              //     height: heightController.text,
+                                              //     otherPhone:
+                                              //         otherPhoneController.text,
+                                              //     phone: phoneController.text,
+                                              //     weight: weightController.text,
+                                              //     image: _imageUrl.value);
                                             });
                                     }),
                                 const SizedBox(height: 60),
@@ -286,56 +285,73 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  _updateProfile(
-      {required String height,
-      required String otherPhone,
-      required String phone,
-      required String weight,
-      required String image}) async {
-    final firebaseUser = FirebaseAuth.instance.currentUser;
-    if (height != null) {
-      await FirebaseFirestore.instance
-          .collection('UserData')
-          .doc(firebaseUser!.uid)
-          .update({
-        'height': height,
-      });
-    }
-    if (otherPhone != null) {
-      await FirebaseFirestore.instance
-          .collection('UserData')
-          .doc(firebaseUser!.uid)
-          .update({
-        'otherPhone': otherPhone,
-      });
-    }
-
-    if (phone != null) {
-      await FirebaseFirestore.instance
-          .collection('UserData')
-          .doc(firebaseUser!.uid)
-          .update({
-        'phone': phone,
-      });
-    }
-    if (weight != null) {
-      await FirebaseFirestore.instance
-          .collection('UserData')
-          .doc(firebaseUser!.uid)
-          .update({
-        'weight': weight,
-      });
-    }
-
-    if (image != null) {
-      await FirebaseFirestore.instance
-          .collection('UserData')
-          .doc(firebaseUser!.uid)
-          .update({
-        'image': image,
-      });
-    }
-  }
+  // _updateProfile(
+  //     {required String height,
+  //     required String otherPhone,
+  //     required String phone,
+  //     required String weight,
+  //     required String image,
+  //     required var profile
+  //     }) async {
+  //
+  //   if (height != null) {
+  //     await FirebaseFirestore.instance.collection('UserData')
+  //         .doc(firebaseUser!.uid)
+  //         .update({
+  //       'height': height,
+  //     });
+  //
+  //   }else{
+  //     await FirebaseFirestore.instance.
+  //   collection('UserData').doc(firebaseUser!.uid).update({
+  //     'height': profile[0].height,
+  //     });
+  //
+  //
+  //
+  //   }
+  //   if (otherPhone != null) {
+  //     await FirebaseFirestore.instance
+  //         .collection('UserData')
+  //         .doc(firebaseUser.uid)
+  //         .update({
+  //       'otherPhone': otherPhone,
+  //     });
+  //   }else{
+  //     await FirebaseFirestore.instance.
+  //     collection('UserData').doc(firebaseUser.uid).update({
+  //       'otherPhone': profile[0].other,
+  //     });
+  //
+  //
+  //   }
+  //
+  //   if (phone != null) {
+  //     await FirebaseFirestore.instance
+  //         .collection('UserData')
+  //         .doc(firebaseUser.uid)
+  //         .update({
+  //       'phone': phone,
+  //     });
+  //   }
+  //   if (weight != null) {
+  //     await FirebaseFirestore.instance
+  //         .collection('UserData')
+  //         .doc(firebaseUser.uid)
+  //         .update({
+  //       'weight': weight,
+  //     });
+  //   }
+  //
+  //   if (image != null) {
+  //     await FirebaseFirestore.instance
+  //         .collection('UserData')
+  //         .doc(firebaseUser.uid)
+  //         .update({
+  //       'image': image,
+  //     });
+  //   }
+  // }
 
   _fetch() async {
     final firebaseUser = FirebaseAuth.instance.currentUser;

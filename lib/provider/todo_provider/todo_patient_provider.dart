@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-
 import '../../database/controller/patient_controller.dart';
 import '../../models/todo_model/patient_todo_model.dart';
 

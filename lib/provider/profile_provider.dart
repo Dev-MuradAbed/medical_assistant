@@ -24,7 +24,7 @@ class ProfileProvider extends ChangeNotifier {
     print('listTask: $listTask');
     notifyListeners();
   }
-  void delete(Task task) async {
+  void delete(Profile task) async {
     await _taskController.delete(task.id!);
     getTask();
     notifyListeners();
