@@ -47,7 +47,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     heightController.dispose();
     weightController.dispose();
   }
-  final firebaseUser = FirebaseAuth.instance.currentUser;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -157,11 +157,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   readOnly: true,
                                   label: 'User Name',
                                   hint: profile[0].name,
-                                  // sufWidget: IconButton(
-                                  //   icon: (
-                                  //       Icon(Icons.edit)),
-                                  //   // onPressed: ()=>_updateProfile(),
-                                  // ),
                                 ),
                                 const SizedBox(height: 30),
                                 TextInput(
@@ -181,8 +176,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     child: IconButton(
                                       icon: (Icon(Icons.edit)),
                                       onPressed: () {
-                                        phoneController.text =
-                                            profile[0].phone.toString();
+                                        profile[0].phone.toString();
                                       },
                                     ),
                                   ),
@@ -200,14 +194,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       icon: (Icon(Icons.edit)),
                                       onPressed: () {
                                         setState(() {
-                                          otherPhoneController.text =
-                                              profile[0].other.toString();
+                                          profile[0].other.toString();
                                         });
                                       },
                                       // onPressed: ()=>_updateProfile(),
                                     ),
                                   ),
                                 ),
+                                /*
+                                int count = await database.rawUpdate(
+29    'UPDATE Test SET name = ?, value = ? WHERE name = ?',
+30    ['updated name', '9876', 'some name']);
+31print('updated: $count');
+32
+   Future<bool> update(profile) async {
+    int countOfRowUpdate = await database
+        .update('note', profile.toMap(), where: 'id = ?', whereArgs: [note.id]);
+    return countOfRowUpdate == 1;
+  }
+    Future<bool> update(Note updateNote) async {
+    bool updated = await _noteController.update(updateNote);
+    if (updated) {
+      int index = notes.indexWhere((elements) => elements.id == updateNote.id);
+      if (index != -1) {
+        notes[index] = updateNote;
+        notifyListeners();
+      }
+    }
+    return updated;
+  }
+                                 */
                                 const SizedBox(height: 30),
                                 TextInput(
                                     label: 'Gender',
@@ -235,7 +251,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 TextInput(
                                   controller: weightController,
                                   label: 'Weight',
-                                  hint: profile[0].height.toString(),
+                                  hint: profile[0].wight.toString(),
                                   readOnly: !visible,
                                   keyboardType: TextInputType.number,
                                   sufWidget: Visibility(
@@ -261,14 +277,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             })
                                           : setState(() {
                                               visible = !visible;
-                                              // _updateProfile(
-                                              //   profile: profile[0],
-                                              //     height: heightController.text,
-                                              //     otherPhone:
-                                              //         otherPhoneController.text,
-                                              //     phone: phoneController.text,
-                                              //     weight: weightController.text,
-                                              //     image: _imageUrl.value);
+                                              _updateProfile(
+                                                  height: heightController.text,
+                                                  otherPhone:otherPhoneController.text,
+                                                  phone: phoneController.text,
+                                                  weight: weightController.text,
+                                                  image: _imageUrl.value);
                                             });
                                     }),
                                 const SizedBox(height: 60),
@@ -285,73 +299,62 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  // _updateProfile(
-  //     {required String height,
-  //     required String otherPhone,
-  //     required String phone,
-  //     required String weight,
-  //     required String image,
-  //     required var profile
-  //     }) async {
-  //
-  //   if (height != null) {
-  //     await FirebaseFirestore.instance.collection('UserData')
-  //         .doc(firebaseUser!.uid)
-  //         .update({
-  //       'height': height,
-  //     });
-  //
-  //   }else{
-  //     await FirebaseFirestore.instance.
-  //   collection('UserData').doc(firebaseUser!.uid).update({
-  //     'height': profile[0].height,
-  //     });
-  //
-  //
-  //
-  //   }
-  //   if (otherPhone != null) {
-  //     await FirebaseFirestore.instance
-  //         .collection('UserData')
-  //         .doc(firebaseUser.uid)
-  //         .update({
-  //       'otherPhone': otherPhone,
-  //     });
-  //   }else{
-  //     await FirebaseFirestore.instance.
-  //     collection('UserData').doc(firebaseUser.uid).update({
-  //       'otherPhone': profile[0].other,
-  //     });
-  //
-  //
-  //   }
-  //
-  //   if (phone != null) {
-  //     await FirebaseFirestore.instance
-  //         .collection('UserData')
-  //         .doc(firebaseUser.uid)
-  //         .update({
-  //       'phone': phone,
-  //     });
-  //   }
-  //   if (weight != null) {
-  //     await FirebaseFirestore.instance
-  //         .collection('UserData')
-  //         .doc(firebaseUser.uid)
-  //         .update({
-  //       'weight': weight,
-  //     });
-  //   }
-  //
-  //   if (image != null) {
-  //     await FirebaseFirestore.instance
-  //         .collection('UserData')
-  //         .doc(firebaseUser.uid)
-  //         .update({
-  //       'image': image,
-  //     });
-  //   }
-  // }
+  _updateProfile(
+      {required String? height,
+      required String? otherPhone,
+      required String? phone,
+      required String? weight,
+      required String? image,
+      }) async {
+    final firebaseUser = FirebaseAuth.instance.currentUser;
+    if (height != "") {
+      print("height");
+      await FirebaseFirestore.instance
+          .collection('UserData')
+          .doc(firebaseUser!.uid)
+          .update({
+        'height': height,
+      });
+    }
+    if (otherPhone != null) {
+      print("otherPhone");
+      await FirebaseFirestore.instance
+          .collection('UserData')
+          .doc(firebaseUser!.uid)
+          .update({
+        'otherPhone': otherPhone,
+      });
+    }
+
+    if (phone != null) {
+      print("phone");
+      await FirebaseFirestore.instance
+          .collection('UserData')
+          .doc(firebaseUser!.uid)
+          .update({
+        'phone': phone,
+      });
+    }
+    if (weight != null) {
+      print("weight");
+      await FirebaseFirestore.instance
+          .collection('UserData')
+          .doc(firebaseUser!.uid)
+          .update({
+        'weight': weight,
+      });
+    }
+
+    if (image != null) {
+      print("image");
+      await FirebaseFirestore.instance
+          .collection('UserData')
+          .doc(firebaseUser!.uid)
+          .update({
+        'image': image,
+      });
+    }
+  }
 
   _fetch() async {
     final firebaseUser = FirebaseAuth.instance.currentUser;
