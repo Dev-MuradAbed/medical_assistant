@@ -3,68 +3,64 @@ import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:medical_assistant/models/result_model.dart';
 import 'package:medical_assistant/provider/profile_provider.dart';
 import 'package:medical_assistant/provider/result_provider.dart';
-
 import 'package:medical_assistant/screen/list_result.dart';
 import 'package:medical_assistant/theme.dart';
 import 'package:medical_assistant/widgets/assistant.dart';
 import 'package:medical_assistant/widgets/count_down_timer_boold.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:wakelock/wakelock.dart';
+import 'models/result_model.dart';
 import 'models/sensorvalue.dart';
-import'dart:math'as math;
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
+import 'dart:math'as math;
 
 class BloodRate extends StatefulWidget {
   const BloodRate({Key? key}) : super(key: key);
 
   @override
-  HomeRateView createState() {
-    return HomeRateView();
+  HomeBooldView createState() {
+    return HomeBooldView();
   }
 }
 
-class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin, WidgetsBindingObserver {
+class HomeBooldView extends State<BloodRate>
+    with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   bool _toggled = false;
   final List<SensorValue> _data = <SensorValue>[];
   CameraController? _controller;
   late AnimationController _animationController;
   double _buttonScale = 1;
-  String? buttonText ;
+  String buttonText = "Check Heart Rate";
   int _sy = 0;
   int _di = 0;
-  int _fs = 30;
-  int _windowLen = 30 * 6;
-   var _image;
-  late double _avg;
-  late DateTime _now;
-   Timer? _timerImage,
-      _timer;
+  final int _fs = 30;
+  final int _windowLen = 30 * 6;
+  var _image;
+  double _avg = 0.0;
+  DateTime _now = DateTime.now();
+  Timer? _timerImage, _timer;
   int seconds = 60;
   List data = [];
   bool done = true;
 
   @override
   void initState() {
-//CameraImage late
-    super.initState();
-   ;
     _tooltipBehavior=TooltipBehavior(enable: true);
+    Provider.of<ProfileProvider>(context, listen: false).getTask();
+    Permission.camera.request();
     Provider.of<ResultProvider>(context, listen: false).getRecord();
-    _animationController =
-        AnimationController(duration: const Duration(milliseconds: 500), vsync: this);
-    _animationController
-        .addListener(() {
+    super.initState();
+    _animationController = AnimationController(
+        duration: const Duration(milliseconds: 500), vsync: this);
+    _animationController.addListener(() {
       setState(() {
         _buttonScale = 1.0 + _animationController.value * 0.4;
       });
     });
-    WidgetsBinding.instance!.addObserver(
-        this);
+    WidgetsBinding.instance?.addObserver(this);
   }
 
   @override
@@ -77,26 +73,23 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
     _animationController.stop();
     _animationController.dispose();
     super.dispose();
-    WidgetsBinding.instance!
-        .removeObserver(this);
+    WidgetsBinding.instance?.removeObserver(this);
   }
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.inactive ||
         state == AppLifecycleState.detached) return;
     final inbackground = (state == AppLifecycleState.paused);
     if (inbackground) {
-      _controller!
-          .setFlashMode(FlashMode.off);
+      _controller?.setFlashMode(FlashMode.off);
       _untoggle();
       setState(() {
-        buttonText =
-        AppLocalizations.of(context)!.check_blood_pressure;
-         _sy = 0;
-         _di = 0;
+        buttonText = 'Check Heart Rate';
+        _sy = 0;
+        _di = 0;
         _timer?.cancel();
-        seconds =
-        60;
+        seconds = 60;
       });
     }
   }
@@ -105,10 +98,13 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
   Widget build(BuildContext context) {
     return FutureProvider(
       initialData: [],
-      create: (context) =>Provider.of<ProfileProvider>(context, listen: false).getTask(),
+      create: (context) =>
+          Provider.of<ProfileProvider>(context, listen: false).getTask(),
       child: Consumer<ProfileProvider>(
-          builder: (context, task, child){
-            var profile =Provider.of<ProfileProvider>(context).listTask;
+          builder: (context, task, child) {
+            var profile = Provider
+                .of<ProfileProvider>(context)
+                .listTask;
             return Column(
               // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -116,31 +112,34 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Padding(padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 0),
+                    Padding(
+                      padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
                       child: ClipRRect(
-                          borderRadius: const BorderRadius.all(Radius.circular(18)),
-                          child:SizedBox(
+                          borderRadius:
+                          const BorderRadius.all(Radius.circular(18)),
+                          child: SizedBox(
                             height: 130,
                             width: 130,
                             child: Stack(
                               fit: StackFit.expand,
                               alignment: Alignment.center,
                               children: [
-                                _controller!=null&&_toggled?AspectRatio(
-                                  aspectRatio: _controller!.value.aspectRatio,
-                                  child: CameraPreview(_controller!),
-
-                                ):Container(
-                                  height: 300,
-                                  padding: const EdgeInsets.all(12),
-                                  alignment: Alignment.center,
-                                  color: Colors.green.shade300,
-                                ),
+                                if (_controller != null && _toggled)
+                                  AspectRatio(
+                                    aspectRatio: _controller!.value.aspectRatio,
+                                    child: CameraPreview(_controller!),
+                                  )
+                                else
+                                  Container(
+                                    height: 300,
+                                    padding: const EdgeInsets.all(12),
+                                    alignment: Alignment.center,
+                                    color: Colors.green.shade300,
+                                  ),
                               ],
-
                             ),
-                          )
-                      ),
+                          )),
                     ),
                     Center(
                       child: Column(
@@ -154,9 +153,10 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
                             color: greenClr,
                             current: seconds,
                             total: 60,
-                            sp: _sy,
+                            // bpm: _bpm,
                             dp: _di,
-                            textColor: blueClr,
+                            sp: _sy,
+                            textColor: Colors.black,
                           )
                         ],
                       ),
@@ -180,34 +180,38 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),
                               ),
-                              child: Text(buttonText?? AppLocalizations.of(context)!.check_blood_pressure
-                                ,  style: const TextStyle(
-                                  color: Colors.white, fontSize: 15),
+                              child: Text(
+                                buttonText,
+                                style: const TextStyle(
+                                    color: Colors.white, fontSize: 15),
                               ),
                               color: greenClr,
                               onPressed: () {
                                 if (_toggled) {
-                                  buttonText = AppLocalizations.of(context)!.check_blood_pressure;
+                                  buttonText = "Check Blood Pressure";
                                   _untoggle();
                                 } else {
-                                  DateFormat dateFormat = DateFormat("dd/MM/yyyy");
-                                  DateTime dateTime = dateFormat.parse(profile[0].birthday.toString());
-                                  buttonText = AppLocalizations.of(context)!.stop;
+                                  DateFormat dateFormat =
+                                  DateFormat("dd/MM/yyyy");
+                                  DateTime dateTime = dateFormat
+                                      .parse(profile[0].birthday.toString());
+                                  buttonText = "Stop";
                                   _toggle(
-                                      age: DateTime.now().year-dateTime.year,
-                                      name: profile[0].name.toString(),gender: profile[0].gender.toString(),
-                                  image: profile[0].image.toString()
-                                  );
+                                      age: DateTime
+                                          .now()
+                                          .year - dateTime.year,
+                                      name: profile[0].name.toString(),
+                                      gender: profile[0].gender.toString(),
+                                      image: profile[0].image.toString());
                                 }
                               },
-
                             ),
                           ),
                           MaterialButton(
-                              child:  Text(
-                                AppLocalizations.of(context)!.record,
-                                style: const TextStyle(
-                                    color: Colors.white, fontSize: 15),
+                              child: const Text(
+                                "Records",
+                                style:
+                                TextStyle(color: Colors.white, fontSize: 15),
                               ),
                               color: greenClr,
                               shape: RoundedRectangleBorder(
@@ -217,8 +221,7 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
                                     listen: false)
                                     .getRecord();
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) =>
-                                    const ListResult()));
+                                    builder: (context) => const ListResult()));
                               }),
                         ],
                       ),
@@ -226,12 +229,18 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
                         height: 40,
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 5),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 5),
                         child: Row(
-                          children: [
-                            const CircleAvatar(radius: 7,backgroundColor:blueClr,),
-                            const SizedBox(width: 10,),
-                            Text(AppLocalizations.of(context)!.blood_pressure)
+                          children: const [
+                            CircleAvatar(
+                              radius: 7,
+                              backgroundColor: blueClr,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text("Blood Pressure")
                           ],
                         ),
                       ),
@@ -244,29 +253,37 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
                     legend: Legend(isVisible: true),
                     tooltipBehavior: _tooltipBehavior,
                     series: <ChartSeries>[
-                      StackedLineSeries<ResultModel,String>(
-                          dataSource: Provider.of<ResultProvider>(context).resultList,
-                          xValueMapper: (ResultModel exp,_)=>Provider.of<ResultProvider>(context, listen: false)
-                              .resultList
-                              .length <
-                              10
-                              ? '${exp.hourTime}:${exp.munitTime}'
-                              : exp.dayDate.toString(),
-                          yValueMapper: (ResultModel exp,_)=>exp.dy,
-                        name: AppLocalizations.of(context)!.sy,
+                      StackedLineSeries<ResultModel, String>(
+                        dataSource: Provider
+                            .of<ResultProvider>(context)
+                            .resultList,
+                        xValueMapper: (ResultModel exp, _) =>
+                        Provider
+                            .of<ResultProvider>(context, listen: false)
+                            .resultList
+                            .length <
+                            10
+                            ? '${exp.hourTime}:${exp.munitTime}'
+                            : exp.dayDate.toString(),
+                        yValueMapper: (ResultModel exp, _) => exp.dy,
+                        name: "DI",
                         markerSettings: const MarkerSettings(isVisible: true),
 
                       ),
-                      StackedLineSeries<ResultModel,String>(
-                          dataSource: Provider.of<ResultProvider>(context).resultList,
-                          xValueMapper: (ResultModel exp,_)=>Provider.of<ResultProvider>(context, listen: false)
-                              .resultList
-                              .length <
-                              10
-                              ? '${exp.hourTime}:${exp.munitTime}'
-                              : exp.dayDate.toString(),
-                          yValueMapper: (ResultModel exp,_)=>exp.sy,
-                      name: AppLocalizations.of(context)!.dy,
+                      StackedLineSeries<ResultModel, String>(
+                        dataSource: Provider
+                            .of<ResultProvider>(context)
+                            .resultList,
+                        xValueMapper: (ResultModel exp, _) =>
+                        Provider
+                            .of<ResultProvider>(context, listen: false)
+                            .resultList
+                            .length <
+                            10
+                            ? '${exp.hourTime}:${exp.munitTime}'
+                            : exp.dayDate.toString(),
+                        yValueMapper: (ResultModel exp, _) => exp.sy,
+                        name: "SY",
                         markerSettings: const MarkerSettings(isVisible: true),
                       ),
                     ],
@@ -277,8 +294,11 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
                 )
               ],
             );
-
           }
+
+
+
+
 
       ),
     );
@@ -295,15 +315,19 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
     }
   }
 
-  void _toggle({required String name, required String gender,required int age,required String image}) {
-    startTimer(gender: gender,name: name,age: age,image: image);
+  void _toggle(
+      {required String name,
+        required String gender,
+        required int age,
+        required String image}) {
+    startTimer(gender: gender, name: name, age: age, image: image);
     _clearData();
     _initController().then((onValue) {
       Wakelock.enable();
       _animationController.repeat(reverse: true);
       setState(() {
-         _sy = 0;
-         _di = 0;
+        _sy = 0;
+        _di = 0;
         _toggled = true;
       });
       // after is toggled
@@ -325,7 +349,7 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
   }
 
   void _disposeController() {
-    _controller!.dispose();
+    _controller?.dispose();
     _controller = null;
   }
 
@@ -335,11 +359,10 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
       _controller = CameraController(_cameras.first, ResolutionPreset.low);
       await _controller!.initialize();
       Future.delayed(const Duration(milliseconds: 50)).then((onValue) {
-        _controller!.setFlashMode(FlashMode
-            .torch);
+        _controller!.setFlashMode(FlashMode.torch);
       });
       _controller!.startImageStream((CameraImage image) {
-        _image  = image;
+        _image = image;
       });
     } catch (Exception) {
       print(Exception);
@@ -368,7 +391,6 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
       _data.add(SensorValue(_now, 255 - _avg));
     });
   }
-
   void _updateBPM() async {
     List<SensorValue> _values;
     double _avg;
@@ -438,38 +460,43 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
     }
   }
 
-  void startTimer({required String name, required String gender,required int age,required String image}) {
-    const onesec =
-    Duration(seconds: 1);
+
+  void startTimer(
+      {required String name,
+        required String gender,
+        required int age,
+        required String image}) {
+    const onesec = Duration(seconds: 1);
     _timer = Timer.periodic(onesec, (Timer timer) {
       if (seconds == 0) {
         setState(() {
           timer.cancel();
-          seconds =
-          60;
+          seconds = 60;
           _untoggle();
-          buttonText =
-          AppLocalizations.of(context)!.check_blood_pressure;
-          _save(gender: gender,name: name,age: age,image:image );
+          buttonText = "Check Heart Rate";
+          _save(gender: gender, name: name, age: age, image: image);
         });
       } else {
         setState(() {
-          seconds -=
-          1;
+          seconds -= 1;
         });
       }
     });
   }
 
-  _save({required String name, required String gender,required int age,required String image}) async {
+  _save(
+      {required String name,
+        required String gender,
+        required int age,
+        required String image}) async {
     try {
       int value =
       await Provider.of<ResultProvider>(context, listen: false).addRecord(
           task: ResultModel(
             hourTime: DateTime.now().hour,
             munitTime: DateTime.now().minute,
-            sy: _sy,
             dy: _di,
+            sy: _sy,
             date: DateTime.now().toString(),
             monthDate: DateTime.now().month,
             yearTime: DateTime.now().year,
@@ -477,14 +504,10 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
           ));
       Provider.of<ResultProvider>(context, listen: false).getRecord();
       debugPrint("test $value");
-
-      Assistant.CheckBooldPressure(systolic: _sy, diastolic: _di,image:image ,name: name, context: context,);
-      debugPrint(
-          "The Length ${Provider.of<ResultProvider>(context, listen: false).resultList.length} $_sy / $_di,");
+      Assistant.CheckBooldPressure(systolic: _sy, diastolic: _di, name: name, image: image, context: context);
     } catch (e) {
       debugPrint("$e");
     }
-
   }
 
   @override

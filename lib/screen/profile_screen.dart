@@ -24,14 +24,14 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   final Storage storage = Storage();
   final ValueNotifier<String> _imageUrl =
-      ValueNotifier('assets/images/logo_png.png');
+      ValueNotifier('https://cdn.icon-icons.com/icons2/2643/PNG/512/male_boy_person_people_avatar_icon_159358.png');
   bool visible = false;
   bool readonly = true;
   late TextEditingController phoneController;
   late TextEditingController otherPhoneController;
   late TextEditingController heightController;
   late TextEditingController weightController;
-  String image = '';
+  // String image = '';
 
   @override
   void initState() {
@@ -137,22 +137,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                                   .no_file_selected)));
                                                   return;
                                                 }
-                                                final path =
-                                                    result.files.single.path!;
-                                                final filename =
-                                                    result.files.single.name;
-                                                storage
-                                                    .uploadImage(path, filename)
-                                                    .then((value) =>
+                                                final path =result.files.single.path!;
+                                                final filename = result.files.single.name;
+                                                storage.uploadImage(path, filename) .then((value) =>
                                                         print("Done"));
 
-                                                storage.getImage(filename).then(
-                                                    (value) => setState(() {
-                                                          _imageUrl.value =
-                                                              image;
-                                                          print(
-                                                              "Image URL: $image");
-                                                        }));
+                                                _imageUrl.value = await storage.getImage(filename);
                                               },
                                               icon: const Icon(
                                                 Icons.camera_alt_outlined,
@@ -167,7 +157,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       decoration: BoxDecoration(
                                         image: DecorationImage(
                                           image: NetworkImage(
-                                            profile[0].image.toString(),
+                                            _imageUrl.value,
                                           ),
                                           fit: BoxFit.cover,
                                         ),
@@ -228,29 +218,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                 ),
                               ),
-                              /*
-                                int count = await database.rawUpdate(
-29    'UPDATE Test SET name = ?, value = ? WHERE name = ?',
-30    ['updated name', '9876', 'some name']);
-31print('updated: $count');
-32
-   Future<bool> update(profile) async {
-    int countOfRowUpdate = await database
-        .update('note', profile.toMap(), where: 'id = ?', whereArgs: [note.id]);
-    return countOfRowUpdate == 1;
-  }
-    Future<bool> update(Note updateNote) async {
-    bool updated = await _noteController.update(updateNote);
-    if (updated) {
-      int index = notes.indexWhere((elements) => elements.id == updateNote.id);
-      if (index != -1) {
-        notes[index] = updateNote;
-        notifyListeners();
-      }
-    }
-    return updated;
-  }
-                                 */
                               const SizedBox(height: 30),
                               TextInput(
                                   label: AppLocalizations.of(context)!.gender,
@@ -345,7 +312,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         'height': height,
       });
     }
-    if (otherPhone != null) {
+    if (otherPhone != "") {
       print("otherPhone");
       await FirebaseFirestore.instance
           .collection('UserData')
@@ -355,7 +322,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       });
     }
 
-    if (phone != null) {
+    if (phone != "") {
       print("phone");
       await FirebaseFirestore.instance
           .collection('UserData')
@@ -364,7 +331,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         'phone': phone,
       });
     }
-    if (weight != null) {
+    if (weight != "") {
       print("weight");
       await FirebaseFirestore.instance
           .collection('UserData')
@@ -374,7 +341,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       });
     }
 
-    if (image != null) {
+    if (image != "") {
       print("image");
       await FirebaseFirestore.instance
           .collection('UserData')

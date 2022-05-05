@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:medical_assistant/provider/profile_provider.dart';
 import 'package:medical_assistant/provider/result_provider.dart';
-import 'package:medical_assistant/screen/auth/login_screen.dart';
 import 'package:medical_assistant/screen/list_result.dart';
 import 'package:medical_assistant/theme.dart';
 import 'package:medical_assistant/widgets/assistant.dart';
@@ -17,11 +16,8 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:wakelock/wakelock.dart';
-
-import 'database/controller/result_controller.dart';
 import 'models/result_model.dart';
 import 'models/sensorvalue.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PlusRate extends StatefulWidget {
   const PlusRate({Key? key}) : super(key: key);
@@ -37,13 +33,13 @@ class HomeRateView extends State<PlusRate>
   bool _toggled = false;
   final List<SensorValue> _data = <SensorValue>[];
   CameraController? _controller;
-  double _alpha = 0.3;
+  final double _alpha = 0.3;
   late AnimationController _animationController;
   double _buttonScale = 1;
-  String? buttonText;
+  String buttonText = "Check Heart Rate";
   int _bpm = 0;
-  int _fs = 30;
-  int _windowLen = 30 * 6;
+  final int _fs = 30;
+  final int _windowLen = 30 * 6;
   var _image;
   double _avg=0.0;
   DateTime _now=DateTime.now();
@@ -66,7 +62,7 @@ class HomeRateView extends State<PlusRate>
         _buttonScale = 1.0 + _animationController.value * 0.4;
       });
     });
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance?.addObserver(this);
   }
 
   @override
@@ -79,7 +75,7 @@ class HomeRateView extends State<PlusRate>
     _animationController.stop();
     _animationController.dispose();
     super.dispose();
-    WidgetsBinding.instance!.removeObserver(this);
+    WidgetsBinding.instance?.removeObserver(this);
   }
 
   @override
@@ -88,7 +84,7 @@ class HomeRateView extends State<PlusRate>
         state == AppLifecycleState.detached) return;
     final inbackground = (state == AppLifecycleState.paused);
     if (inbackground) {
-      _controller!.setFlashMode(FlashMode.off);
+      _controller?.setFlashMode(FlashMode.off);
       _untoggle();
       setState(() {
         buttonText = 'Check Heart Rate';
@@ -125,12 +121,10 @@ class HomeRateView extends State<PlusRate>
                             fit: StackFit.expand,
                             alignment: Alignment.center,
                             children: [
-                              _controller != null && _toggled
-                                  ? AspectRatio(
+                              if (_controller != null && _toggled) AspectRatio(
                                 aspectRatio: _controller!.value.aspectRatio,
                                 child: CameraPreview(_controller!),
-                              )
-                                  : Container(
+                              ) else Container(
                                 height: 300,
                                 padding: const EdgeInsets.all(12),
                                 alignment: Alignment.center,
@@ -178,19 +172,19 @@ class HomeRateView extends State<PlusRate>
                               borderRadius: BorderRadius.circular(30),
                             ),
                             child: Text(
-                              buttonText??AppLocalizations.of(context)!.check_heart_rate,
+                              buttonText,
                               style:
                               const TextStyle(color: Colors.white, fontSize: 15),
                             ),
                             color: greenClr,
                             onPressed: () {
                               if (_toggled) {
-                                buttonText = AppLocalizations.of(context)!.check_heart_rate;
+                                buttonText = "Check Blood Pressure";
                                 _untoggle();
                               } else {
                                 DateFormat dateFormat = DateFormat("dd/MM/yyyy");
                                 DateTime dateTime = dateFormat.parse(profile[0].birthday.toString());
-                                buttonText = AppLocalizations.of(context)!.stop;
+                                buttonText = "Stop";
                                 _toggle(
                                     age: DateTime.now().year-dateTime.year,
                                     name: profile[0].name.toString(),gender: profile[0].gender.toString(),image: profile[0].image.toString());
@@ -199,8 +193,8 @@ class HomeRateView extends State<PlusRate>
                           ),
                         ),
                         MaterialButton(
-                            child:  Text(
-                              AppLocalizations.of(context)!.record,
+                            child: const Text(
+                              "Records",
                               style: TextStyle(color: Colors.white, fontSize: 15),
                             ),
                             color: greenClr,
@@ -223,13 +217,15 @@ class HomeRateView extends State<PlusRate>
                       padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                       child: Row(
-                        children:  [
-                          const CircleAvatar(
+                        children: const [
+                          CircleAvatar(
                             radius: 7,
                             backgroundColor: blueClr,
                           ),
-                          const SizedBox(width: 10),
-                          Text(AppLocalizations.of(context)!.heart_rate)
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text("Blood Pressure")
                         ],
                       ),
                     ),
@@ -307,7 +303,7 @@ class HomeRateView extends State<PlusRate>
   }
 
   void _disposeController() {
-    _controller!.dispose();
+    _controller?.dispose();
     _controller = null;
   }
 
@@ -406,7 +402,7 @@ class HomeRateView extends State<PlusRate>
           timer.cancel();
           seconds = 60;
           _untoggle();
-          buttonText = AppLocalizations.of(context)!.check_heart_rate;
+          buttonText = "Check Heart Rate";
           _save(gender: gender,name: name,age: age,image: image);
         });
       } else {

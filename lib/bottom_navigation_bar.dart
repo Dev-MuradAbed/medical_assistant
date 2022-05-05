@@ -30,7 +30,6 @@ class _BNBarState extends State<BNBar> {
 @override
   void initState() {
     super.initState();
-    Permission.camera.request();
   }
 
   bool visibility=false;
