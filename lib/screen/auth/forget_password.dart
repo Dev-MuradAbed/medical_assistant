@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../theme.dart';
 import '../../widgets/button_widget.dart';
@@ -47,8 +47,8 @@ class _ForgetPasswordState extends State<ForgetPassword> {
             Navigator.pop(context);
           },
         ),
-        title: const Text('Forget Password',style:
-        TextStyle(
+        title:  Text(AppLocalizations.of(context)!.forgot_password,style:
+        const TextStyle(
           color: blueClr,
           fontSize: 25,
           fontFamily: 'Candara',
@@ -61,9 +61,9 @@ class _ForgetPasswordState extends State<ForgetPassword> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              'Password Recovery',
-              style: TextStyle(
+             Text(
+               AppLocalizations.of(context)!.password_recovery,
+              style: const TextStyle(
                 fontFamily: 'Candara',
                 color: blueClr,
                 fontSize: 20,
@@ -71,8 +71,8 @@ class _ForgetPasswordState extends State<ForgetPassword> {
               ),
             ),
             const SizedBox(height: 15),
-            const Text('Enter your email to recover your password',
-              style: TextStyle(
+             Text(AppLocalizations.of(context)!.enter_your_email,
+              style: const TextStyle(
                 fontFamily: 'Candara',
                 color: blackClr,
                 fontSize: 15,
@@ -86,7 +86,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
 
               child: TextInput(
                 controller: _emailController,
-                label: 'Enter Email',
+                label: AppLocalizations.of(context)!.email,
                 keyboardType: TextInputType.emailAddress,
                 widgetIcon: const Icon(
                   Icons.email,
@@ -95,11 +95,11 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "Email cannot be empty";
+                    return AppLocalizations.of(context)!.email_can_not_be_empty;
                   }
                   if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
                       .hasMatch(value)) {
-                    return ("Please enter a valid email");
+                    return (AppLocalizations.of(context)!.email_is_not_valid);
                   } else {
                     return null;
                   }
@@ -110,7 +110,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
               ),
             ),
             const SizedBox(height: 30),
-            ButtonWidget(text: 'Sent', onPressed: () {
+            ButtonWidget(text: AppLocalizations.of(context)!.send, onPressed: () {
               _sendPasswordResetEmail(_emailController.text);
             }),
             const SizedBox(height: 90),

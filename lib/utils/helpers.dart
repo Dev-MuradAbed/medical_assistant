@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '../size_config.dart';
 import '../theme.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 mixin Helper {
 
@@ -22,7 +23,7 @@ mixin Helper {
       ),
     ));
   }
-  noTask(  Future<void> Function() _onRefresh,String massage) {
+  noTask(  Future<void> Function() _onRefresh,String massage,BuildContext context) {
     return Stack(
       children: [
         AnimatedPositioned(
@@ -41,7 +42,7 @@ mixin Helper {
                         : const SizedBox(height: 220),
                     SvgPicture.asset(
                       'assets/images/task.svg',
-                      semanticsLabel: 'Task',
+                      semanticsLabel:AppLocalizations.of(context)!.task ,
                       height: 90,
                       color: primaryClr.withOpacity(0.5),
                     ),

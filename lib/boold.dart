@@ -8,7 +8,6 @@ import 'package:medical_assistant/provider/profile_provider.dart';
 import 'package:medical_assistant/provider/result_provider.dart';
 
 import 'package:medical_assistant/screen/list_result.dart';
-import 'package:medical_assistant/screen/scann_home.dart';
 import 'package:medical_assistant/theme.dart';
 import 'package:medical_assistant/widgets/assistant.dart';
 import 'package:medical_assistant/widgets/count_down_timer_boold.dart';
@@ -17,6 +16,8 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:wakelock/wakelock.dart';
 import 'models/sensorvalue.dart';
 import'dart:math'as math;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class BloodRate extends StatefulWidget {
   const BloodRate({Key? key}) : super(key: key);
@@ -33,7 +34,7 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
   CameraController? _controller;
   late AnimationController _animationController;
   double _buttonScale = 1;
-  String buttonText = "Check Blood Pressure";
+  String? buttonText ;
   int _sy = 0;
   int _di = 0;
   int _fs = 30;
@@ -90,7 +91,7 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
       _untoggle();
       setState(() {
         buttonText =
-        'Check Blood Pressure';
+        AppLocalizations.of(context)!.check_blood_pressure;
          _sy = 0;
          _di = 0;
         _timer?.cancel();
@@ -179,18 +180,19 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),
                               ),
-                              child: Text(buttonText,  style: const TextStyle(
+                              child: Text(buttonText?? AppLocalizations.of(context)!.check_blood_pressure
+                                ,  style: const TextStyle(
                                   color: Colors.white, fontSize: 15),
                               ),
                               color: greenClr,
                               onPressed: () {
                                 if (_toggled) {
-                                  buttonText = "Check Blood Pressure";
+                                  buttonText = AppLocalizations.of(context)!.check_blood_pressure;
                                   _untoggle();
                                 } else {
                                   DateFormat dateFormat = DateFormat("dd/MM/yyyy");
                                   DateTime dateTime = dateFormat.parse(profile[0].birthday.toString());
-                                  buttonText = "Stop";
+                                  buttonText = AppLocalizations.of(context)!.stop;
                                   _toggle(
                                       age: DateTime.now().year-dateTime.year,
                                       name: profile[0].name.toString(),gender: profile[0].gender.toString(),
@@ -202,9 +204,9 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
                             ),
                           ),
                           MaterialButton(
-                              child: const Text(
-                                "Records",
-                                style: TextStyle(
+                              child:  Text(
+                                AppLocalizations.of(context)!.record,
+                                style: const TextStyle(
                                     color: Colors.white, fontSize: 15),
                               ),
                               color: greenClr,
@@ -226,10 +228,10 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 5),
                         child: Row(
-                          children: const[
-                            CircleAvatar(radius: 7,backgroundColor:blueClr,),
-                            SizedBox(width: 10,),
-                            Text("Blood Pressure")
+                          children: [
+                            const CircleAvatar(radius: 7,backgroundColor:blueClr,),
+                            const SizedBox(width: 10,),
+                            Text(AppLocalizations.of(context)!.blood_pressure)
                           ],
                         ),
                       ),
@@ -251,7 +253,7 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
                               ? '${exp.hourTime}:${exp.munitTime}'
                               : exp.dayDate.toString(),
                           yValueMapper: (ResultModel exp,_)=>exp.dy,
-                        name: "Sy",
+                        name: AppLocalizations.of(context)!.sy,
                         markerSettings: const MarkerSettings(isVisible: true),
 
                       ),
@@ -264,7 +266,7 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
                               ? '${exp.hourTime}:${exp.munitTime}'
                               : exp.dayDate.toString(),
                           yValueMapper: (ResultModel exp,_)=>exp.sy,
-                      name: "Dy",
+                      name: AppLocalizations.of(context)!.dy,
                         markerSettings: const MarkerSettings(isVisible: true),
                       ),
                     ],
@@ -447,7 +449,7 @@ class HomeRateView extends State<BloodRate> with SingleTickerProviderStateMixin,
           60;
           _untoggle();
           buttonText =
-          "Check Blood Pressure";
+          AppLocalizations.of(context)!.check_blood_pressure;
           _save(gender: gender,name: name,age: age,image:image );
         });
       } else {

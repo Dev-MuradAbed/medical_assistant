@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NewsViewPage extends StatelessWidget {
   final String? title;
@@ -50,7 +51,7 @@ extendBodyBehindAppBar: true,
                 child: Stack(
                   children: [
                     Container(
-                      color: Color(0xAA333639),
+                      color: const Color(0xAA333639),
                       child: Padding(
                         padding: const EdgeInsets.all(8),
                         child:Container(
@@ -59,7 +60,7 @@ extendBodyBehindAppBar: true,
                           child: Column(
                             children: [
                               Text(
-                                title??'No title',
+                                title??AppLocalizations.of(context)!.no_title,
                                 style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 20,
@@ -79,7 +80,7 @@ extendBodyBehindAppBar: true,
                                         mainAxisAlignment: MainAxisAlignment.start,
                                         children: [
                                           Text(
-                                            time??'No time',
+                                            time??AppLocalizations.of(context)!.no_time,
                                             style: TextStyle(color: Colors.grey[400]),
                                           )
                                         ],
@@ -98,12 +99,12 @@ extendBodyBehindAppBar: true,
                               ),
                               Container(
                                 margin: const EdgeInsets.only(top: 10, right: 40),
-                                child: Text( description??'No description',
+                                child: Text( description??AppLocalizations.of(context)!.no_description,
                                     style: const TextStyle(
                                       color: Colors.white,
                                     )),
                               ),
-                              SizedBox(height: 30,)
+                              const SizedBox(height: 30,)
                             ],
                           ),
                         ),

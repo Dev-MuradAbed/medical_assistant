@@ -6,12 +6,16 @@ import 'package:medical_assistant/database/storage_fire.dart';
 import 'package:medical_assistant/models/profile_model.dart';
 import 'package:medical_assistant/provider/profile_provider.dart';
 import 'package:provider/provider.dart';
+import '../provider/provider_language.dart';
 import '../theme.dart';
 import '../widgets/button_widget.dart';
 import '../widgets/text_field.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  const ProfileScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -19,14 +23,16 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   final Storage storage = Storage();
-  final ValueNotifier<String> _imageUrl = ValueNotifier('assets/images/logo_png.png');
+  final ValueNotifier<String> _imageUrl =
+      ValueNotifier('assets/images/logo_png.png');
   bool visible = false;
   bool readonly = true;
   late TextEditingController phoneController;
   late TextEditingController otherPhoneController;
   late TextEditingController heightController;
   late TextEditingController weightController;
-   String image='';
+  String image = '';
+
   @override
   void initState() {
     // TODO: implement initState
@@ -52,6 +58,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        title: Text(
+          AppLocalizations.of(context)!.profile,
+          style: const TextStyle(color: blueClr),
+          textAlign: TextAlign.start,
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.language_outlined, color: blueClr),
+            onPressed: () {
+              Provider.of<LanguageProvider>(context,listen: false).changeLanguage();
+
+            },
+          ),
+          SizedBox(width: 20),
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: SingleChildScrollView(
@@ -61,147 +86,149 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 if (snapshot.connectionState == ConnectionState.done) {
                   return FutureProvider(
                       initialData: [],
-                      create: (context) =>Provider.of<ProfileProvider>(context, listen: false).getTask(),
+                      create: (context) =>
+                          Provider.of<ProfileProvider>(context, listen: false)
+                              .getTask(),
                       child: Consumer<ProfileProvider>(
                         builder: (context, task, child) {
-                            var profile =Provider.of<ProfileProvider>(context).listTask;
-                            return Column(
-                              children: [
-                                const SizedBox(height: 2),
-                                   ValueListenableBuilder(
-                                      valueListenable: _imageUrl,
-                                      builder: (context, String? value, child) {
-                                        return Container(
-                                          height: 150,
-                                          width: 150,
-                                          child: Visibility(
-                                            visible: visible,
-                                            child: Align(
-                                              alignment: Alignment.bottomRight,
-                                              child: Container(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 5,
-                                                        vertical: 5),
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  shape: BoxShape.circle,
-                                                  border: Border.all(
-                                                      color: greenClr,
-                                                      width: 2),
-                                                ),
-                                                child: IconButton(
-                                                  onPressed: () async {
-                                                    final result = await FilePicker.platform
-                                                            .pickFiles(
-                                                      allowMultiple: false,
-                                                      type: FileType.custom,
-                                                      allowedExtensions: [
-                                                        'jpg',
-                                                        'png',
-                                                        'jpeg',
-                                                      ],
-                                                    );
-                                                    if (result == null) {
-                                                      ScaffoldMessenger.of(
-                                                              context)
-                                                          .showSnackBar(
-                                                              const SnackBar(
-                                                                  content: Text(
-                                                                      'No filere Selected')));
-                                                      return null;
-                                                    }
-                                                    final path = result.files.single.path!;
-                                                    final filename = result.files.single.name;
-                                                    storage.uploadImage(path,filename).then((value) => print("Done"));
+                          var profile =
+                              Provider.of<ProfileProvider>(context).listTask;
+                          return Column(
+                            children: [
+                              const SizedBox(height: 2),
+                              ValueListenableBuilder(
+                                  valueListenable: _imageUrl,
+                                  builder: (context, String? value, child) {
+                                    return Container(
+                                      height: 150,
+                                      width: 150,
+                                      child: Visibility(
+                                        visible: visible,
+                                        child: Align(
+                                          alignment: Alignment.bottomRight,
+                                          child: Container(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 5, vertical: 5),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                  color: greenClr, width: 2),
+                                            ),
+                                            child: IconButton(
+                                              onPressed: () async {
+                                                final result = await FilePicker
+                                                    .platform
+                                                    .pickFiles(
+                                                  allowMultiple: false,
+                                                  type: FileType.custom,
+                                                  allowedExtensions: [
+                                                    'jpg',
+                                                    'png',
+                                                    'jpeg',
+                                                  ],
+                                                );
+                                                if (result == null) {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(SnackBar(
+                                                          content: Text(
+                                                              AppLocalizations.of(
+                                                                      context)!
+                                                                  .no_file_selected)));
+                                                  return;
+                                                }
+                                                final path =
+                                                    result.files.single.path!;
+                                                final filename =
+                                                    result.files.single.name;
+                                                storage
+                                                    .uploadImage(path, filename)
+                                                    .then((value) =>
+                                                        print("Done"));
 
-                                                   storage.getImage(filename).then((value) =>setState(() {
-                                                     _imageUrl.value = image;
-                                                     print("Image URL: $image");
-
-                                                   })
-                                                   );
-                                                  },
-                                                  icon: const Icon(
-                                                    Icons.camera_alt_outlined,
-                                                    size: 36,
-                                                    color: blueClr,
-                                                  ),
-                                                ),
+                                                storage.getImage(filename).then(
+                                                    (value) => setState(() {
+                                                          _imageUrl.value =
+                                                              image;
+                                                          print(
+                                                              "Image URL: $image");
+                                                        }));
+                                              },
+                                              icon: const Icon(
+                                                Icons.camera_alt_outlined,
+                                                size: 36,
+                                                color: blueClr,
                                               ),
                                             ),
                                           ),
-                                          alignment: Alignment.center,
-                                          decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                              image: NetworkImage(
-                                                 profile[0].image.toString(),
-                                              ),
-                                              fit: BoxFit.cover,
-                                            ),
-                                            border: Border.all(
-                                                color: greenClr, width: 2),
-                                            shape: BoxShape.circle,
+                                        ),
+                                      ),
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          image: NetworkImage(
+                                            profile[0].image.toString(),
                                           ),
-                                        );
-                                      }),
-
-                                const SizedBox(height: 30),
-                                TextInput(
-                                    readOnly: true,
-                                    label: 'User ID',
-                                    hint: profile[0].id.toString(),
-                                    keyboardType: TextInputType.number),
-                                const SizedBox(height: 30),
-                                TextInput(
-                                  readOnly: true,
-                                  label: 'User Name',
-                                  hint: profile[0].name,
-                                ),
-                                const SizedBox(height: 30),
-                                TextInput(
-                                  label: 'Birthday',
-                                  readOnly: true,
-                                  hint: profile[0].birthday,
-                                ),
-                                const SizedBox(height: 30),
-                                TextInput(
-                                  controller: phoneController,
-                                  readOnly: !visible,
-                                  label: 'Phone Number',
-                                  hint: profile[0].phone.toString(),
-                                  keyboardType: TextInputType.number,
-                                  sufWidget: Visibility(
-                                    visible: visible,
-                                    child: IconButton(
-                                      icon: (Icon(Icons.edit)),
-                                      onPressed: () {
-                                        profile[0].phone.toString();
-                                      },
-                                    ),
+                                          fit: BoxFit.cover,
+                                        ),
+                                        border: Border.all(
+                                            color: greenClr, width: 2),
+                                        shape: BoxShape.circle,
+                                      ),
+                                    );
+                                  }),
+                              const SizedBox(height: 30),
+                              const SizedBox(height: 30),
+                              TextInput(
+                                readOnly: true,
+                                label: AppLocalizations.of(context)!.user_name,
+                                hint: profile[0].name,
+                              ),
+                              const SizedBox(height: 30),
+                              TextInput(
+                                label: AppLocalizations.of(context)!.birthday,
+                                readOnly: true,
+                                hint: profile[0].birthday,
+                              ),
+                              const SizedBox(height: 30),
+                              TextInput(
+                                controller: phoneController,
+                                readOnly: !visible,
+                                label: AppLocalizations.of(context)!.phone,
+                                hint: profile[0].phone.toString(),
+                                keyboardType: TextInputType.number,
+                                sufWidget: Visibility(
+                                  visible: visible,
+                                  child: IconButton(
+                                    icon: (const Icon(Icons.edit)),
+                                    onPressed: () {
+                                      profile[0].phone.toString();
+                                    },
                                   ),
                                 ),
-                                const SizedBox(height: 30),
-                                TextInput(
-                                  controller: otherPhoneController,
-                                  label: 'Other Phone',
-                                  hint: profile[0].other.toString(),
-                                  readOnly: !visible,
-                                  keyboardType: TextInputType.number,
-                                  sufWidget: Visibility(
-                                    visible: visible,
-                                    child: IconButton(
-                                      icon: (Icon(Icons.edit)),
-                                      onPressed: () {
-                                        setState(() {
-                                          profile[0].other.toString();
-                                        });
-                                      },
-                                      // onPressed: ()=>_updateProfile(),
-                                    ),
+                              ),
+                              const SizedBox(height: 30),
+                              TextInput(
+                                controller: otherPhoneController,
+                                label:
+                                    AppLocalizations.of(context)!.other_phone,
+                                hint: profile[0].other.toString(),
+                                readOnly: !visible,
+                                keyboardType: TextInputType.number,
+                                sufWidget: Visibility(
+                                  visible: visible,
+                                  child: IconButton(
+                                    icon: (const Icon(Icons.edit)),
+                                    onPressed: () {
+                                      setState(() {
+                                        profile[0].other.toString();
+                                      });
+                                    },
+                                    // onPressed: ()=>_updateProfile(),
                                   ),
                                 ),
-                                /*
+                              ),
+                              /*
                                 int count = await database.rawUpdate(
 29    'UPDATE Test SET name = ?, value = ? WHERE name = ?',
 30    ['updated name', '9876', 'some name']);
@@ -224,71 +251,73 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return updated;
   }
                                  */
-                                const SizedBox(height: 30),
-                                TextInput(
-                                    label: 'Gender',
-                                    readOnly: true,
-                                    hint: profile[0].gender),
-                                const SizedBox(height: 30),
-                                TextInput(
-                                  controller: heightController,
-                                  label: 'Height',
-                                  hint: profile[0].height.toString(),
-                                  readOnly: !visible,
-                                  keyboardType: TextInputType.number,
-                                  sufWidget: Visibility(
-                                    visible: visible,
-                                    child: IconButton(
-                                      icon: (Icon(Icons.edit)),
-                                      onPressed: () {
-                                        profile[0].other.toString();
-                                      },
-                                      // onPressed: ()=>_updateProfile(),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(height: 30),
-                                TextInput(
-                                  controller: weightController,
-                                  label: 'Weight',
-                                  hint: profile[0].wight.toString(),
-                                  readOnly: !visible,
-                                  keyboardType: TextInputType.number,
-                                  sufWidget: Visibility(
-                                    visible: visible,
-                                    child: IconButton(
-                                      icon: (Icon(Icons.edit)),
-                                      onPressed: () {
-                                        profile[0].wight.toString();
-                                      },
-                                      // onPressed: ()=>_updateProfile(),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(height: 25),
-                                ButtonWidget(
-                                    text: visible == false
-                                        ? "Update Profile"
-                                        : "Save Profile",
+                              const SizedBox(height: 30),
+                              TextInput(
+                                  label: AppLocalizations.of(context)!.gender,
+                                  readOnly: true,
+                                  hint: profile[0].gender),
+                              const SizedBox(height: 30),
+                              TextInput(
+                                controller: heightController,
+                                label: AppLocalizations.of(context)!.height,
+                                hint: profile[0].height.toString(),
+                                readOnly: !visible,
+                                keyboardType: TextInputType.number,
+                                sufWidget: Visibility(
+                                  visible: visible,
+                                  child: IconButton(
+                                    icon: (const Icon(Icons.edit)),
                                     onPressed: () {
-                                      visible == false
-                                          ? setState(() {
-                                              visible = !visible;
-                                            })
-                                          : setState(() {
-                                              visible = !visible;
-                                              _updateProfile(
-                                                  height: heightController.text,
-                                                  otherPhone:otherPhoneController.text,
-                                                  phone: phoneController.text,
-                                                  weight: weightController.text,
-                                                  image: _imageUrl.value);
-                                            });
-                                    }),
-                                const SizedBox(height: 60),
-                              ],
-                            );
-
+                                      profile[0].other.toString();
+                                    },
+                                    // onPressed: ()=>_updateProfile(),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 30),
+                              TextInput(
+                                controller: weightController,
+                                label: AppLocalizations.of(context)!.weight,
+                                hint: profile[0].wight.toString(),
+                                readOnly: !visible,
+                                keyboardType: TextInputType.number,
+                                sufWidget: Visibility(
+                                  visible: visible,
+                                  child: IconButton(
+                                    icon: (const Icon(Icons.edit)),
+                                    onPressed: () {
+                                      profile[0].wight.toString();
+                                    },
+                                    // onPressed: ()=>_updateProfile(),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 25),
+                              ButtonWidget(
+                                  text: visible == false
+                                      ? AppLocalizations.of(context)!
+                                          .update_profile
+                                      : AppLocalizations.of(context)!
+                                          .save_profile,
+                                  onPressed: () {
+                                    visible == false
+                                        ? setState(() {
+                                            visible = !visible;
+                                          })
+                                        : setState(() {
+                                            visible = !visible;
+                                            _updateProfile(
+                                                height: heightController.text,
+                                                otherPhone:
+                                                    otherPhoneController.text,
+                                                phone: phoneController.text,
+                                                weight: weightController.text,
+                                                image: _imageUrl.value);
+                                          });
+                                  }),
+                              const SizedBox(height: 60),
+                            ],
+                          );
                         },
                       ));
                 }
@@ -299,13 +328,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  _updateProfile(
-      {required String? height,
-      required String? otherPhone,
-      required String? phone,
-      required String? weight,
-      required String? image,
-      }) async {
+  _updateProfile({
+    required String? height,
+    required String? otherPhone,
+    required String? phone,
+    required String? weight,
+    required String? image,
+  }) async {
     final firebaseUser = FirebaseAuth.instance.currentUser;
     if (height != "") {
       print("height");

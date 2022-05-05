@@ -9,6 +9,7 @@ import '../../provider/todo_provider/todo_patient_provider.dart';
 import '../../theme.dart';
 import '../../widgets/todo_widget/patient_todo_widget/button.dart';
 import '../../widgets/todo_widget/patient_todo_widget/input_field.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 class AddTaskPage extends StatefulWidget {
@@ -44,7 +45,6 @@ class _AddTaskPageState extends State<AddTaskPage>with Helper {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      //backgroundColor: context.theme.backgroundColor,
       appBar: _appBar(),
       body: SafeArea(
         child: Container(
@@ -53,21 +53,21 @@ class _AddTaskPageState extends State<AddTaskPage>with Helper {
             child: Column(
               children: [
                 Text(
-                  'Add Task',
+                  AppLocalizations.of(context)!.add_task,
                   style: heading,
                 ),
                 InputField(
-                  title: 'Title',
-                  hint: 'Enter Title Task',
+                  title: AppLocalizations.of(context)!.title,
+                  hint: AppLocalizations.of(context)!.enter_title_task,
                   controller: _titlecontroller,
                 ),
                 InputField(
-                  title: 'Note',
-                  hint: 'Enter Note Task',
+                  title: AppLocalizations.of(context)!.note,
+                  hint: AppLocalizations.of(context)!.enter_note_task,
                   controller: _notecontroller,
                 ),
                 InputField(
-                  title: 'Date',
+                  title: AppLocalizations.of(context)!.date,
                   hint: DateFormat.yMd().format(_selectedTime),
                   widget: IconButton(
                     icon: const Icon(
@@ -91,7 +91,7 @@ class _AddTaskPageState extends State<AddTaskPage>with Helper {
                     const SizedBox(width: 12),
                     Expanded(
                         child: InputField(
-                          title: 'End Time',
+                          title: AppLocalizations.of(context)!.end_time,
                           hint: endTime,
                           widget: IconButton(
                             onPressed: () => _getTime(isStart: false),
@@ -104,8 +104,8 @@ class _AddTaskPageState extends State<AddTaskPage>with Helper {
                   ],
                 ),
                 InputField(
-                  title: 'Remind',
-                  hint: '$_selecRemind minuet early',
+                  title: AppLocalizations.of(context)!.remind,
+                  hint: '$_selecRemind ${AppLocalizations.of(context)!.minuet_early}',
                   widget: Row(
                     children: [
                       DropdownButton(
@@ -133,7 +133,7 @@ class _AddTaskPageState extends State<AddTaskPage>with Helper {
                   ),
                 ),
                 InputField(
-                  title: 'Repeat',
+                  title: AppLocalizations.of(context)!.repeat,
                   hint: _selectRepeat,
                   widget: Row(
                     children: [
@@ -169,7 +169,7 @@ class _AddTaskPageState extends State<AddTaskPage>with Helper {
                   children: [
                     Column_methode(),
                     MyButton(
-                        label: 'Create Task',
+                        label: AppLocalizations.of(context)!.create_task,
                         onTap: () {
                           validateTask();
                         }),
@@ -210,7 +210,7 @@ class _AddTaskPageState extends State<AddTaskPage>with Helper {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('Color'),
+         Text(AppLocalizations.of(context)!.color),
         Wrap(
           children: List.generate(
               3,
@@ -246,7 +246,7 @@ class _AddTaskPageState extends State<AddTaskPage>with Helper {
       _addTaskToDb();
       Navigator.pop(context);
     } else if (_titlecontroller.text.isEmpty || _notecontroller.text.isEmpty) {
-      showSnackBar( context,message: 'Required title or note ', error: true);
+      showSnackBar( context,message: AppLocalizations.of(context)!.required_title_and_note, error: true);
     } else {
       print('nothing');
     }

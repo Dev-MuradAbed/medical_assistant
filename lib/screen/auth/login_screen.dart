@@ -7,7 +7,8 @@ import '../../utils/custom_painter.dart';
 import '../../utils/helpers.dart';
 import '../../widgets/button_widget.dart';
 import '../../widgets/text_field.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+//AppLocalizations.of(context)!.
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -53,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> with Helper {
                     ),
 
                       CustomPaint(
-                       size: Size(double.infinity, 700),
+                       size: const Size(double.infinity, 700),
                         foregroundPainter: RPSCustomPainter(),
                       ),
 
@@ -75,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> with Helper {
                           children: [
                             TextInput(
                               // label: 'Enter Email',
-                              hint: 'Enter Email',
+                              hint: AppLocalizations.of(context)!.email,
                               controller: _emailController,
                               keyboardType: TextInputType.emailAddress,
                               widgetIcon: const Icon(
@@ -85,12 +86,12 @@ class _LoginScreenState extends State<LoginScreen> with Helper {
                               ),
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return "Email cannot be empty";
+                                  return  AppLocalizations.of(context)!.email_can_not_be_empty;
                                 }
                                 if (!RegExp(
                                         "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
                                     .hasMatch(value)) {
-                                  return ("Please enter a valid email");
+                                  return ( AppLocalizations.of(context)!.email_is_not_valid);
                                 } else {
                                   return null;
                                 }
@@ -102,7 +103,7 @@ class _LoginScreenState extends State<LoginScreen> with Helper {
                             const SizedBox(height: 20),
                             TextInput(
                               // label: 'password',
-                              hint: 'Enter Password',
+                              hint:  AppLocalizations.of(context)!.password,
                               controller: _passwordController,
                               keyboardType: TextInputType.emailAddress,
                               widgetIcon: const Icon(
@@ -128,10 +129,10 @@ class _LoginScreenState extends State<LoginScreen> with Helper {
                               validator: (value) {
                                 RegExp regex = RegExp(r'^.{6,}$');
                                 if (value!.isEmpty) {
-                                  return "Password cannot be empty";
+                                  return  AppLocalizations.of(context)!.password_can_not_be_empty;
                                 }
                                 if (!regex.hasMatch(value)) {
-                                  return ("please enter valid password min. 6 character");
+                                  return ( AppLocalizations.of(context)!.password_must_be_at_least_6_characters);
                                 } else {
                                   return null;
                                 }
@@ -148,9 +149,9 @@ class _LoginScreenState extends State<LoginScreen> with Helper {
                                   child: TextButton(
                                     onPressed: () => Navigator.pushNamed(
                                         context, '/forget_screen'),
-                                    child: const Text(
-                                      'FORGET PASSWORD ?',
-                                      style: TextStyle(
+                                    child:  Text(
+                                      AppLocalizations.of(context)!.forgot_password,
+                                      style: const TextStyle(
                                         fontFamily: 'Candara',
                                         color: blueClr,
                                         fontSize: 12,
@@ -163,16 +164,16 @@ class _LoginScreenState extends State<LoginScreen> with Helper {
                               height: MediaQuery.of(context).size.height * 0.23,
                             ),
                             ButtonWidget(
-                                text: "LOG IN",
+                                text: AppLocalizations.of(context)!.login,
                                 onPressed: () => signIn(_emailController.text,
                                     _passwordController.text)),
                             TextButton(
                               onPressed: () {
                                 Navigator.pushNamed(context, '/signup_screen');
                               },
-                              child: const Text(
-                                'YOU DON\'T HAVE ANY ACCOUNT ? SGIN UP.',
-                                style: TextStyle(
+                              child:  Text(
+                                AppLocalizations.of(context)!.you_dont_have_an_account_signup,
+                                style: const TextStyle(
                                   fontFamily: 'Candara',
                                   color: greenClr,
                                   fontSize: 8,
@@ -204,9 +205,9 @@ class _LoginScreenState extends State<LoginScreen> with Helper {
 
       } on FirebaseAuthException catch (e) {
         if (e.code == 'user-not-found') {
-          showSnackBar(context, message: 'User Not Found', error: true);
+          showSnackBar(context, message: AppLocalizations.of(context)!.user_not_found, error: true);
         } else if (e.code == 'wrong-password') {
-          showSnackBar(context, message: 'Wrong Password', error: true);
+          showSnackBar(context, message: AppLocalizations.of(context)!.wrong_password, error: true);
         }
       }
     }

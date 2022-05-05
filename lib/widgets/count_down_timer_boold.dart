@@ -69,7 +69,7 @@ class CountDownTimer extends StatelessWidget {
       width: width,
       height: height,
       child: Padding(
-        padding: EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(8.0),
         child: Stack(
           alignment: Alignment.center,
           children: <Widget>[
@@ -95,7 +95,7 @@ class CountDownTimer extends StatelessWidget {
                     color: textColor,
                   ),
                 ),
-                Divider(),
+                const Divider(),
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   if(sp!=null&&dp!=null&&(sp!>dp!||sp!<60||dp!>30))
                     Column(
@@ -103,9 +103,9 @@ class CountDownTimer extends StatelessWidget {
                       children: [
                         Text(
                           (sp!=null&&dp!=null&&(sp!<dp!||sp!<60||dp!>=30)? '$sp / $dp': "--"),
-                          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                          style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                         ),
-                         Text(
+                         const Text(
                           "mmHg",
                           style: TextStyle(fontSize: 18, color: Colors.grey),
                           textAlign: TextAlign.center,

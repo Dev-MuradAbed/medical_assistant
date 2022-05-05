@@ -6,7 +6,7 @@ class RPSCustomPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     Paint paint0 = Paint()
   ..shader = ui.Gradient.linear(
-      Offset(2, 1),
+      const Offset(2, 1),
       Offset(size.width, size.height),
       <Color>[ Colors.blue.shade900,  Colors.blue.shade400],
       <double>[1.0, 1.0],
@@ -22,7 +22,7 @@ class RPSCustomPainter extends CustomPainter {
 
     Paint paint1 = Paint()
     ..shader=ui.Gradient.linear(
-        Offset(2, 1),
+        const Offset(2, 1),
         Offset(size.width, size.height),
         <Color>[Colors.blue.shade900,  Colors.blue.shade400],
         <double>[0.0, 1.0],

@@ -2,20 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:medical_assistant/map/Screens/search.dart';
-import 'package:medical_assistant/provider/todo_provider/todo_patient_provider.dart';
-import 'package:medical_assistant/read_camera.dart';
 import 'package:medical_assistant/screen/home_news_screen.dart';
-import 'package:medical_assistant/screen/map_pat_screen.dart';
-import 'package:medical_assistant/screen/news_details.dart';
 import 'package:medical_assistant/screen/profile_screen.dart';
 import 'package:medical_assistant/screen/scann_home.dart';
-import 'package:medical_assistant/screen/todo_screen/patient_add_task.dart';
-import 'package:medical_assistant/screen/todo_screen/patient_home_todo.dart';
 import 'package:medical_assistant/screen/todo_screen/todo_home.dart';
 import 'package:medical_assistant/theme.dart';
-import 'package:oktoast/oktoast.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:provider/provider.dart';
 
 class BNBar extends StatefulWidget {
   const BNBar({Key? key}) : super(key: key);
@@ -40,16 +32,17 @@ class _BNBarState extends State<BNBar> {
     super.initState();
     Permission.camera.request();
   }
-  final screens = [
-    ProfileScreen(),
-    Search(),
-    HomeNewsScreen(),
-    HomeScan(),
-    TodoHome( ),
-  ];
+
   bool visibility=false;
   @override
   Widget build(BuildContext context) {
+    final screens = [
+     const ProfileScreen(),
+    Search(),
+    const HomeNewsScreen(),
+     const HomeScan(),
+     const TodoHome(),
+  ];
     return Container(
       color: greenClr,
       child: SafeArea(

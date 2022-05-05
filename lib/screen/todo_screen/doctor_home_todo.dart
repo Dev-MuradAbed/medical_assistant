@@ -1,11 +1,10 @@
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:medical_assistant/database/controller/doctor_controller.dart';
+
 import 'package:medical_assistant/models/todo_model/doctor_todo_model.dart';
 import 'package:medical_assistant/utils/helpers.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +14,9 @@ import '../../size_config.dart';
 import '../../theme.dart';
 import '../../widgets/todo_widget/patient_todo_widget/doctor_task_tile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+//AppLocalizations.of(context)!.
 class DoctorHomeTodo extends StatefulWidget {
   const DoctorHomeTodo({Key? key}) : super(key: key);
 
@@ -38,6 +39,7 @@ class _DoctorHomeTodoState extends State<DoctorHomeTodo> with Helper {
   }
 
   DateTime _selectedTime = DateTime.now();
+
   @override
   Widget build(BuildContext context) {
     size.init(context);
@@ -78,35 +80,12 @@ class _DoctorHomeTodoState extends State<DoctorHomeTodo> with Helper {
     );
   }
 
-  AppBar _appBar() => AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: const CircleAvatar(
-          radius: 20,
-          backgroundImage: AssetImage('assets/images/person.jpeg'),
-        ),
-        actions: [
-          IconButton(
-            color: Colors.black,
-            icon: const Icon(
-              Icons.cleaning_services_outlined,
-              size: 24,
-            ),
-            onPressed: () {
-              notifyHelper.flutterLocalNotificationsPlugin.cancelAll();
-              Provider.of<TaskDoctorProvider>(context, listen: false)
-                  .deleteAllTask();
-            },
-          ),
-          const SizedBox(width: 10)
-        ],
-      );
-
   _showTask() {
     return Expanded(
         child: Provider.of<TaskDoctorProvider>(context).listTask.isEmpty
             ? noTask(_onRefresh,
-                "Don't have any Task\nAdd new Task to make your Day productive")
+                "${AppLocalizations.of(context)!..dont_have_any_task}\n${AppLocalizations.of(context)!.add_new_task_to_make_your_day_productive}"
+            ,context)
             : RefreshIndicator(
                 onRefresh: _onRefresh,
                 child: ListView.builder(
@@ -157,41 +136,36 @@ class _DoctorHomeTodoState extends State<DoctorHomeTodo> with Helper {
               ));
   }
 
+  _feach() async {
+    var uuidUser = FirebaseAuth.instance.currentUser!.uid;
+    var fireStronsSub =
+        FirebaseFirestore.instance.collection('UserData').doc(uuidUser);
+    var pr = Provider.of<TaskDoctorProvider>(context, listen: false);
+    fireStronsSub.collection("DoctorNote").snapshots().listen((data) {
+      data.docs.forEach((doc) async {
+        print(doc.id);
+        if (pr.listTask.where((element) => element.idNote != doc.id).isEmpty) {
 
-_feach() async {
-    var uuidUser=FirebaseAuth.instance.currentUser!.uid;
-var fireStronsSub=FirebaseFirestore.instance.collection('UserData').doc(uuidUser);
-var pr=Provider.of<TaskDoctorProvider>(context,listen: false);
-fireStronsSub.collection("DoctorNote").snapshots().listen((data) {
-  data.docs.forEach((doc) async{
-    print(doc.id);
-  if(pr.listTask.where((element)=>element.idNote!=doc.id).isEmpty){
-    print("not empty");
- await pr.addTask(
-        idNote: doc.id,
-        task:  DoctorTask(
-          title: doc.data()['title'],
-          note: doc.data()['note'],
-          remind: doc.data()['remind'],
-          isCompleted: doc.data()['isCompleted'],
-          color: doc.data()['color'],
-          idNote: doc.id,
-          repeat: doc.data()['repeat'],
-          endTime: doc.data()['endTime'],
-          startTime: doc.data()['startTime'],
-          date: doc.data()['date'],
-        )
-    );
- Provider.of<TaskDoctorProvider>(context).getTask();
-  }else{
-    print('empty');
-  }
-
-  });
-
-
-
-});
+          await pr.addTask(
+              idNote: doc.id,
+              task: DoctorTask(
+                title: doc.data()['title'],
+                note: doc.data()['note'],
+                remind: doc.data()['remind'],
+                isCompleted: doc.data()['isCompleted'],
+                color: doc.data()['color'],
+                idNote: doc.id,
+                repeat: doc.data()['repeat'],
+                endTime: doc.data()['endTime'],
+                startTime: doc.data()['startTime'],
+                date: doc.data()['date'],
+              ));
+          Provider.of<TaskDoctorProvider>(context).getTask();
+        } else {
+          print('empty');
+        }
+      });
+    });
   }
 
   _addDateTask() {

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 import '../../theme.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({Key? key, required this.payload}) : super(key: key);
@@ -48,15 +50,16 @@ class _NotificationScreenState extends State<NotificationScreen> {
             const SizedBox(height: 10),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Text('Hello ,Nahed',
-                    style: TextStyle(
+              children:  [
+                Text(AppLocalizations.of(context)!.welcome_to_back,
+                    style:const TextStyle(
                         fontSize: 26,
                         fontWeight: FontWeight.w900,
                         color: darkGreyClr)),
-                SizedBox(height: 10),
-                Text('Your have a reminder',
-                    style: TextStyle(
+
+                const SizedBox(height: 10),
+                Text(AppLocalizations.of(context)!.you_have_a_reminder,
+                    style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w300,
                         color: darkGreyClr)),
@@ -75,7 +78,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      rowNotification('Title', Icons.text_format),
+                      rowNotification(AppLocalizations.of(context)!.title, Icons.text_format),
                       const SizedBox(height: 20),
                       Text(
                         payload.toString().split('|')[0],
@@ -84,7 +87,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         ),
                       ),
                       const SizedBox(height: 20),
-                      rowNotification('Description', Icons.description),
+                      rowNotification(AppLocalizations.of(context)!.note, Icons.description),
                       const SizedBox(height: 20),
                       Text(
                         payload.toString().split('|')[1],
@@ -93,7 +96,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         ),
                       ),
                       const SizedBox(height: 20),
-                      rowNotification('Time', Icons.calendar_today_sharp),
+                      rowNotification(AppLocalizations.of(context)!.time, Icons.calendar_today_sharp),
                       const SizedBox(height: 20),
                       Text(
                         payload.toString().split('|')[2],

@@ -188,29 +188,7 @@ class DoctorNotificationHelper {
   Future onDidReceiveLocalNotification(
       int id, String? title, String? body, String? payload,) async {
     // display a dialog with the notification details, tap ok to go to another page
-    /* showDialog(
-      context: context,
-      builder: (BuildContext context) => CupertinoAlertDialog(
-        title: const Text('Title'),
-        content: const Text('Body'),
-        actions: [
-          CupertinoDialogAction(
-            isDefaultAction: true,
-            child: const Text('Ok'),
-            onPressed: () async {
-              Navigator.of(context, rootNavigator: true).pop();
-              await Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Container(color: Colors.white),
-                ),
-              );
-            },
-          )
-        ],
-      ),
-    );
- */
+
     showDialog(context: context, builder: (BuildContext context){
       return AlertDialog(
         title: Text(body!),

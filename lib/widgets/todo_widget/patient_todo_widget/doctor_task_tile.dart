@@ -6,6 +6,7 @@ import 'package:medical_assistant/models/todo_model/doctor_todo_model.dart';
 import '../../../models/todo_model/patient_todo_model.dart';
 import '../../../size_config.dart';
 import '../../../theme.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 class DoctorTaskTile extends StatelessWidget {
@@ -83,7 +84,7 @@ class DoctorTaskTile extends StatelessWidget {
             RotatedBox(
               quarterTurns: 3,
               child: Text(
-                task.isCompleted == 0 ? 'TODO' : 'Completed',
+                task.isCompleted == 0 ? AppLocalizations.of(context)!.todo : AppLocalizations.of(context)!.completed,
                 style: GoogleFonts.lato(
                   textStyle: const TextStyle(
                       fontSize: 12,

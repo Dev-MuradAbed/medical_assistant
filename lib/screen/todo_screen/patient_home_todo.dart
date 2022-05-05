@@ -18,6 +18,8 @@ import '../../theme.dart';
 import '../../widgets/todo_widget/patient_todo_widget/button.dart';
 import '../../widgets/todo_widget/patient_todo_widget/patient_task_tile.dart';
 import 'patient_add_task.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class PatientHomeTodo extends StatefulWidget {
   const PatientHomeTodo({Key? key}) : super(key: key);
@@ -80,34 +82,13 @@ floatingActionButtonLocation:FloatingActionButtonLocation.endTop ,
     );
   }
 
-  AppBar _appBar() => AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: const CircleAvatar(
-          radius: 20,
-          backgroundImage: AssetImage('assets/images/person.jpeg'),
-        ),
-        actions: [
-          IconButton(
-            color: Colors.black,
-            icon: const Icon(
-              Icons.cleaning_services_outlined,
-              size: 24,
-            ),
-            onPressed: () {
-              notifyHelper.flutterLocalNotificationsPlugin.cancelAll();
-              Provider.of<TaskProvider>(context, listen: false).deleteAllTask();
-            },
-          ),
-          const SizedBox(width: 10)
-        ],
-      );
+
 
   _showTask() {
     return Expanded(
         child: Provider.of<TaskProvider>(context).listTask.isEmpty
             ? noTask(_onRefresh,
-                "Don't have any Task\nAdd new Task to make your Day productive")
+                "${AppLocalizations.of(context)!.dont_have_any_task}\n${AppLocalizations.of(context)!.add_new_task_to_make_your_day_productive}",context)
             : RefreshIndicator(
                 onRefresh: _onRefresh,
                 child: ListView.builder(
@@ -180,7 +161,7 @@ floatingActionButtonLocation:FloatingActionButtonLocation.endTop ,
             ],
           ),
           MyButton(
-              label: '+ Add Task',
+              label: AppLocalizations.of(context)!.add_task,
               onTap: () async {
                 Navigator.push(
                     context,
@@ -255,7 +236,7 @@ floatingActionButtonLocation:FloatingActionButtonLocation.endTop ,
                 task.isCompleted == 1
                     ? Container()
                     : _buildBottomSheet(
-                        label: 'Competed Task',
+                        label: AppLocalizations.of(context)!.completed_task,
                         clr: primaryClr,
                         onTap: () async {
                           Provider.of<TaskProvider>(context, listen: false)
@@ -265,7 +246,7 @@ floatingActionButtonLocation:FloatingActionButtonLocation.endTop ,
                           Navigator.pop(context);
                         }),
                 _buildBottomSheet(
-                    label: 'Deleted Task',
+                    label: AppLocalizations.of(context)!.delete_task,
                     clr: Colors.red[300]!,
                     onTap: () async {
                       Provider.of<TaskProvider>(context, listen: false)
@@ -280,7 +261,7 @@ floatingActionButtonLocation:FloatingActionButtonLocation.endTop ,
                   color: darkGreyClr,
                 ),
                 _buildBottomSheet(
-                    label: 'Cancel',
+                    label: AppLocalizations.of(context)!.cancel,
                     clr: primaryClr,
                     onTap: () {
                       Navigator.pop(context);

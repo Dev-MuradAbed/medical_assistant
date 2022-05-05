@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
 import '../../../models/todo_model/patient_todo_model.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import '../../../size_config.dart';
 import '../../../theme.dart';
-
 
 class TaskTile extends StatelessWidget {
   const TaskTile(this.task, {Key? key}) : super(key: key);
@@ -39,7 +39,7 @@ class TaskTile extends StatelessWidget {
                         textStyle: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
-                            color:Colors.white),
+                            color: Colors.white),
                       ),
                     ),
                     const SizedBox(height: 12),
@@ -65,8 +65,7 @@ class TaskTile extends StatelessWidget {
                     Text(
                       '${task.note}',
                       style: GoogleFonts.lato(
-                        textStyle:
-                            const TextStyle(fontSize: 15, color:white),
+                        textStyle: const TextStyle(fontSize: 15, color: white),
                       ),
                     )
                   ],
@@ -82,12 +81,12 @@ class TaskTile extends StatelessWidget {
             RotatedBox(
               quarterTurns: 3,
               child: Text(
-                task.isCompleted == 0 ? 'TODO' : 'Completed',
+                task.isCompleted == 0
+                    ? AppLocalizations.of(context)!.todo
+                    : AppLocalizations.of(context)!.completed,
                 style: GoogleFonts.lato(
                   textStyle: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                      color: white),
+                      fontSize: 12, fontWeight: FontWeight.bold, color: white),
                 ),
               ),
             )

@@ -8,6 +8,7 @@ import '../models/news.dart';
 
 import '../theme.dart';
 import 'news_details.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomeNewsScreen extends StatefulWidget {
   const HomeNewsScreen({Key? key}) : super(key: key);
@@ -25,13 +26,12 @@ class _Home_News_ScrrenState extends State<HomeNewsScreen>
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          iconTheme: IconThemeData(color: Colors.black),
-
+          iconTheme: const IconThemeData(color: Colors.black),
           elevation: 0,
           backgroundColor: Colors.white,
-          title: const Text(
-            'Medical Assistant',
-            style: TextStyle(color: blueClr),
+          title:  Text(
+            AppLocalizations.of(context)!.medical_assistant,
+            style: const TextStyle(color: blueClr),
             textAlign: TextAlign.start,
           ),
         ),
@@ -67,7 +67,7 @@ class _Home_News_ScrrenState extends State<HomeNewsScreen>
                     return SafeArea(
                         child: Column(
                       children: [
-                        SizedBox(height: 10,),
+                        const SizedBox(height: 10,),
                         CarouselSlider(
                           options: CarouselOptions(
                               aspectRatio: 16 / 9,
@@ -125,9 +125,9 @@ class _Home_News_ScrrenState extends State<HomeNewsScreen>
                           padding: const EdgeInsetsDirectional.only(start: 30),
                           child: Container(
                             alignment: AlignmentDirectional.centerStart,
-                            child: const Text(
-                              'Latest News',
-                              style: TextStyle(
+                            child:  Text(
+                              AppLocalizations.of(context)!.latest_news,
+                              style: const TextStyle(
                                   fontSize: 26, fontWeight: FontWeight.bold),
                             ),
                           ),

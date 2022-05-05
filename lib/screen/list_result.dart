@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import '../size_config.dart';
 import '../theme.dart';
 import '../widgets/list_rate.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ListResult extends StatefulWidget {
   const ListResult({Key? key}) : super(key: key);
@@ -32,9 +33,9 @@ class _ListResultState extends State<ListResult> with Helper {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: white,
-        title: const Text(
-          'Medical Assistant',
-          style: TextStyle(
+        title:  Text(
+            AppLocalizations.of(context)!.medical_assistant,
+          style: const TextStyle(
               fontFamily: 'Candara',
               color: blueClr,
               fontSize: 20,
@@ -64,7 +65,7 @@ class _ListResultState extends State<ListResult> with Helper {
   Expanded showRecord() {
     return Expanded(
       child: Provider.of<ResultProvider>(context).resultList.isEmpty
-          ? noTask(_onRefresh, 'You Don\'t have any Record')
+          ? noTask(_onRefresh, AppLocalizations.of(context)!.dont_have_any_task,context)
           : RefreshIndicator(
               onRefresh: _onRefresh,
               child: ListView.builder(

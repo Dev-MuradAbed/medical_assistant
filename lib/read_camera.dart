@@ -21,6 +21,7 @@ import 'package:wakelock/wakelock.dart';
 import 'database/controller/result_controller.dart';
 import 'models/result_model.dart';
 import 'models/sensorvalue.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PlusRate extends StatefulWidget {
   const PlusRate({Key? key}) : super(key: key);
@@ -39,7 +40,7 @@ class HomeRateView extends State<PlusRate>
   double _alpha = 0.3;
   late AnimationController _animationController;
   double _buttonScale = 1;
-  String buttonText = "Check Heart Rate";
+  String? buttonText;
   int _bpm = 0;
   int _fs = 30;
   int _windowLen = 30 * 6;
@@ -159,7 +160,7 @@ class HomeRateView extends State<PlusRate>
                   )
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 width: 30,
                 height: 30,
               ),
@@ -177,19 +178,19 @@ class HomeRateView extends State<PlusRate>
                               borderRadius: BorderRadius.circular(30),
                             ),
                             child: Text(
-                              buttonText,
+                              buttonText??AppLocalizations.of(context)!.check_heart_rate,
                               style:
                               const TextStyle(color: Colors.white, fontSize: 15),
                             ),
                             color: greenClr,
                             onPressed: () {
                               if (_toggled) {
-                                buttonText = "Check Blood Pressure";
+                                buttonText = AppLocalizations.of(context)!.check_heart_rate;
                                 _untoggle();
                               } else {
                                 DateFormat dateFormat = DateFormat("dd/MM/yyyy");
                                 DateTime dateTime = dateFormat.parse(profile[0].birthday.toString());
-                                buttonText = "Stop";
+                                buttonText = AppLocalizations.of(context)!.stop;
                                 _toggle(
                                     age: DateTime.now().year-dateTime.year,
                                     name: profile[0].name.toString(),gender: profile[0].gender.toString(),image: profile[0].image.toString());
@@ -198,8 +199,8 @@ class HomeRateView extends State<PlusRate>
                           ),
                         ),
                         MaterialButton(
-                            child: const Text(
-                              "Records",
+                            child:  Text(
+                              AppLocalizations.of(context)!.record,
                               style: TextStyle(color: Colors.white, fontSize: 15),
                             ),
                             color: greenClr,
@@ -215,22 +216,20 @@ class HomeRateView extends State<PlusRate>
                             }),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 40,
                     ),
                     Padding(
                       padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                       child: Row(
-                        children: const [
-                          CircleAvatar(
+                        children:  [
+                          const CircleAvatar(
                             radius: 7,
                             backgroundColor: blueClr,
                           ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text("Blood Pressure")
+                          const SizedBox(width: 10),
+                          Text(AppLocalizations.of(context)!.heart_rate)
                         ],
                       ),
                     ),
@@ -407,7 +406,7 @@ class HomeRateView extends State<PlusRate>
           timer.cancel();
           seconds = 60;
           _untoggle();
-          buttonText = "Check Heart Rate";
+          buttonText = AppLocalizations.of(context)!.check_heart_rate;
           _save(gender: gender,name: name,age: age,image: image);
         });
       } else {

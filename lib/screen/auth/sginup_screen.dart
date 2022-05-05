@@ -7,6 +7,7 @@ import '../../database/storage_fire.dart';
 import '../../theme.dart';
 import '../../widgets/button_widget.dart';
 import '../../widgets/text_field.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class SignupScreen extends StatefulWidget {
   const SignupScreen({Key? key}) : super(key: key);
   @override
@@ -77,9 +78,9 @@ class _SignupScreenState extends State<SignupScreen> with Helper {
             Navigator.pop(context);
           },
         ),
-        title: const Text(
-          'SIGN UP',
-          style: TextStyle(
+        title:  Text(
+          AppLocalizations.of(context)!.signup,
+          style: const TextStyle(
             fontFamily: 'Candara',
             color: Color(0xff184093),
             fontSize: 24,
@@ -108,9 +109,9 @@ class _SignupScreenState extends State<SignupScreen> with Helper {
                           );
                           if (result == null) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text('No filere Selected')));
-                            return null;
+                                 SnackBar(
+                                    content: Text( AppLocalizations.of(context)!.no_file_selected)));
+                            return;
                           }
                           final path = result.files.single.path!;
                           final filename = result.files.single.name;
@@ -140,30 +141,30 @@ class _SignupScreenState extends State<SignupScreen> with Helper {
               const SizedBox(height: 20),
               const SizedBox(height: 30),
               TextInput(
-                label: 'User Name',
+                label: AppLocalizations.of(context)!.user_name,
                 controller: nameController,
               ),
               const SizedBox(height: 30),
               TextInput(
-                label: 'Email',
+                label: AppLocalizations.of(context)!.email,
                 controller: emailController,
                 keyboardType: TextInputType.emailAddress,
               ),
               const SizedBox(height: 30),
               TextInput(
-                label: 'Birthday',
+                label: AppLocalizations.of(context)!.birthday,
                 readOnly: true,
                 controller: birthController,
                 onTap: () async => _getDate(),
               ),
               const SizedBox(height: 30),
               TextInput(
-                  label: 'Phone Number',
+                  label: AppLocalizations.of(context)!.phone,
                   controller: phoneController,
                   keyboardType: TextInputType.number),
               const SizedBox(height: 30),
               TextInput(
-                  label: 'Other Phone',
+                  label: AppLocalizations.of(context)!.other_phone,
                   controller: otherPhoneController,
                   keyboardType: TextInputType.number),
               const SizedBox(height: 30),
@@ -173,7 +174,7 @@ class _SignupScreenState extends State<SignupScreen> with Helper {
                     genderController.text = _selectGender;
                   });
                 },
-                label: 'Gender',
+                label: AppLocalizations.of(context)!.gender,
                 readOnly: true,
                 controller: genderController,
                 sufWidget: Padding(
@@ -207,17 +208,17 @@ class _SignupScreenState extends State<SignupScreen> with Helper {
               ),
               const SizedBox(height: 30),
               TextInput(
-                  label: 'Height',
+                  label: AppLocalizations.of(context)!.height,
                   controller: heightController,
                   keyboardType: TextInputType.number),
               const SizedBox(height: 30),
               TextInput(
-                  label: 'Weight',
+                  label: AppLocalizations.of(context)!.weight,
                   controller: weightController,
                   keyboardType: TextInputType.number),
               const SizedBox(height: 30),
               TextInput(
-                label: 'Enter Password',
+                label: AppLocalizations.of(context)!.entre_password,
                 controller: _passwordController,
                 keyboardType: TextInputType.emailAddress,
                 obscureText: isPassword,
@@ -238,10 +239,10 @@ class _SignupScreenState extends State<SignupScreen> with Helper {
                 validator: (value) {
                   RegExp regex = RegExp(r'^.{6,}$');
                   if (value!.isEmpty) {
-                    return "Password cannot be empty";
+                    return AppLocalizations.of(context)!.password_can_not_be_empty;
                   }
                   if (!regex.hasMatch(value)) {
-                    return ("please enter valid password min. 6 character");
+                    return (AppLocalizations.of(context)!.password_must_be_at_least_6_characters);
                   } else {
                     return null;
                   }
@@ -253,7 +254,7 @@ class _SignupScreenState extends State<SignupScreen> with Helper {
               const SizedBox(height: 30),
               TextInput(
                 // label: 'password',
-                label: 'Confirm Password',
+                label: AppLocalizations.of(context)!.confirm_password,
                 controller: _passwordConfirmController,
                 keyboardType: TextInputType.emailAddress,
                 obscureText: isPassword,
@@ -274,10 +275,10 @@ class _SignupScreenState extends State<SignupScreen> with Helper {
                 validator: (value) {
                   RegExp regex = RegExp(r'^.{6,}$');
                   if (value!.isEmpty) {
-                    return "Password cannot be empty";
+                    return AppLocalizations.of(context)!.password_can_not_be_empty;
                   }
                   if (!regex.hasMatch(value)) {
-                    return ("please enter valid password min. 6 character");
+                    return (AppLocalizations.of(context)!.password_must_be_at_least_6_characters);
                   } else {
                     return null;
                   }
@@ -287,7 +288,7 @@ class _SignupScreenState extends State<SignupScreen> with Helper {
                 },
               ),
               const SizedBox(height: 30),
-              ButtonWidget(text: "Create", onPressed:  perSingUp),
+              ButtonWidget(text: AppLocalizations.of(context)!.create, onPressed:  perSingUp),
               const SizedBox(height: 30),
             ],
           ),
@@ -361,7 +362,6 @@ class _SignupScreenState extends State<SignupScreen> with Helper {
             'name': nameController.text,
             'birth': birthController,
             'email': emailController.text,
-            'name': nameController.text,
             'gender': genderController.text,
             'phone': phoneController.text,
             'otherPhone': otherPhoneController.text,
@@ -377,33 +377,33 @@ class _SignupScreenState extends State<SignupScreen> with Helper {
     }
     if (nameController.text.isEmpty) {
       showSnackBar(context,
-          message: 'Please enter your User Name', error: true);
+          message: AppLocalizations.of(context)!.please_enter_your_username, error: true);
     } else if (emailController.text.isEmpty) {
-      showSnackBar(context, message: 'Please enter your Email', error: true);
+      showSnackBar(context, message: AppLocalizations.of(context)!.please_enter_your_email, error: true);
     } else if (!emailController.text.contains('@') ||
         !emailController.text.contains('.')) {
-      showSnackBar(context, message: 'Email is not valid', error: true);
+      showSnackBar(context, message: AppLocalizations.of(context)!.email_is_not_valid, error: true);
     } else if (birthController.text.isEmpty) {
-      showSnackBar(context, message: 'Please enter your Birth', error: true);
+      showSnackBar(context, message: AppLocalizations.of(context)!.please_enter_your_birthday, error: true);
     } else if (phoneController.text.isEmpty) {
-      showSnackBar(context, message: 'Please enter your Phone', error: true);
+      showSnackBar(context, message: AppLocalizations.of(context)!.please_enter_your_phone, error: true);
     } else if (otherPhoneController.text.isEmpty) {
       showSnackBar(context,
-          message: 'Please enter your Other Phone', error: true);
+          message: AppLocalizations.of(context)!.please_enter_your_other_phone, error: true);
     } else if (genderController.text.isEmpty) {
-      showSnackBar(context, message: 'Please enter your ', error: true);
+      showSnackBar(context, message: AppLocalizations.of(context)!.please_enter_your_gender, error: true);
     } else if (heightController.text.isEmpty) {
-      showSnackBar(context, message: 'Please enter your Height', error: true);
+      showSnackBar(context, message: AppLocalizations.of(context)!.please_enter_your_height, error: true);
     } else if (weightController.text.isEmpty) {
-      showSnackBar(context, message: 'Please enter your Weight', error: true);
+      showSnackBar(context, message: AppLocalizations.of(context)!.please_enter_your_weight, error: true);
     } else if (_passwordController.text.length < 6 ||
         _passwordConfirmController.text.length < 6) {
       showSnackBar(context,
-          message: 'Password must be at least 6 characters', error: true);
+          message: AppLocalizations.of(context)!.password_must_be_at_least_6_characters, error: true);
     } else if (_passwordController.text != _passwordConfirmController.text) {
-      showSnackBar(context, message: 'Password does not match', error: true);
+      showSnackBar(context, message: AppLocalizations.of(context)!.password_does_not_match, error: true);
     }else{
-      showSnackBar(context, message: 'email already exist', error: true);
+      showSnackBar(context, message: AppLocalizations.of(context)!.email_is_already_exist, error: true);
     }
     return false;
   }

@@ -88,10 +88,6 @@ class _TextInputState extends State<TextInput> {
           borderRadius: BorderRadius.circular(25),
         ),
          suffixIcon:widget.sufWidget,
-         // IconButton(
-         //   onPressed: widgets.onpressed,
-         //  icon: widgets.sufWidget??Container(),
-         // ),
       ),
       onTap: widget.onTap,
     );
