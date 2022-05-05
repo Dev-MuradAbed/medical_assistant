@@ -32,7 +32,6 @@ class PolylineServise {
         polylineCoordinates[i + 1].longitude,
       );
     }
-     print ("distance = =============================================${totalDistance.toStringAsFixed(2)} km");
   }
 
   void _calcDistance(List<LatLng> polylineCoordinates) {
@@ -45,8 +44,7 @@ class PolylineServise {
         polylineCoordinates[i + 1].longitude,
       );
     }
-    print(
-        "distance = =============================================${totalDistance.toStringAsFixed(2)} km");
+
   }
 
   double _coordineCoordinates(lat1, lng1, lat2, lng2) {

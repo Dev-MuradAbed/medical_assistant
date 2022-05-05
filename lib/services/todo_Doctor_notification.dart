@@ -14,7 +14,6 @@ import 'package:timezone/timezone.dart' as tz;
 import '../screen/todo_screen/notification_screen.dart';
 
 
-// import '/models/task01.dart';
 
 class DoctorNotificationHelper {
 
@@ -32,7 +31,6 @@ class DoctorNotificationHelper {
     tz.initializeTimeZones();
     _configureSelectNotificationSubject(context);
     await _configureLocalTimeZone();
-    // await requestIOSPermissions(flutterLocalNotificationsPlugin);
     final IOSInitializationSettings initializationSettingsIOS =
     IOSInitializationSettings(
       requestSoundPermission: false,
@@ -53,7 +51,7 @@ class DoctorNotificationHelper {
       initializationSettings,
       onSelectNotification: (String? payload) async {
         if (payload != null) {
-          debugPrint('notification payload: ' + payload);
+
         }
         selectNotificationSubject.add(payload!);
       },
@@ -61,7 +59,7 @@ class DoctorNotificationHelper {
   }
 
   displayNotification({required String title, required String body}) async {
-    print('doing test');
+
     var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
         'your channel id', 'your channel name', 'your channel description',
         importance: Importance.max, priority: Priority.high);
@@ -91,7 +89,6 @@ class DoctorNotificationHelper {
       task.id!,
       task.title,
       task.note,
-      //tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)),
       _nextInstanceOfTenAM(
           hour, minutes, task.remind!, task.repeat!, task.date!),
       const NotificationDetails(
@@ -129,7 +126,6 @@ class DoctorNotificationHelper {
         scheduledDate = tz.TZDateTime(tz.local, now.year,
             (formmatedDate.month) + 1, formmatedDate.day, hour, minutes);
       }
-//      scheduledDate = scheduledDate.add(const Duration(days: 1));
 
       scheduledDate = afterRemind(remind, scheduledDate);
     }
@@ -173,39 +169,28 @@ class DoctorNotificationHelper {
     tz.setLocalLocation(tz.getLocation(timeZoneName));
   }
 
-/*   Future selectNotification(String? payload) async {
-    if (payload != null) {
-      //selectedNotificationPayload = "The best";
-      selectNotificationSubject.add(payload);
-      print('notification payload: $payload');
-    } else {
-      print("Notification Done");
-    }
-    Get.to(() => SecondScreen(selectedNotificationPayload));
-  } */
 
-//Older IOS
   Future onDidReceiveLocalNotification(
       int id, String? title, String? body, String? payload,) async {
-    // display a dialog with the notification details, tap ok to go to another page
+
 
     showDialog(context: context, builder: (BuildContext context){
       return AlertDialog(
         title: Text(body!),
       );
     });
-    // Get.dialog(Text(body!));
+
   }
 
   void _configureSelectNotificationSubject(BuildContext context) {
     selectNotificationSubject.stream.listen((String payload) async {
-      debugPrint('My payload is ' + payload);
+
       await Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => NotificationScreen(payload: payload),
           ));
-      //Get.to(() => NotificationScreen( pylode:payload,));
+
     });
   }
 }

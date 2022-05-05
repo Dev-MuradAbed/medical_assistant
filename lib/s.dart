@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:medical_assistant/theme.dart';
 
 customErroerScreens() {
   return ErrorWidget.builder = ((details) {

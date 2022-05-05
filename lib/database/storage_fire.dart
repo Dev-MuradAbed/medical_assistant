@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart'as firebase_storage;
 import 'package:firebase_core/firebase_core.dart'as firebase_core;
-import 'package:flutter/widgets.dart';
 class Storage{
   final firebase_storage.FirebaseStorage _storage =
       firebase_storage.FirebaseStorage.instance;
@@ -12,7 +11,7 @@ try{
   await _storage.ref('profile_image/$filename').putFile(file);
 
 }on firebase_core.FirebaseException catch(e){
-  print(e);
+
 
 }
   }

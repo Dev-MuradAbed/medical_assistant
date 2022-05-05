@@ -9,7 +9,7 @@ class ProfileProvider extends ChangeNotifier {
   List<Profile> listTask = <Profile>[];
 
   Future<int> addTask({required Profile task}) async {
-    print('inserting task');
+
     int newRow = await _taskController.insert(task);
     if (newRow != 0) {
       listTask.add(task);
@@ -21,20 +21,10 @@ class ProfileProvider extends ChangeNotifier {
   Future<void>getTask() async {
     final List<Map<String, dynamic>> tasks = await _taskController.query();
     listTask = tasks.map((Map<String, dynamic> task) => Profile.fromJson(task)).toList();
-    print('listTask: $listTask');
+
     notifyListeners();
   }
-  void delete(Profile task) async {
-    await _taskController.delete(task.id!);
-    getTask();
-    notifyListeners();
-  }
-  Future<void> deleteAllTask() async {
-    await _taskController.deleteAllTask();
-    print('sucsess delete');
-    getTask();
-    notifyListeners();
-  }
+
 
   void markTaskCompleted(int id) async {
     await _taskController.update(id);

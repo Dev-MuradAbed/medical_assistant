@@ -38,8 +38,6 @@ class _SearchState extends State<Search> {
     final placesProvider = Provider.of<Future<List<Place>>>(context);
     ImageConfiguration configuration = createLocalImageConfiguration(context);
 
-    print('${currentPosition.latitude}');
-    print('${currentPosition.longitude}');
 
     return FutureProvider(
         create: (_) => placesProvider,
@@ -55,7 +53,7 @@ class _SearchState extends State<Search> {
                     var markers = (snapshot.data != null)
                         ? markerServise.getMarkers(snapshot.data)
                         : marke;
-                    print('the set${Set<Marker>.of(markers)}');
+
 
                     if (snapshot.hasData) {
                       return Column(
@@ -74,8 +72,7 @@ class _SearchState extends State<Search> {
                                 markers: Set<Marker>.of(markers),
                                 polylines: _Polyline,
                                 onMapCreated: (controller) {
-                                  // controller.setMapStyle(Utils.mapStyle);
-                                  // setPolylines();
+
                                   setPolyline(
                                       startlatitude: currentPosition.latitude,
                                       startlongitude: currentPosition.longitude,
@@ -83,13 +80,12 @@ class _SearchState extends State<Search> {
                                       endlongitude: shortlongtude);
                                 }),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           Expanded(
                             child: ListView.builder(
                                 itemCount: snapshot.data!.length,
-                                // itemCount: PlacesService().getPlaces().,
                                 itemBuilder: (_, index) {
                                   return FutureProvider(
                                     create: (context) => geoServise.getDist(
@@ -103,13 +99,13 @@ class _SearchState extends State<Search> {
                                     child: Card(
                                       child: ListTile(
                                         title: Text(
-                                            '${snapshot.data![index].name}'),
+                                            snapshot.data![index].name),
                                         subtitle: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
 
-                                            SizedBox(
+                                            const SizedBox(
                                               height: 5.0,
                                             ),
                                             Consumer<double?>(
@@ -132,10 +128,9 @@ class _SearchState extends State<Search> {
                                                                   "")
                                                               ? Text(
                                                                   '${snapshot.data![index].vicinity} \u00b7 ')
-                                                              : Text(
+                                                              : const Text(
                                                                   'No clear address'),
-                                                          // Text(
-                                                          //     '${(km / 1609).round()} mi')
+
                                                           Text(
                                                               "${(km / 1000).toStringAsFixed(1)} km"),
                                                         ],
@@ -143,7 +138,7 @@ class _SearchState extends State<Search> {
                                                     : Container();
                                               },
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               height: 3.0,
                                             )
                                           ],
@@ -164,26 +159,18 @@ class _SearchState extends State<Search> {
                         ],
                       );
                     } else {
-                      return Center(
-                        child: CircularProgressIndicator(),
+                      return const Center(
+                        child: const CircularProgressIndicator(),
                       );
                     }
                   },
                 )
-              : Center(
-                  child: CircularProgressIndicator(),
+              : const Center(
+                  child: const CircularProgressIndicator(),
                 ),
         ));
   }
 
-  // void _launchMapUrl({required double lat, required double lng}) async {
-  //   final url = 'https://www.google.com/maps/search/?api=1&query=$lat,$lng';
-  //   if (await canLaunch(url)) {
-  //     await launch(url);
-  //   } else {
-  //     throw 'Could not launch $url';
-  //   }
-  // }
 
   void setPolyline(
       {required double startlatitude,
@@ -201,7 +188,7 @@ class _SearchState extends State<Search> {
       });
       setState(() {
         _Polyline.add(Polyline(
-            polylineId: PolylineId('polyline'),
+            polylineId: const PolylineId('polyline'),
             width: 5,
             color: Colors.blue,
             points: polylineCoordinates));
@@ -209,28 +196,7 @@ class _SearchState extends State<Search> {
     }
   }
 
-//   void setPolylines() async {
-//     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-//         "c",
-//         PointLatLng(31.425116, 34.38021),
-//         PointLatLng(31.420637, 34.359642));
-//       print('noooooooooooooooo${result.status}');
 
-//     if (result.status == "OK") {
-//       print('yesssssssssssssssss');
-//       result.points.forEach((PointLatLng point) {
-//         polylineCoordinates.add(LatLng(point.latitude, point.longitude));
-//       });
-//       setState(() {
-//         Polyline(
-//             width: 10,
-//             polylineId: PolylineId('polyline'),
-//             color: Colors.green,
-//             points: polylineCoordinates);
-//       });
-//     }
-//   }
-// }
 }
 
 class Utils {

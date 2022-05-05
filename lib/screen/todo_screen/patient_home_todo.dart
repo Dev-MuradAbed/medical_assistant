@@ -1,8 +1,8 @@
 import 'package:date_picker_timeline/date_picker_timeline.dart';
-import 'package:flutter/gestures.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -10,7 +10,6 @@ import 'package:medical_assistant/utils/helpers.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/todo_model/patient_todo_model.dart';
-import '../../provider/todo_provider/todo_doctor_provider.dart';
 import '../../provider/todo_provider/todo_patient_provider.dart';
 import '../../services/todo_patient_notification.dart';
 import '../../size_config.dart';
@@ -71,13 +70,6 @@ class _PatientHomeTodoState extends State<PatientHomeTodo> with Helper {
           ),
         ),
 floatingActionButtonLocation:FloatingActionButtonLocation.endTop ,
-// floatingActionButton: FloatingActionButton.extended(
-//
-//
-//   onPressed: () {
-//
-//     }, label: Text("Add Task"),
-//       ),
       ),
     );
   }
@@ -128,7 +120,7 @@ floatingActionButtonLocation:FloatingActionButtonLocation.endTop ,
                           child: FadeInAnimation(
                             child: GestureDetector(
                               onTap: () {
-                                print('ok');
+
                                 showBottomSheet(context, task);
                               },
                               child: TaskTile(task),
@@ -169,8 +161,7 @@ floatingActionButtonLocation:FloatingActionButtonLocation.endTop ,
                       builder: (context) => const AddTaskPage(),
                     ));
                 Provider.of<TaskProvider>(context, listen: false).getTask();
-                // Get.to(const AddTaskPage());
-                //_taskController.getTasks();
+
               })
         ],
       ),
@@ -253,7 +244,7 @@ floatingActionButtonLocation:FloatingActionButtonLocation.endTop ,
                           .delete(task);
                       await notifyHelper.flutterLocalNotificationsPlugin
                           .cancel(task.id!);
-                      print('Notification Deleted');
+
 
                       Navigator.pop(context);
                     }),

@@ -23,14 +23,15 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   final Storage storage = Storage();
-  final ValueNotifier<String> _imageUrl =
-      ValueNotifier('https://cdn.icon-icons.com/icons2/2643/PNG/512/male_boy_person_people_avatar_icon_159358.png');
+  final ValueNotifier<String> _imageUrl = ValueNotifier(
+      'https://cdn.icon-icons.com/icons2/2643/PNG/512/male_boy_person_people_avatar_icon_159358.png');
   bool visible = false;
   bool readonly = true;
   late TextEditingController phoneController;
   late TextEditingController otherPhoneController;
   late TextEditingController heightController;
   late TextEditingController weightController;
+
   // String image = '';
 
   @override
@@ -70,11 +71,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
           IconButton(
             icon: const Icon(Icons.language_outlined, color: blueClr),
             onPressed: () {
-              Provider.of<LanguageProvider>(context,listen: false).changeLanguage();
-
+              Provider.of<LanguageProvider>(context, listen: false)
+                  .changeLanguage();
             },
           ),
-          SizedBox(width: 20),
+          IconButton(
+            onPressed: () async{
+              await confirmLogOut();
+            },
+            icon: const Icon(
+              Icons.logout_outlined,
+              color: blueClr,
+            ),
+          ),
+          const SizedBox(width: 20),
         ],
       ),
       body: Padding(
@@ -137,12 +147,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                                   .no_file_selected)));
                                                   return;
                                                 }
-                                                final path =result.files.single.path!;
-                                                final filename = result.files.single.name;
-                                                storage.uploadImage(path, filename) .then((value) =>
+                                                final path =
+                                                    result.files.single.path!;
+                                                final filename =
+                                                    result.files.single.name;
+                                                storage
+                                                    .uploadImage(path, filename)
+                                                    .then((value) =>
                                                         print("Done"));
 
-                                                _imageUrl.value = await storage.getImage(filename);
+                                                _imageUrl.value = await storage
+                                                    .getImage(filename);
                                               },
                                               icon: const Icon(
                                                 Icons.camera_alt_outlined,
@@ -214,7 +229,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         profile[0].other.toString();
                                       });
                                     },
-                                    // onPressed: ()=>_updateProfile(),
+
                                   ),
                                 ),
                               ),
@@ -237,7 +252,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     onPressed: () {
                                       profile[0].other.toString();
                                     },
-                                    // onPressed: ()=>_updateProfile(),
+
                                   ),
                                 ),
                               ),
@@ -304,7 +319,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }) async {
     final firebaseUser = FirebaseAuth.instance.currentUser;
     if (height != "") {
-      print("height");
+
+
       await FirebaseFirestore.instance
           .collection('UserData')
           .doc(firebaseUser!.uid)
@@ -313,7 +329,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       });
     }
     if (otherPhone != "") {
-      print("otherPhone");
+
+
       await FirebaseFirestore.instance
           .collection('UserData')
           .doc(firebaseUser!.uid)
@@ -323,7 +340,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
 
     if (phone != "") {
-      print("phone");
+
+
       await FirebaseFirestore.instance
           .collection('UserData')
           .doc(firebaseUser!.uid)
@@ -332,7 +350,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       });
     }
     if (weight != "") {
-      print("weight");
+
+
       await FirebaseFirestore.instance
           .collection('UserData')
           .doc(firebaseUser!.uid)
@@ -342,7 +361,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
 
     if (image != "") {
-      print("image");
+
       await FirebaseFirestore.instance
           .collection('UserData')
           .doc(firebaseUser!.uid)
@@ -377,6 +396,39 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ));
         } catch (e) {}
       }).catchError((e) {});
+    }
+  }
+
+  Future<void> cleared() async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.pushReplacementNamed(context, '/login_screen');
+  }
+  Future<void> confirmLogOut() async {
+    bool? clearedConf = await showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(AppLocalizations.of(context)!.logout),
+          content: Text(AppLocalizations.of(context)!.are_you_sure),
+          actions: [
+            TextButton(
+              child: Text(AppLocalizations.of(context)!.yes),
+              onPressed: () {
+                Navigator.pop(context, true);
+              },
+            ),
+            TextButton(
+              child: Text(AppLocalizations.of(context)!.no),
+              onPressed: () {
+                Navigator.pop(context, false);
+              },
+            ),
+          ],
+        );
+      },
+    );
+    if (clearedConf ?? false) {
+      await cleared();
     }
   }
 }

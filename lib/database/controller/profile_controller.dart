@@ -5,7 +5,7 @@ import '../patient_db.dart';
 class profileController{
   Database database = DbController().database;
   Future<int> insert(Profile task) async {
-    print('insert function code');
+
     return await database.insert('profile', task.toJson());
   }
 
@@ -14,17 +14,17 @@ class profileController{
   }
 
   Future<int> deleteAllTask() async {
-    print('delete All function code');
+
     return await database.delete('profile');
   }
 
   Future<List<Map<String, dynamic>>> query() async {
-    print('query function code');
+
     return await database.query('profile');
   }
 
   Future<int> update(int id) async {
-    print('update function code ');
+
     return await database.rawUpdate('''
     UPDATE profile 
     SET isCompleted = ? 

@@ -19,11 +19,12 @@ class _LunchScreenState extends State<LunchScreen> {
 
   @override
   void initState() {
+
     Future.delayed(const Duration(milliseconds: 500), () async{
+
       FirebaseAuth.instance.authStateChanges().listen((user) {
         if (user != null) {
           Navigator.pushReplacementNamed(context, '/button_navigator_bar');
-
         }else{
           Navigator.pushReplacementNamed(context, '/login_screen');
         }
@@ -50,7 +51,7 @@ class _LunchScreenState extends State<LunchScreen> {
                   style: const TextStyle(
 
                     fontSize: 30.0,
-                   // fontWeight: FontWeight.bold,
+
                   ),
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,

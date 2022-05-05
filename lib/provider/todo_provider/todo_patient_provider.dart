@@ -28,7 +28,7 @@ class TaskProvider extends ChangeNotifier {
   }
   Future<void> deleteAllTask() async {
     await _taskController.deleteAllTask();
-    print('sucsess delete');
+
     getTask();
     notifyListeners();
   }

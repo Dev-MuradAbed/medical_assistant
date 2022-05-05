@@ -6,7 +6,7 @@ class Profile {
   String? phone;
   String? other;
   String? gender;
-  String? height;
+  int? height;
   String? wight;
   String? birthday;
   String? type;

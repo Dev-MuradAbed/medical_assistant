@@ -1,14 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:medical_assistant/screen/profile_screen.dart';
 import '../../theme.dart';
 import '../../utils/custom_painter.dart';
 import '../../utils/helpers.dart';
 import '../../widgets/button_widget.dart';
 import '../../widgets/text_field.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-//AppLocalizations.of(context)!.
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -75,7 +73,6 @@ class _LoginScreenState extends State<LoginScreen> with Helper {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             TextInput(
-                              // label: 'Enter Email',
                               hint: AppLocalizations.of(context)!.email,
                               controller: _emailController,
                               keyboardType: TextInputType.emailAddress,
@@ -102,7 +99,6 @@ class _LoginScreenState extends State<LoginScreen> with Helper {
                             ),
                             const SizedBox(height: 20),
                             TextInput(
-                              // label: 'password',
                               hint:  AppLocalizations.of(context)!.password,
                               controller: _passwordController,
                               keyboardType: TextInputType.emailAddress,

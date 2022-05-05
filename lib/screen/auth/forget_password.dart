@@ -47,7 +47,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
             Navigator.pop(context);
           },
         ),
-        title:  Text(AppLocalizations.of(context)!.forgot_password,style:
+        title:  Text(AppLocalizations.of(context)!.password_recovery,style:
         const TextStyle(
           color: blueClr,
           fontSize: 25,
@@ -62,7 +62,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
              Text(
-               AppLocalizations.of(context)!.password_recovery,
+               AppLocalizations.of(context)!.forgot_password,
               style: const TextStyle(
                 fontFamily: 'Candara',
                 color: blueClr,
@@ -70,7 +70,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 15),
+            const SizedBox(height: 7),
              Text(AppLocalizations.of(context)!.enter_your_email,
               style: const TextStyle(
                 fontFamily: 'Candara',

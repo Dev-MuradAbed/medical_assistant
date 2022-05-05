@@ -14,10 +14,10 @@ class TextInput extends StatefulWidget {
      this.controller,
     this.obscureText = false,
      this.keyboardType=TextInputType.text,
-    // this.onPressed,
+
     this.onTap, this.onSaved, this.validator,
   }) : super(key: key);
-   // VoidCallback? onPressed;
+
    VoidCallback? onTap;
   final String? label;
   final Widget? widgetIcon;
@@ -35,7 +35,7 @@ class TextInput extends StatefulWidget {
 
 class _TextInputState extends State<TextInput> {
 
-  // List of items in our dropdown menu
+
   List genderList = [
     'Meal',
     'Female',

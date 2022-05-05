@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:medical_assistant/models/todo_model/doctor_todo_model.dart';
 
 
-import '../../../models/todo_model/patient_todo_model.dart';
 import '../../../size_config.dart';
 import '../../../theme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

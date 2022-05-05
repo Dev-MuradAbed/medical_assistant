@@ -16,6 +16,7 @@ import 'package:wakelock/wakelock.dart';
 import 'models/result_model.dart';
 import 'models/sensorvalue.dart';
 import 'dart:math'as math;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BloodRate extends StatefulWidget {
   const BloodRate({Key? key}) : super(key: key);
@@ -33,7 +34,7 @@ class HomeBooldView extends State<BloodRate>
   CameraController? _controller;
   late AnimationController _animationController;
   double _buttonScale = 1;
-  String buttonText = "Check Heart Rate";
+  String? buttonText;
   int _sy = 0;
   int _di = 0;
   final int _fs = 30;
@@ -85,7 +86,7 @@ class HomeBooldView extends State<BloodRate>
       _controller?.setFlashMode(FlashMode.off);
       _untoggle();
       setState(() {
-        buttonText = 'Check Heart Rate';
+        buttonText = AppLocalizations.of(context)!.check_blood_pressure;
         _sy = 0;
         _di = 0;
         _timer?.cancel();
@@ -106,7 +107,7 @@ class HomeBooldView extends State<BloodRate>
                 .of<ProfileProvider>(context)
                 .listTask;
             return Column(
-              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -153,7 +154,7 @@ class HomeBooldView extends State<BloodRate>
                             color: greenClr,
                             current: seconds,
                             total: 60,
-                            // bpm: _bpm,
+
                             dp: _di,
                             sp: _sy,
                             textColor: Colors.black,
@@ -181,21 +182,21 @@ class HomeBooldView extends State<BloodRate>
                                 borderRadius: BorderRadius.circular(30),
                               ),
                               child: Text(
-                                buttonText,
+                                buttonText??AppLocalizations.of(context)!.check_blood_pressure,
                                 style: const TextStyle(
                                     color: Colors.white, fontSize: 15),
                               ),
                               color: greenClr,
                               onPressed: () {
                                 if (_toggled) {
-                                  buttonText = "Check Blood Pressure";
+                                  buttonText = AppLocalizations.of(context)!.check_blood_pressure;
                                   _untoggle();
                                 } else {
                                   DateFormat dateFormat =
                                   DateFormat("dd/MM/yyyy");
                                   DateTime dateTime = dateFormat
                                       .parse(profile[0].birthday.toString());
-                                  buttonText = "Stop";
+                                  buttonText = AppLocalizations.of(context)!.stop;
                                   _toggle(
                                       age: DateTime
                                           .now()
@@ -208,10 +209,10 @@ class HomeBooldView extends State<BloodRate>
                             ),
                           ),
                           MaterialButton(
-                              child: const Text(
-                                "Records",
+                              child:  Text(
+                                AppLocalizations.of(context)!.record,
                                 style:
-                                TextStyle(color: Colors.white, fontSize: 15),
+                                const TextStyle(color: Colors.white, fontSize: 15),
                               ),
                               color: greenClr,
                               shape: RoundedRectangleBorder(
@@ -232,7 +233,7 @@ class HomeBooldView extends State<BloodRate>
                         padding: const EdgeInsets.symmetric(
                             horizontal: 20, vertical: 5),
                         child: Row(
-                          children: const [
+                          children:  [
                             CircleAvatar(
                               radius: 7,
                               backgroundColor: blueClr,
@@ -240,7 +241,7 @@ class HomeBooldView extends State<BloodRate>
                             SizedBox(
                               width: 10,
                             ),
-                            Text("Blood Pressure")
+                            Text(AppLocalizations.of(context)!.blood_pressure)
                           ],
                         ),
                       ),
@@ -266,7 +267,7 @@ class HomeBooldView extends State<BloodRate>
                             ? '${exp.hourTime}:${exp.munitTime}'
                             : exp.dayDate.toString(),
                         yValueMapper: (ResultModel exp, _) => exp.dy,
-                        name: "DI",
+                        name: AppLocalizations.of(context)!.dy,
                         markerSettings: const MarkerSettings(isVisible: true),
 
                       ),
@@ -283,7 +284,7 @@ class HomeBooldView extends State<BloodRate>
                             ? '${exp.hourTime}:${exp.munitTime}'
                             : exp.dayDate.toString(),
                         yValueMapper: (ResultModel exp, _) => exp.sy,
-                        name: "SY",
+                        name: AppLocalizations.of(context)!.sy,
                         markerSettings: const MarkerSettings(isVisible: true),
                       ),
                     ],
@@ -330,7 +331,7 @@ class HomeBooldView extends State<BloodRate>
         _di = 0;
         _toggled = true;
       });
-      // after is toggled
+
       _initTimer();
       _updateBPM();
     });
@@ -365,7 +366,6 @@ class HomeBooldView extends State<BloodRate>
         _image = image;
       });
     } catch (Exception) {
-      print(Exception);
     }
   }
 
@@ -401,9 +401,9 @@ class HomeBooldView extends State<BloodRate>
     int _counter;
     int _previous;
     while (_toggled) {
-      _values = List.from(_data); // create a copy of the current data array
+      _values = List.from(_data);
       for (var x in _values) {
-        print(x);
+
       }
       _avg = 0;
       _n = _values.length;
@@ -430,7 +430,7 @@ class HomeBooldView extends State<BloodRate>
       }
       if (_counter > 0) {
         _bpm = _bpm / _counter;
-        print("_bpm ${_bpm}");
+
         int Beats = _bpm.toInt();
         setState(() {
           int Hei = 185;
@@ -452,11 +452,11 @@ class HomeBooldView extends State<BloodRate>
           this._sy = (MPP + 3 / 2 * PP).toInt();
           this._di = (MPP - PP / 3).toInt();
         });
-        print("the boold $_sy / $_di");
+
       }
       await Future.delayed(Duration(
           milliseconds:
-          1000 * _windowLen ~/ _fs)); // wait for a new set of _data values
+          1000 * _windowLen ~/ _fs));
     }
   }
 
@@ -473,7 +473,7 @@ class HomeBooldView extends State<BloodRate>
           timer.cancel();
           seconds = 60;
           _untoggle();
-          buttonText = "Check Heart Rate";
+          buttonText = AppLocalizations.of(context)!.check_heart_rate;
           _save(gender: gender, name: name, age: age, image: image);
         });
       } else {
@@ -503,10 +503,10 @@ class HomeBooldView extends State<BloodRate>
             dayDate: DateTime.now().day,
           ));
       Provider.of<ResultProvider>(context, listen: false).getRecord();
-      debugPrint("test $value");
+
       Assistant.CheckBooldPressure(systolic: _sy, diastolic: _di, name: name, image: image, context: context);
     } catch (e) {
-      debugPrint("$e");
+
     }
   }
 

@@ -16,7 +16,7 @@ class SharedPrefController {
 
   Future<void> initPref() async {
     sharedPreferences = await SharedPreferences.getInstance();
-    print('SharedPrefController initPref');
+
   }
 
   Future<bool>changeLanguage(String language)async{

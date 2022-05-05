@@ -253,7 +253,7 @@ class _SignupScreenState extends State<SignupScreen> with Helper {
               ),
               const SizedBox(height: 30),
               TextInput(
-                // label: 'password',
+
                 label: AppLocalizations.of(context)!.confirm_password,
                 controller: _passwordConfirmController,
                 keyboardType: TextInputType.emailAddress,
@@ -331,7 +331,6 @@ class _SignupScreenState extends State<SignupScreen> with Helper {
   }
 
    perSingUp()  {
-    print("perSingUp");
     if ( checkSignup()) {
       singUp();
     }
@@ -356,7 +355,6 @@ class _SignupScreenState extends State<SignupScreen> with Helper {
       try {
         _firebaseAuth.createUserWithEmailAndPassword(email: emailController.text, password: _passwordController.text).then((value) async {
           await FirebaseFirestore.instance.collection('UserUid').doc('123963').set({'id': value.user!.uid});
-          // FirebaseFirestore.instance.collection('UserData').doc(FirebaseAuth.instance.currentUser!.uid).collection("DoctorNote").doc();
           await FirebaseFirestore.instance.collection("UserData").doc(value.user!.uid).set({
             'image': _imageUrl.value,
             'name': nameController.text,

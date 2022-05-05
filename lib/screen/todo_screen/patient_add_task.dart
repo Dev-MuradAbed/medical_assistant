@@ -187,22 +187,14 @@ class _AddTaskPageState extends State<AddTaskPage>with Helper {
 
     backgroundColor:white,
     elevation: 0,
-    //backgroundColor: context.theme.backgroundColor,
     leading: IconButton(
-      color: Colors.black,
+      color: blueClr,
       icon: const Icon(
         Icons.arrow_back_ios,
         size: 24,
       ),
       onPressed: () => Navigator.pop(context),
     ),
-    actions: const [
-      CircleAvatar(
-        radius: 18,
-        backgroundImage: AssetImage('assets/images/person.jpeg'),
-      ),
-      SizedBox(width: 6)
-    ],
   );
 
 
@@ -248,7 +240,7 @@ class _AddTaskPageState extends State<AddTaskPage>with Helper {
     } else if (_titlecontroller.text.isEmpty || _notecontroller.text.isEmpty) {
       showSnackBar( context,message: AppLocalizations.of(context)!.required_title_and_note, error: true);
     } else {
-      print('nothing');
+
     }
   }
 
@@ -266,11 +258,14 @@ class _AddTaskPageState extends State<AddTaskPage>with Helper {
             remind: _selecRemind,
             repeat: _selectRepeat,
           ));
-      print('$value');
-      print('success add task');
+
+
+
+
       Provider.of<TaskProvider>(context,listen: false).getTask();
     } catch (e) {
-      print(e);
+
+
     }
   }
 
@@ -286,7 +281,8 @@ class _AddTaskPageState extends State<AddTaskPage>with Helper {
         _selectedTime = _pickedDate;
       });
     } else {
-      print('Nothing');
+
+
     }
   }
 
@@ -312,7 +308,8 @@ class _AddTaskPageState extends State<AddTaskPage>with Helper {
         endTime = _formatDate;
       });
     } else {
-      print('Nothing');
+
+
     }
   }
 }

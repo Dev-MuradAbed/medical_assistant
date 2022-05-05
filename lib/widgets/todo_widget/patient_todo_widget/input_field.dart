@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import '../../../size_config.dart';
 import '../../../theme.dart';
 
- // import 'package:get/get.dart';
 class InputField extends StatelessWidget {
   const InputField(
       {Key? key,

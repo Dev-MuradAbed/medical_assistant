@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-// import 'package:get/get.dart';
 
 import '../../theme.dart';
 
@@ -25,7 +24,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //  backgroundColor: context.theme.backgroundColor,
+
       appBar: AppBar(
         title: Text(
           payload.toString().split('|')[0],
@@ -33,7 +32,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
             color: darkGreyClr,
           ),
         ),
-        //backgroundColor: context.theme.backgroundColor,
+
         centerTitle: true,
         elevation: 0,
         leading: IconButton(

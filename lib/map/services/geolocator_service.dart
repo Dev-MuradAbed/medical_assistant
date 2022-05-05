@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class GeoLocatorServise {
   Future<Position> getLocation() async {
@@ -19,8 +18,8 @@ class GeoLocatorServise {
 
   Future<double> getDistanceFromLatLonInKm(double startLatitude,
       double startLongitude, double endLatitude, double endLongitude) {
-    var R = 6371; // Radius of the earth in km
-    var dLat = deg2rad(endLatitude - startLatitude); // deg2rad below
+    var R = 6371;
+    var dLat = deg2rad(endLatitude - startLatitude);
     var dLon = deg2rad(endLongitude - startLongitude);
     var a = sin(dLat / 2) * sin(dLat / 2) +
         cos(deg2rad(startLatitude)) *
@@ -28,7 +27,7 @@ class GeoLocatorServise {
             sin(dLon / 2) *
             sin(dLon / 2);
     var c = 2 * atan2(sqrt(a), sqrt(1 - a));
-    dynamic d = R * c; // Distance in km
+    dynamic d = R * c;
     return d;
   }
 

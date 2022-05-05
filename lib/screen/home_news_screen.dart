@@ -45,10 +45,7 @@ class _Home_News_ScrrenState extends State<HomeNewsScreen>
                     );
                   } else if (snapshot.hasData){
                     var newList = snapshot.data as News;
-                    // select top 10
-                    //if length >10, we will get from 0~10
-                    //if length <10, we will get from 0~x
-                    //if length ==null, we will get 0
+
                     var sliderList = newList.articles != null
                         ? newList.articles!.length > 10
                             ? newList.articles!.getRange(0, 10).toList()
@@ -56,7 +53,7 @@ class _Home_News_ScrrenState extends State<HomeNewsScreen>
                                 .take(newList.articles!.length)
                                 .toList()
                         : [];
-                    //select article excepts top 10
+
                     var contentList = newList.articles != null
                         ? newList.articles!.length > 10
                             ? newList.articles!

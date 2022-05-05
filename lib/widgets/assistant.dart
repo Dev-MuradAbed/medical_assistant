@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../theme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -14,53 +13,51 @@ class Assistant {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Container(
-              child: Column(
-                children: <Widget>[
-                  Container(
-                      height: 150,
-                      width: 150,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(
-                            image,
-                          ),
-                          fit: BoxFit.cover,
+            title: Column(
+              children: <Widget>[
+                Container(
+                    height: 150,
+                    width: 150,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage(
+                          image,
                         ),
-                        border: Border.all(color: greenClr, width: 2),
-                        shape: BoxShape.circle,
-                      )),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    Name,
-                    style: const TextStyle(color: blueClr, fontSize: 20),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    AppLocalizations.of(context)!.i_wish_you_could,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: blueClr, fontSize: 20),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    rate,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(color: blueClr, fontSize: 20),
-                  ),
-                ],
-              ),
+                        fit: BoxFit.cover,
+                      ),
+                      border: Border.all(color: greenClr, width: 2),
+                      shape: BoxShape.circle,
+                    )),
+                const SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  Name,
+                  style: const TextStyle(color: blueClr, fontSize: 20),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  AppLocalizations.of(context)!.i_wish_you_could,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(color: blueClr, fontSize: 20),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  rate,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(color: blueClr, fontSize: 20),
+                ),
+              ],
             ),
             actions: <Widget>[
               TextButton(
                 child: Text(AppLocalizations.of(context)!.ok,
-                    style: TextStyle(color: blueClr)),
+                    style: const TextStyle(color: blueClr)),
                 onPressed: () {
                   Navigator.pop(context);
                 },
@@ -113,31 +110,26 @@ class Assistant {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!.you_have_a_athlete);
-          print("ATHLETE");
         } else if (bmp >= 56 && bmp <= 61) {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!
                   .you_have_a_excellent_heart_rate);
-          print('EXCEL\'T');
         } else if (bmp >= 62 && bmp <= 65) {
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_good_heart_rate);
-          print('GOOD');
         } else if (bmp >= 66 && bmp <= 69) {
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_above_heart_rate);
-          print('ABOVE AV');
         } else if (bmp >= 70 && bmp <= 73) {
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_average_heart_rate);
-          print('AVERAGE');
         } else if (bmp >= 74 && bmp <= 81) {
           ShowDilogD(
             Name: name,
@@ -148,49 +140,39 @@ class Assistant {
         } else if (bmp >= 82) {
           ShowDilogD(
               context: context, Name: name, image: image, rate: bmp.toString());
-          print('POOR');
         } else {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!.error_try_again);
-          print('error');
         }
       } else if (age >= 26 && age <= 35) {
         if (bmp >= 49 && bmp <= 54) {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!.you_have_a_athlete);
-          print("ATHLETE");
         } else if (bmp >= 55 && bmp <= 61) {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!
                   .you_have_a_excellent_heart_rate);
-
-          print('EXCEL\'T');
         } else if (bmp >= 62 && bmp <= 65) {
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_good_heart_rate);
-          print('GOOD');
-          print('GOOD');
         } else if (bmp >= 66 && bmp <= 70) {
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_above_heart_rate);
-          print('ABOVE AV');
         } else if (bmp >= 71 && bmp <= 74) {
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_average_heart_rate);
-          print('AVERAGE');
         } else if (bmp >= 75 && bmp <= 81) {
           ShowDilogD(
               context: context, image: image, Name: name, rate: bmp.toString());
-          print('BELOW AV');
         } else if (bmp >= 82) {
           ShowDilogD(
             rate: bmp.toString(),
@@ -198,45 +180,36 @@ class Assistant {
             Name: name,
             context: context,
           );
-          print('POOR');
         } else {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!.error_try_again);
-          print('error');
         }
       } else if (age >= 36 && age <= 45) {
         if (bmp >= 50 && bmp <= 56) {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!.you_have_a_athlete);
-          print("ATHLETE");
         } else if (bmp >= 57 && bmp <= 62) {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!
                   .you_have_a_excellent_heart_rate);
-
-          print('EXCEL\'T');
         } else if (bmp >= 63 && bmp <= 66) {
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_good_heart_rate);
-          print('GOOD');
-          print('GOOD');
         } else if (bmp >= 67 && bmp <= 70) {
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_above_heart_rate);
-          print('ABOVE AV');
         } else if (bmp >= 71 && bmp <= 75) {
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_average_heart_rate);
-          print('AVERAGE');
         } else if (bmp >= 76 && bmp <= 82) {
           ShowDilogD(
             Name: name,
@@ -244,7 +217,6 @@ class Assistant {
             rate: bmp.toString(),
             context: context,
           );
-          print('BELOW AV');
         } else if (bmp >= 83) {
           ShowDilogD(
             Name: name,
@@ -252,45 +224,36 @@ class Assistant {
             rate: bmp.toString(),
             context: context,
           );
-          print('POOR');
         } else {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!.error_try_again);
-          print('error');
         }
       } else if (age >= 46 && age <= 55) {
         if (bmp >= 50 && bmp <= 57) {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!.you_have_a_athlete);
-          print("ATHLETE");
         } else if (bmp >= 58 && bmp <= 63) {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!
                   .you_have_a_excellent_heart_rate);
-
-          print('EXCEL\'T');
         } else if (bmp >= 64 && bmp <= 67) {
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_good_heart_rate);
-          print('GOOD');
-          print('GOOD');
         } else if (bmp >= 68 && bmp <= 71) {
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_above_heart_rate);
-          print('ABOVE AV');
         } else if (bmp >= 72 && bmp <= 76) {
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_average_heart_rate);
-          print('AVERAGE');
         } else if (bmp >= 77 && bmp <= 83) {
           ShowDilogD(
             Name: name,
@@ -298,7 +261,6 @@ class Assistant {
             rate: bmp.toString(),
             context: context,
           );
-          print('BELOW AV');
         } else if (bmp >= 84) {
           ShowDilogD(
             Name: name,
@@ -306,45 +268,36 @@ class Assistant {
             rate: bmp.toString(),
             context: context,
           );
-          print('POOR');
         } else {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!.error_try_again);
-          print('error');
         }
       } else if (age >= 56 && age <= 65) {
         if (bmp >= 51 && bmp <= 54) {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!.you_have_a_athlete);
-          print("ATHLETE");
         } else if (bmp >= 57 && bmp <= 61) {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!
                   .you_have_a_excellent_heart_rate);
-
-          print('EXCEL\'T');
         } else if (bmp >= 62 && bmp <= 67) {
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_good_heart_rate);
-
-          print('GOOD');
         } else if (bmp >= 68 && bmp <= 71) {
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_above_heart_rate);
-          print('ABOVE AV');
         } else if (bmp >= 72 && bmp <= 75) {
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_average_heart_rate);
-          print('AVERAGE');
         } else if (bmp >= 76 && bmp <= 81) {
           ShowDilogD(
             context: context,
@@ -352,7 +305,6 @@ class Assistant {
             image: image,
             rate: bmp.toString(),
           );
-          print('BELOW AV');
         } else if (bmp >= 82) {
           ShowDilogD(
             context: context,
@@ -360,49 +312,39 @@ class Assistant {
             image: image,
             rate: bmp.toString(),
           );
-          print('POOR');
         } else {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!.error_try_again);
-          print('error');
         }
       } else if (age >= 65) {
         if (bmp >= 50 && bmp <= 55) {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!.you_have_a_athlete);
-          print("ATHLETE");
         } else if (bmp >= 56 && bmp <= 61) {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!
                   .you_have_a_excellent_heart_rate);
-
-          print('EXCEL\'T');
         } else if (bmp >= 62 && bmp <= 65) {
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_good_heart_rate);
-          print('GOOD');
-          print('GOOD');
         } else if (bmp >= 66 && bmp <= 69) {
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_above_heart_rate);
-          print('ABOVE AV');
         } else if (bmp >= 70 && bmp <= 73) {
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_average_heart_rate);
-          print('AVERAGE');
         } else if (bmp >= 74 && bmp <= 79) {
           ShowDilogD(
               context: context, Name: name, image: image, rate: bmp.toString());
-          print('BELOW AV');
         } else if (bmp >= 80) {
           ShowDilogD(
             Name: name,
@@ -410,12 +352,10 @@ class Assistant {
             rate: bmp.toString(),
             context: context,
           );
-          print('POOR');
         } else {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!.error_try_again);
-          print('error');
         }
       }
     } else if (gendar == 'female') {
@@ -424,36 +364,29 @@ class Assistant {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!.you_have_a_athlete);
-          print("ATHLETE");
         } else if (bmp >= 61 && bmp <= 65) {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!
                   .you_have_a_excellent_heart_rate);
-          print('EXCEL\'T');
         } else if (bmp >= 66 && bmp <= 69) {
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_good_heart_rate);
-          print('GOOD');
-          print('GOOD');
         } else if (bmp >= 70 && bmp <= 73) {
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_above_heart_rate);
-          print('ABOVE AV');
         } else if (bmp >= 74 && bmp <= 78) {
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_average_heart_rate);
-          print('AVERAGE');
         } else if (bmp >= 79 && bmp <= 84) {
           ShowDilogD(
               context: context, Name: name, image: image, rate: bmp.toString());
-          print('BELOW AV');
         } else if (bmp >= 85) {
           ShowDilogD(
             Name: name,
@@ -461,45 +394,36 @@ class Assistant {
             rate: bmp.toString(),
             context: context,
           );
-          print('POOR');
         } else {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!.error_try_again);
-          print('error');
         }
       } else if (bmp >= 26 && bmp <= 35) {
         if (bmp >= 54 && bmp <= 59) {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!.you_have_a_athlete);
-          print("ATHLETE");
         } else if (bmp >= 60 && bmp <= 64) {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!
                   .you_have_a_excellent_heart_rate);
-
-          print('EXCEL\'T');
         } else if (bmp >= 65 && bmp <= 68) {
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_good_heart_rate);
-          print('GOOD');
-          print('GOOD');
         } else if (bmp >= 69 && bmp <= 72) {
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_above_heart_rate);
-          print('ABOVE AV');
         } else if (bmp >= 73 && bmp <= 76) {
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_average_heart_rate);
-          print('AVERAGE');
         } else if (bmp >= 77 && bmp <= 82) {
           ShowDilogD(
             rate: bmp.toString(),
@@ -507,7 +431,6 @@ class Assistant {
             image: image,
             context: context,
           );
-          print('BELOW AV');
         } else if (bmp >= 83) {
           ShowDilogD(
             rate: bmp.toString(),
@@ -515,45 +438,36 @@ class Assistant {
             image: image,
             context: context,
           );
-          print('POOR');
         } else {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!.error_try_again);
-          print('error');
         }
       } else if (age >= 36 && age <= 45) {
         if (bmp >= 54 && bmp <= 59) {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!.you_have_a_athlete);
-          print("ATHLETE");
         } else if (bmp >= 60 && bmp <= 64) {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!
                   .you_have_a_excellent_heart_rate);
-
-          print('EXCEL\'T');
         } else if (bmp >= 65 && bmp <= 69) {
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_good_heart_rate);
-          print('GOOD');
-          print('GOOD');
         } else if (bmp >= 70 && bmp <= 73) {
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_above_heart_rate);
-          print('ABOVE AV');
         } else if (bmp >= 74 && bmp <= 78) {
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_average_heart_rate);
-          print('AVERAGE');
         } else if (bmp >= 79 && bmp <= 84) {
           ShowDilogD(
             rate: bmp.toString(),
@@ -561,7 +475,6 @@ class Assistant {
             image: image,
             context: context,
           );
-          print('BELOW AV');
         } else if (bmp >= 85) {
           ShowDilogD(
             context: context,
@@ -569,45 +482,36 @@ class Assistant {
             Name: name,
             image: image,
           );
-          print('POOR');
         } else {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!.error_try_again);
-          print('error');
         }
       } else if (age >= 46 && age <= 55) {
         if (bmp >= 54 && bmp <= 60) {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!.you_have_a_athlete);
-          print("ATHLETE");
         } else if (bmp >= 61 && bmp <= 65) {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!
                   .you_have_a_excellent_heart_rate);
-
-          print('EXCEL\'T');
         } else if (bmp >= 66 && bmp <= 69) {
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_good_heart_rate);
-          print('GOOD');
-          print('GOOD');
         } else if (bmp >= 70 && bmp <= 73) {
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_above_heart_rate);
-          print('ABOVE AV');
         } else if (bmp >= 74 && bmp <= 77) {
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_average_heart_rate);
-          print('AVERAGE');
         } else if (bmp >= 78 && bmp <= 83) {
           ShowDilogD(
             context: context,
@@ -615,7 +519,6 @@ class Assistant {
             Name: name,
             image: image,
           );
-          print('BELOW AV');
         } else if (bmp >= 84) {
           ShowDilogD(
             context: context,
@@ -623,44 +526,36 @@ class Assistant {
             Name: name,
             image: image,
           );
-          print('POOR');
         } else {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!.error_try_again);
-          print('error');
         }
       } else if (age >= 56 && age <= 65) {
         if (bmp >= 54 && bmp <= 59) {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!.you_have_a_athlete);
-          print("ATHLETE");
         } else if (bmp >= 60 && bmp <= 64) {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!
                   .you_have_a_excellent_heart_rate);
-          print('EXCEL\'T');
         } else if (bmp >= 65 && bmp <= 68) {
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_good_heart_rate);
-          print('GOOD');
-          print('GOOD');
         } else if (bmp >= 69 && bmp <= 73) {
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_above_heart_rate);
-          print('ABOVE AV');
         } else if (bmp >= 74 && bmp <= 77) {
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_average_heart_rate);
-          print('AVERAGE');
         } else if (bmp >= 78 && bmp <= 83) {
           ShowDilogD(
             context: context,
@@ -668,8 +563,6 @@ class Assistant {
             Name: name,
             image: image,
           );
-
-          print('BELOW AV');
         } else if (bmp >= 84) {
           ShowDilogD(
             context: context,
@@ -677,46 +570,36 @@ class Assistant {
             Name: name,
             image: image,
           );
-
-          print('POOR');
         } else {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!.error_try_again);
-          print('error');
         }
       } else if (age >= 65) {
         if (bmp >= 54 && bmp <= 59) {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!.you_have_a_athlete);
-          print("ATHLETE");
         } else if (bmp >= 60 && bmp <= 64) {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!
                   .you_have_a_excellent_heart_rate);
-
-          print('EXCEL\'T');
         } else if (bmp >= 65 && bmp <= 68) {
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_good_heart_rate);
-          print('GOOD');
-          print('GOOD');
         } else if (bmp >= 69 && bmp <= 72) {
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_above_heart_rate);
-          print('ABOVE AV');
         } else if (bmp >= 73 && bmp <= 76) {
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_average_heart_rate);
-          print('AVERAGE');
         } else if (bmp >= 77 && bmp <= 84) {
           ShowDilogD(
             context: context,
@@ -724,7 +607,6 @@ class Assistant {
             rate: bmp.toString(),
             Name: name,
           );
-          print('BELOW AV');
         } else if (bmp >= 85) {
           ShowDilogD(
             context: context,
@@ -732,13 +614,10 @@ class Assistant {
             Name: name,
             image: image,
           );
-
-          print('POOR');
         } else {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!.error_try_again);
-          print('error');
         }
       }
     }

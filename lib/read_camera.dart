@@ -1,4 +1,3 @@
-// ignore_for_file: deprecated_member_use, prefer_collection_literals
 
 import 'dart:async';
 import 'package:camera/camera.dart';
@@ -18,6 +17,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:wakelock/wakelock.dart';
 import 'models/result_model.dart';
 import 'models/sensorvalue.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PlusRate extends StatefulWidget {
   const PlusRate({Key? key}) : super(key: key);
@@ -36,7 +36,7 @@ class HomeRateView extends State<PlusRate>
   final double _alpha = 0.3;
   late AnimationController _animationController;
   double _buttonScale = 1;
-  String buttonText = "Check Heart Rate";
+  String? buttonText;
   int _bpm = 0;
   final int _fs = 30;
   final int _windowLen = 30 * 6;
@@ -87,7 +87,7 @@ class HomeRateView extends State<PlusRate>
       _controller?.setFlashMode(FlashMode.off);
       _untoggle();
       setState(() {
-        buttonText = 'Check Heart Rate';
+        buttonText = AppLocalizations.of(context)!.check_heart_rate;
         _bpm = 0;
         _timer?.cancel();
         seconds = 60;
@@ -104,7 +104,6 @@ class HomeRateView extends State<PlusRate>
         builder: (context, task, child){
           var profile =Provider.of<ProfileProvider>(context).listTask;
           return Column(
-            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -172,19 +171,19 @@ class HomeRateView extends State<PlusRate>
                               borderRadius: BorderRadius.circular(30),
                             ),
                             child: Text(
-                              buttonText,
+                              buttonText??AppLocalizations.of(context)!.check_heart_rate,
                               style:
                               const TextStyle(color: Colors.white, fontSize: 15),
                             ),
                             color: greenClr,
                             onPressed: () {
                               if (_toggled) {
-                                buttonText = "Check Blood Pressure";
+                                buttonText = AppLocalizations.of(context)!.check_blood_pressure;
                                 _untoggle();
                               } else {
                                 DateFormat dateFormat = DateFormat("dd/MM/yyyy");
                                 DateTime dateTime = dateFormat.parse(profile[0].birthday.toString());
-                                buttonText = "Stop";
+                                buttonText = AppLocalizations.of(context)!.stop;
                                 _toggle(
                                     age: DateTime.now().year-dateTime.year,
                                     name: profile[0].name.toString(),gender: profile[0].gender.toString(),image: profile[0].image.toString());
@@ -193,9 +192,9 @@ class HomeRateView extends State<PlusRate>
                           ),
                         ),
                         MaterialButton(
-                            child: const Text(
-                              "Records",
-                              style: TextStyle(color: Colors.white, fontSize: 15),
+                            child:  Text(
+                              AppLocalizations.of(context)!.record,
+                              style: const TextStyle(color: Colors.white, fontSize: 15),
                             ),
                             color: greenClr,
                             shape: RoundedRectangleBorder(
@@ -217,15 +216,15 @@ class HomeRateView extends State<PlusRate>
                       padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                       child: Row(
-                        children: const [
-                          CircleAvatar(
+                        children:  [
+                          const CircleAvatar(
                             radius: 7,
                             backgroundColor: blueClr,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
-                          Text("Blood Pressure")
+                          Text(AppLocalizations.of(context)!.heart_rate)
                         ],
                       ),
                     ),
@@ -235,9 +234,7 @@ class HomeRateView extends State<PlusRate>
               Padding(
                 padding: const EdgeInsets.only(bottom: 50),
                 child: SfCartesianChart(
-                  // borderColor: greenClr,
                   primaryXAxis: CategoryAxis(),
-                  // legend: Legend(isVisible: true),
                   tooltipBehavior: TooltipBehavior(enable: true),
                   series: <ChartSeries<ResultModel, String>>[
                     LineSeries<ResultModel, String>(
@@ -284,7 +281,6 @@ class HomeRateView extends State<PlusRate>
         _bpm = 0;
         _toggled = true;
       });
-      // after is toggled
       _initTimer();
       _updateBPM();
     });
@@ -319,7 +315,7 @@ class HomeRateView extends State<PlusRate>
         _image = image;
       });
     } catch (Exception) {
-      print(Exception);
+
     }
   }
 
@@ -356,9 +352,9 @@ class HomeRateView extends State<PlusRate>
     int _counter;
     int _previous;
     while (_toggled) {
-      _values = List.from(_data); // create a copy of the current data array
+      _values = List.from(_data);
       for (var x in _values) {
-        print(x);
+
       }
       _avg = 0;
       _n = _values.length;
@@ -385,7 +381,7 @@ class HomeRateView extends State<PlusRate>
       }
       if (_counter > 0) {
         _bpm = _bpm / _counter;
-        print("_bpm ${_bpm}");
+     ;
         setState(() {
           this._bpm = ((1 - _alpha) * this._bpm + _alpha * _bpm).toInt();
         });
@@ -402,7 +398,7 @@ class HomeRateView extends State<PlusRate>
           timer.cancel();
           seconds = 60;
           _untoggle();
-          buttonText = "Check Heart Rate";
+          buttonText = AppLocalizations.of(context)!.check_heart_rate;
           _save(gender: gender,name: name,age: age,image: image);
         });
       } else {
@@ -427,11 +423,10 @@ class HomeRateView extends State<PlusRate>
             dayDate: DateTime.now().day,
           ));
       Provider.of<ResultProvider>(context, listen: false).getRecord();
-      debugPrint("test $value");
       Assistant.CheckStausBMP(Gendar: gender, Age: age, Bmp: _bpm,name: name,image:  image,context: context);
 
     } catch (e) {
-      debugPrint("$e");
+
     }
   }
 

@@ -143,7 +143,6 @@ class _HomeScanState extends State<HomeScan>
                   ),
                   const Text(
                     '120/60 mmHg - 70 bmp',
-                    // '${Provider.of<ResultProvider>(context).resultList.last.sy} / ${Provider.of<ResultProvider>(context).resultList.last.dy}',
                     style: TextStyle(fontSize: 12),
                   ),
                 ],

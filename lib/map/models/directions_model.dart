@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -15,11 +14,12 @@ class Directions {
     required this.totalDuration,
   });
 
+
   factory Directions.fromMap(Map<String, dynamic> map) {
-    // Check if route is not available
+
     if ((map['routes'] as List).isEmpty) return throw 'You dont have any data'  ;
 
-    // Get route information
+
     final data = Map<String, dynamic>.from(map['routes'][0]);
 
     // Bounds
@@ -30,7 +30,7 @@ class Directions {
       southwest: LatLng(southwest['lat'], southwest['lng']),
     );
 
-    // Distance & Duration
+
     String distance = '';
     String duration = '';
     if ((data['legs'] as List).isNotEmpty) {

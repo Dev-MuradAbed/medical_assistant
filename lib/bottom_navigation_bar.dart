@@ -7,7 +7,6 @@ import 'package:medical_assistant/screen/profile_screen.dart';
 import 'package:medical_assistant/screen/scann_home.dart';
 import 'package:medical_assistant/screen/todo_screen/todo_home.dart';
 import 'package:medical_assistant/theme.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class BNBar extends StatefulWidget {
   const BNBar({Key? key}) : super(key: key);
@@ -51,23 +50,7 @@ class _BNBarState extends State<BNBar> {
             backgroundColor: Colors.white,
             extendBody: true,
             body: screens[_index],
-            // floatingActionButton: Visibility(
-            //   visible: visibility,
-            //   child:FloatingActionButton(
-            //
-            //     onPressed: () async {
-            //       Navigator.push(
-            //           context,
-            //           MaterialPageRoute(
-            //             builder: (context) => const AddTaskPage(),
-            //           ));
-            //       Provider.of<TaskProvider>(context, listen: false).getTask();
-            //       // Get.to(const AddTaskPage());
-            //       //_taskController.getTasks();
-            //     },
-            //     child: Icon(Icons.add),
-            //   )
-            // ),
+
             bottomNavigationBar: CurvedNavigationBar(
               key: navigationKey,
               backgroundColor: Colors.transparent,
@@ -80,27 +63,7 @@ class _BNBarState extends State<BNBar> {
                   _index = index;
                 });
 
-                //   if(await Permission.camera.isGranted&&await Permission.location.isGranted&&await Permission.microphone.isGranted){
-                //     setState(() {
-                //       _index = index;
-                //     });
-                //   }else {
-                //     await  Permission.microphone.request();
-                //     await Permission.camera.request();
-                //     await Permission.location.request();
-                //     if(await Permission.camera.isGranted){
-                //       setState(() {
-                //         _index = index;
-                //       });
-                //     }
-                //
-                //
-                //     showToast("Provide Camera, Location and Microphone permission to use this app", position: ToastPosition.bottom);
-                //   }
-                //
-                //   // _index = index;
-                // });
-                // setState(() => this.index = index);
+
               },
               //  letIndexChange: ,
             ),

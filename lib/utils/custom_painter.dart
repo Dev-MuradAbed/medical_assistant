@@ -12,7 +12,6 @@ class RPSCustomPainter extends CustomPainter {
       <double>[1.0, 1.0],
       TileMode.clamp)
 
-      // ..color = const Color.fromRGBO(24, 64, 147, 1.0)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 25.770000457763672;
 
@@ -27,7 +26,6 @@ class RPSCustomPainter extends CustomPainter {
         <Color>[Colors.blue.shade900,  Colors.blue.shade400],
         <double>[0.0, 1.0],
         TileMode.clamp)
-    // ..color = const Color.fromRGBO(24, 64, 147, 1.0)
       ..style =PaintingStyle.fill
       ..strokeWidth = 1.0;
 

@@ -1,5 +1,4 @@
-import 'package:flutter/foundation.dart';
-// import 'package:dio/dio.dart';
+
 import 'package:http/http.dart'as http;
 import 'dart:convert' as convert;
 
@@ -11,9 +10,6 @@ class DirectionsRepository {
   static const String _baseUrl =
       'https://maps.googleapis.com/maps/api/directions/json?';
 
-// final Dio? _dio;
-
-  //  DirectionsRepository({Dio? dio}) : _dio = dio;
 
   Future<Directions> getDirections({
     required LatLng origin,
@@ -28,7 +24,6 @@ class DirectionsRepository {
       },
     );
 
-    // Check if response is successful
     if (response.statusCode == 200) {
       return Directions.fromMap( convert.jsonDecode(response.body));
     }

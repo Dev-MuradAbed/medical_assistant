@@ -16,7 +16,7 @@ import '../../widgets/todo_widget/patient_todo_widget/doctor_task_tile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-//AppLocalizations.of(context)!.
+
 class DoctorHomeTodo extends StatefulWidget {
   const DoctorHomeTodo({Key? key}) : super(key: key);
 
@@ -143,7 +143,7 @@ class _DoctorHomeTodoState extends State<DoctorHomeTodo> with Helper {
     var pr = Provider.of<TaskDoctorProvider>(context, listen: false);
     fireStronsSub.collection("DoctorNote").snapshots().listen((data) {
       data.docs.forEach((doc) async {
-        print(doc.id);
+
         if (pr.listTask.where((element) => element.idNote != doc.id).isEmpty) {
 
           await pr.addTask(
@@ -162,7 +162,6 @@ class _DoctorHomeTodoState extends State<DoctorHomeTodo> with Helper {
               ));
           Provider.of<TaskDoctorProvider>(context).getTask();
         } else {
-          print('empty');
         }
       });
     });
