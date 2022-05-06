@@ -10,6 +10,7 @@ class ResultModel {
   int? sy;
   int? dy;
   String? heartRateType;
+  String? booldPressureType;
 
   ResultModel({
     this.id,
@@ -22,7 +23,8 @@ class ResultModel {
     this.dayDate,
     this.sy,
     this.dy,
-    this.heartRateType
+    this.heartRateType,
+    this.booldPressureType,
   });
   Map<String,dynamic>toJson(){
     return {
@@ -36,7 +38,8 @@ class ResultModel {
       'dayDate':dayDate,
       'sy':sy,
       'dy':dy,
-      'heartRateType':heartRateType
+      'heartRateType':heartRateType,
+      'booldPressureType':booldPressureType,
     };
   }
   ResultModel.fromJson(Map<String,dynamic>json){
@@ -51,5 +54,6 @@ class ResultModel {
     monthDate=json['monthTime'];
     dayDate=json['dayDate'];
     heartRateType=json['heartRateType'];
+    booldPressureType=json['booldPressureType'];
   }
 }

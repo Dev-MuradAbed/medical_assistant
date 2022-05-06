@@ -32,7 +32,8 @@ class ListRate extends StatelessWidget {
               model.heartRate==null?Text('${model.sy}/${model.dy} mmHg'):
               Text('${model.heartRate} bmp',),
               const Spacer(),
-               Text(model.heartRateType.toString()),
+              model.heartRateType==null?Text('${model.booldPressureType}'):
+              Text('${model.heartRateType} ',),
               const Spacer()
             ],
           ),

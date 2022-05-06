@@ -501,7 +501,7 @@ class HomeBooldView extends State<BloodRate>
             monthDate: DateTime.now().month,
             yearTime: DateTime.now().year,
             dayDate: DateTime.now().day,
-
+booldPressureType:  Assistant.CheckBooldPressure(systolic: _sy, diastolic: _di, name: name, image: image, context: context)
           ));
       Provider.of<ResultProvider>(context, listen: false).getRecord();
       Assistant.CheckBooldPressure(systolic: _sy, diastolic: _di, name: name, image: image, context: context);
