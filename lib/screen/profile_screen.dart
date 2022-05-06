@@ -294,7 +294,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                     otherPhoneController.text,
                                                 phone: phoneController.text,
                                                 weight: weightController.text,
-                                                image: _imageUrl.value);
+                                                image: _imageUrl.value.toString());
                                           });
                                   }),
                               const SizedBox(height: 60),
@@ -369,8 +369,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     }
 
-    if (image != "") {
-
+    if (image != "https://cdn.icon-icons.com/icons2/2643/PNG/512/male_boy_person_people_avatar_icon_159358.png") {
       await FirebaseFirestore.instance
           .collection('UserData')
           .doc(firebaseUser!.uid)
