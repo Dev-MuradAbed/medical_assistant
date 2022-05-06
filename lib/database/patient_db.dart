@@ -68,8 +68,8 @@ class DbController {
             'phone STRING, '
             'other STRING, '
             'gender STRING, '
-            'height INTEGER, '
-            'wight String, '
+            'height STRING, '
+            'wight STRING, '
             'birthday STRING, '
             'image STRING, '
             'type STRING)',

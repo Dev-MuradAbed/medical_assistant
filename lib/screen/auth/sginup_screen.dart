@@ -17,7 +17,7 @@ class _SignupScreenState extends State<SignupScreen> with Helper {
   String _selectGender = 'Meal';
   bool isPassword = true;
   final Storage storage = Storage();
-  final ValueNotifier<String> _imageUrl = ValueNotifier('assets/images/logo_png.png');
+  final ValueNotifier<String> _imageUrl = ValueNotifier('https://cdn.icon-icons.com/icons2/2643/PNG/512/male_boy_person_people_avatar_icon_159358.png');
   List genderList = [
     'Meal',
     'Female',
@@ -354,11 +354,12 @@ class _SignupScreenState extends State<SignupScreen> with Helper {
         _passwordController.text == _passwordConfirmController.text) {
       try {
         _firebaseAuth.createUserWithEmailAndPassword(email: emailController.text, password: _passwordController.text).then((value) async {
-          await FirebaseFirestore.instance.collection('UserUid').doc('123963').set({'id': value.user!.uid});
+          print("user created");
+          // await FirebaseFirestore.instance.collection('UserUid').doc('1239635').set({'id': value.user!.uid});
           await FirebaseFirestore.instance.collection("UserData").doc(value.user!.uid).set({
             'image': _imageUrl.value,
             'name': nameController.text,
-            'birth': birthController,
+            'birth': birthController.text,
             'email': emailController.text,
             'gender': genderController.text,
             'phone': phoneController.text,

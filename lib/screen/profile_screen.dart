@@ -32,8 +32,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   late TextEditingController heightController;
   late TextEditingController weightController;
 
-  // String image = '';
-
   @override
   void initState() {
     // TODO: implement initState
@@ -87,7 +85,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           const SizedBox(width: 20),
         ],
       ),
-      body: Padding(
+      body:
+      Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: SingleChildScrollView(
           child: FutureBuilder(
@@ -103,6 +102,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         builder: (context, task, child) {
                           var profile =
                               Provider.of<ProfileProvider>(context).listTask;
+
                           return Column(
                             children: [
                               const SizedBox(height: 2),
@@ -380,9 +380,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
           .get()
           .then((ds) async {
         try {
-          await Provider.of<ProfileProvider>(context, listen: false).addTask(
+          print(ds.data());
+          await Provider.of<ProfileProvider>(context, listen: false).
+          addTask(
               task: Profile(
-            id: ds.data()!['idCard'],
+            // id: ds.data()!['idCard'],
             name: ds.data()!['name'],
             type: ds.data()!['type'],
             height: ds.data()!['height'],
@@ -394,7 +396,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             phone: ds.data()!['phone'],
             wight: ds.data()!['weight'],
           ));
-        } catch (e) {}
+        } catch (e) {
+          print("error $e");
+        }
       }).catchError((e) {});
     }
   }
