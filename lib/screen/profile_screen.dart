@@ -289,6 +289,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         : setState(() {
                                             visible = !visible;
                                             _updateProfile(
+                                              profile: profile[0],
                                                 height: heightController.text,
                                                 otherPhone:
                                                     otherPhoneController.text,
@@ -310,7 +311,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
+
+
+
+
+
+
+
   _updateProfile({
+    required var profile,
     required String? height,
     required String? otherPhone,
     required String? phone,
@@ -325,36 +334,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
           .update({
         'height': height,
       });
-      Provider.of<ProfileProvider>(context, listen: false).updateProfile(task: Profile(
-        height: height,
-      ));
+      profile.height = int.parse(height!).toString();
     }
     if (otherPhone != "") {
-
-
       await FirebaseFirestore.instance
           .collection('UserData')
           .doc(firebaseUser!.uid)
           .update({
         'otherPhone': otherPhone,
       });
-      Provider.of<ProfileProvider>(context, listen: false).updateProfile(task: Profile(
-        other: otherPhone,
-      ));
+      profile.other = int.parse(otherPhone!).toString();
+
     }
 
     if (phone != "") {
-
-
       await FirebaseFirestore.instance
           .collection('UserData')
           .doc(firebaseUser!.uid)
           .update({
         'phone': phone,
       });
-      Provider.of<ProfileProvider>(context, listen: false).updateProfile(task: Profile(
-        phone: phone,
-      ));
+      profile.phone = int.parse(phone!).toString();
+
     }
     if (weight != "") {
       await FirebaseFirestore.instance
@@ -363,9 +364,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           .update({
         'weight': weight,
       });
-      Provider.of<ProfileProvider>(context, listen: false).updateProfile(task: Profile(
-        wight: weight,
-      ));
+      profile.wight = int.parse(weight!).toString();
 
     }
 
@@ -376,12 +375,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
           .update({
         'image': image,
       });
-      Provider.of<ProfileProvider>(context, listen: false).updateProfile(task: Profile(
-        image: image,
-      ));
+      profile.image = int.parse(image!).toString();
+
 
       // print("image is update in sqlite :: ${ Provider.of<ProfileProvider>(context).listTask[0].image}");
     }
+    print(":: image is update in sqlite :: ${Provider.of<ProfileProvider>(context,listen: false).listTask[0].phone}");
+    print('the l${Provider.of<ProfileProvider>(context,listen: false).listTask.length}');
+    Provider.of<ProfileProvider>(context,listen: false).getTask();
   }
 
   _fetch() async {

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:medical_assistant/models/result_model.dart';
 import 'package:medical_assistant/theme.dart';
-
-import 'assistant.dart';
 class ListRate extends StatelessWidget {
 
 
@@ -33,9 +31,8 @@ class ListRate extends StatelessWidget {
             children:  [
               model.heartRate==null?Text('${model.sy}/${model.dy} mmHg'):
               Text('${model.heartRate} bmp',),
-              const SizedBox(width: 5),
               const Spacer(),
-               Text( model.heartRate==null?model.type2??'we Rate':model.type1??'we Rate'),
+               Text(model.heartRateType.toString()),
               const Spacer()
             ],
           ),

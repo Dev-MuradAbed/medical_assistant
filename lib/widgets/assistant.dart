@@ -115,30 +115,35 @@ class Assistant {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!.you_have_a_athlete);
+          return AppLocalizations.of(context)!.you_have_a_athlete;
         } else if (bmp >= 56 && bmp <= 61) {
           bpmText = AppLocalizations.of(context)!.athlete;
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!
                   .you_have_a_excellent_heart_rate);
+          return AppLocalizations.of(context)!.you_have_a_excellent_heart_rate;
         } else if (bmp >= 62 && bmp <= 65) {
           bpmText = AppLocalizations.of(context)!.good;
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_good_heart_rate);
+          return AppLocalizations.of(context)!.you_have_a_good_heart_rate;
         } else if (bmp >= 66 && bmp <= 69) {
           bpmText = AppLocalizations.of(context)!.above_average;
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_above_heart_rate);
+          return AppLocalizations.of(context)!.you_have_a_above_heart_rate;
         } else if (bmp >= 70 && bmp <= 73) {
           bpmText = AppLocalizations.of(context)!.average;
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_average_heart_rate);
+          return AppLocalizations.of(context)!.you_have_a_average_heart_rate;
         } else if (bmp >= 74 && bmp <= 81) {
           bpmText = AppLocalizations.of(context)!.below_average;
           ShowDilogD(
@@ -156,6 +161,7 @@ class Assistant {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!.error_try_again);
+          return AppLocalizations.of(context)!.error_try_again;
         }
       } else if (age >= 26 && age <= 35) {
         if (bmp >= 49 && bmp <= 54) {
@@ -163,30 +169,35 @@ class Assistant {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!.you_have_a_athlete);
+          return AppLocalizations.of(context)!.you_have_a_athlete;
         } else if (bmp >= 55 && bmp <= 61) {
           bpmText = AppLocalizations.of(context)!.excellent;
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!
                   .you_have_a_excellent_heart_rate);
+          return AppLocalizations.of(context)!.you_have_a_excellent_heart_rate;
         } else if (bmp >= 62 && bmp <= 65) {
           bpmText = AppLocalizations.of(context)!.good;
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_good_heart_rate);
+          return AppLocalizations.of(context)!.you_have_a_good_heart_rate;
         } else if (bmp >= 66 && bmp <= 70) {
           bpmText = AppLocalizations.of(context)!.above_average;
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_above_heart_rate);
+          return AppLocalizations.of(context)!.you_have_a_above_heart_rate;
         } else if (bmp >= 71 && bmp <= 74) {
           bpmText = AppLocalizations.of(context)!.average;
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_average_heart_rate);
+          return AppLocalizations.of(context)!.you_have_a_average_heart_rate;
         } else if (bmp >= 75 && bmp <= 81) {
           bpmText = AppLocalizations.of(context)!.below_average;
           ShowDilogD(
@@ -204,6 +215,7 @@ class Assistant {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!.error_try_again);
+          return AppLocalizations.of(context)!.error_try_again;
         }
       } else if (age >= 36 && age <= 45) {
         if (bmp >= 50 && bmp <= 56) {
@@ -211,30 +223,35 @@ class Assistant {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!.you_have_a_athlete);
+          return AppLocalizations.of(context)!.you_have_a_athlete;
         } else if (bmp >= 57 && bmp <= 62) {
           bpmText = AppLocalizations.of(context)!.excellent;
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!
                   .you_have_a_excellent_heart_rate);
+          return AppLocalizations.of(context)!.you_have_a_excellent_heart_rate;
         } else if (bmp >= 63 && bmp <= 66) {
           bpmText = AppLocalizations.of(context)!.good;
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_good_heart_rate);
+          return AppLocalizations.of(context)!.you_have_a_good_heart_rate;
         } else if (bmp >= 67 && bmp <= 70) {
           bpmText = AppLocalizations.of(context)!.above_average;
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_above_heart_rate);
+          return AppLocalizations.of(context)!.you_have_a_above_heart_rate;
         } else if (bmp >= 71 && bmp <= 75) {
           bpmText = AppLocalizations.of(context)!.average;
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_average_heart_rate);
+          return AppLocalizations.of(context)!.you_have_a_average_heart_rate;
         } else if (bmp >= 76 && bmp <= 82) {
           bpmText = AppLocalizations.of(context)!.below_average;
           ShowDilogD(
@@ -256,6 +273,7 @@ class Assistant {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!.error_try_again);
+          return AppLocalizations.of(context)!.error_try_again;
         }
       } else if (age >= 46 && age <= 55) {
         if (bmp >= 50 && bmp <= 57) {
@@ -263,30 +281,35 @@ class Assistant {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!.you_have_a_athlete);
+          return AppLocalizations.of(context)!.you_have_a_athlete;
         } else if (bmp >= 58 && bmp <= 63) {
           bpmText = AppLocalizations.of(context)!.excellent;
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!
                   .you_have_a_excellent_heart_rate);
+          return AppLocalizations.of(context)!.you_have_a_excellent_heart_rate;
         } else if (bmp >= 64 && bmp <= 67) {
           bpmText = AppLocalizations.of(context)!.good;
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_good_heart_rate);
+          return AppLocalizations.of(context)!.you_have_a_good_heart_rate;
         } else if (bmp >= 68 && bmp <= 71) {
           bpmText = AppLocalizations.of(context)!.above_average;
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_above_heart_rate);
+          return AppLocalizations.of(context)!.you_have_a_above_heart_rate;
         } else if (bmp >= 72 && bmp <= 76) {
           bpmText = AppLocalizations.of(context)!.average;
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_average_heart_rate);
+          return AppLocalizations.of(context)!.you_have_a_average_heart_rate;
         } else if (bmp >= 77 && bmp <= 83) {
           bpmText = AppLocalizations.of(context)!.below_average;
           ShowDilogD(
@@ -308,6 +331,7 @@ class Assistant {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!.error_try_again);
+          return AppLocalizations.of(context)!.error_try_again;
         }
       } else if (age >= 56 && age <= 65) {
         if (bmp >= 51 && bmp <= 54) {
@@ -315,30 +339,35 @@ class Assistant {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!.you_have_a_athlete);
+          return AppLocalizations.of(context)!.you_have_a_athlete;
         } else if (bmp >= 57 && bmp <= 61) {
           bpmText = AppLocalizations.of(context)!.excellent;
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!
                   .you_have_a_excellent_heart_rate);
+          return AppLocalizations.of(context)!.you_have_a_excellent_heart_rate;
         } else if (bmp >= 62 && bmp <= 67) {
           bpmText = AppLocalizations.of(context)!.good;
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_good_heart_rate);
+          return AppLocalizations.of(context)!.you_have_a_good_heart_rate;
         } else if (bmp >= 68 && bmp <= 71) {
           bpmText = AppLocalizations.of(context)!.above_average;
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_above_heart_rate);
+          return AppLocalizations.of(context)!.you_have_a_above_heart_rate;
         } else if (bmp >= 72 && bmp <= 75) {
           bpmText = AppLocalizations.of(context)!.average;
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_average_heart_rate);
+          return AppLocalizations.of(context)!.you_have_a_average_heart_rate;
         } else if (bmp >= 76 && bmp <= 81) {
           bpmText = AppLocalizations.of(context)!.below_average;
           ShowDilogD(
@@ -360,6 +389,7 @@ class Assistant {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!.error_try_again);
+          return AppLocalizations.of(context)!.error_try_again;
         }
       } else if (age >= 65) {
         if (bmp >= 50 && bmp <= 55) {
@@ -367,30 +397,35 @@ class Assistant {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!.you_have_a_athlete);
+          return AppLocalizations.of(context)!.you_have_a_athlete;
         } else if (bmp >= 56 && bmp <= 61) {
           bpmText = AppLocalizations.of(context)!.excellent;
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!
                   .you_have_a_excellent_heart_rate);
+          return AppLocalizations.of(context)!.you_have_a_excellent_heart_rate;
         } else if (bmp >= 62 && bmp <= 65) {
           bpmText = AppLocalizations.of(context)!.good;
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_good_heart_rate);
+          return AppLocalizations.of(context)!.you_have_a_good_heart_rate;
         } else if (bmp >= 66 && bmp <= 69) {
           bpmText = AppLocalizations.of(context)!.above_average;
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_above_heart_rate);
+          return AppLocalizations.of(context)!.you_have_a_above_heart_rate;
         } else if (bmp >= 70 && bmp <= 73) {
           bpmText = AppLocalizations.of(context)!.average;
           ShowDilogNormal(
               context: context,
               message:
                   AppLocalizations.of(context)!.you_have_a_average_heart_rate);
+          return AppLocalizations.of(context)!.you_have_a_average_heart_rate;
         } else if (bmp >= 74 && bmp <= 79) {
           bpmText = AppLocalizations.of(context)!.below_average;
           ShowDilogD(
@@ -408,6 +443,7 @@ class Assistant {
           ShowDilogNormal(
               context: context,
               message: AppLocalizations.of(context)!.error_try_again);
+          return AppLocalizations.of(context)!.error_try_again;
         }
       }
     } else if (gendar == 'female') {

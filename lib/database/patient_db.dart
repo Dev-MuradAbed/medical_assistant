@@ -60,6 +60,7 @@ class DbController {
         'type2 STRING, '
         'dayDate INTEGER, '
         'yearTime STRING, '
+        'heartRateType STRING, '
         'monthTime STRING)',
       );
       db.execute(
