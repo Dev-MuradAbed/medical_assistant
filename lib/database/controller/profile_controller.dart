@@ -24,13 +24,18 @@ class profileController{
   }
 
   Future<int> update(int id) async {
-
     return await database.rawUpdate('''
     UPDATE profile 
     SET isCompleted = ? 
     WHERE id = ?  
     ''', [1, id]);
   }
+  Future<int>updateprofile(Profile profile) async {
+    var db =  database;
+    var result=await db.update('profile',profile.toJson(),where: 'id = ?',whereArgs: [profile.id]);
+    return result;
+  }
+
   Future<bool> FutureCheckId(int id) async {
     print('check id function code');
     var c= await database.rawQuery('''

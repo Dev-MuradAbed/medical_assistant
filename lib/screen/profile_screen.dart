@@ -172,7 +172,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       decoration: BoxDecoration(
                                         image: DecorationImage(
                                           image: NetworkImage(
-                                            _imageUrl.value,
+                                            profile[0].image.toString(),
                                           ),
                                           fit: BoxFit.cover,
                                         ),
@@ -319,14 +319,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }) async {
     final firebaseUser = FirebaseAuth.instance.currentUser;
     if (height != "") {
-
-
       await FirebaseFirestore.instance
           .collection('UserData')
           .doc(firebaseUser!.uid)
           .update({
         'height': height,
       });
+      Provider.of<ProfileProvider>(context, listen: false).updateProfile(task: Profile(
+        height: height,
+      ));
     }
     if (otherPhone != "") {
 
@@ -337,6 +338,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           .update({
         'otherPhone': otherPhone,
       });
+      Provider.of<ProfileProvider>(context, listen: false).updateProfile(task: Profile(
+        other: otherPhone,
+      ));
     }
 
     if (phone != "") {
@@ -348,16 +352,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
           .update({
         'phone': phone,
       });
+      Provider.of<ProfileProvider>(context, listen: false).updateProfile(task: Profile(
+        phone: phone,
+      ));
     }
     if (weight != "") {
-
-
       await FirebaseFirestore.instance
           .collection('UserData')
           .doc(firebaseUser!.uid)
           .update({
         'weight': weight,
       });
+      Provider.of<ProfileProvider>(context, listen: false).updateProfile(task: Profile(
+        wight: weight,
+      ));
+
     }
 
     if (image != "") {
@@ -368,6 +377,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
           .update({
         'image': image,
       });
+      Provider.of<ProfileProvider>(context, listen: false).updateProfile(task: Profile(
+        image: image,
+      ));
+
+      // print("image is update in sqlite :: ${ Provider.of<ProfileProvider>(context).listTask[0].image}");
     }
   }
 

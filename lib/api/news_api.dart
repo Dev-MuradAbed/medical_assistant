@@ -13,7 +13,7 @@ News ParsNews(String responseBody){
 
 }
 Future<News>feachNewsByCategory(String category)async{
-  var url='$mainUrl$topHeadLines?language =ar&category=$category&apiKey=$apiKey';
+  var url='$mainUrl$topHeadLines?language=ar&category=$category&apiKey=$apiKey';
   var response=await http.get(Uri.parse(url));
   if(response.statusCode==200&&response.body!=null){
     return compute(ParsNews,response.body);
