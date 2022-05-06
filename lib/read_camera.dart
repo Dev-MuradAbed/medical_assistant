@@ -421,6 +421,7 @@ class HomeRateView extends State<PlusRate>
             monthDate: DateTime.now().month,
             yearTime: DateTime.now().year,
             dayDate: DateTime.now().day,
+            type2:
           ));
       Provider.of<ResultProvider>(context, listen: false).getRecord();
       Assistant.CheckStausBMP(Gendar: gender, Age: age, Bmp: _bpm,name: name,image:  image,context: context);

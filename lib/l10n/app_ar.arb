@@ -104,5 +104,14 @@
   "error_try_again": "خطأ، حاول مرة أخرى",
   "you_have_normal_blood_pressure": "لديك ضغط دم الطبيعي",
   "you_have_a_above_blood_pressure": "لديك ضغط دم أعلى من المتوسط",
-  "you_have_a_average_blood_pressure": "لديك ضغط دم المتوسط"
+  "you_have_a_average_blood_pressure": "لديك ضغط دم المتوسط",
+  "athlete": "معدل رياضي",
+  "excellent": "معدل ممتاز",
+  "good": "معدل جيد",
+  "above_average": "فوق المتوسط",
+  "average": "معدل طبيعي",
+  "below_average": "اقل المتوسط",
+  "normal_blood": "الضغط الطبيعي",
+  "above_average_blood": "فوق المتوسط",
+  "average_blood": "متوسط الضغط "
 }

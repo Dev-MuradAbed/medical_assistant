@@ -11,6 +11,8 @@ class ResultProvider extends ChangeNotifier {
     if (newRowId != 0) {
       resultList.add(task);
       notifyListeners();
+      print(resultList.length);
+      print(resultList.first.type1);
     }
     return newRowId;
   }
@@ -19,6 +21,10 @@ class ResultProvider extends ChangeNotifier {
     final List<Map<String, dynamic>> tasks = await _taskController.query();
     resultList = tasks.map((Map<String, dynamic> task) => ResultModel.fromJson(task)).toList();
     notifyListeners();
+    print(resultList.length);
+    print(resultList);
+    print(resultList.first.type1);
+    print(resultList.first.type2);
   }
 
 

@@ -104,5 +104,14 @@
   "error_try_again": "Error, try again",
   "you_have_normal_blood_pressure": "You have NORMAL blood pressure",
   "you_have_a_above_blood_pressure": "You have a ABOVE Average blood pressure",
-  "you_have_a_average_blood_pressure": "You have a  AVERAGE blood pressure"
+  "you_have_a_average_blood_pressure": "You have a  AVERAGE blood pressure",
+  "athlete": "Athlete Rate",
+  "excellent": "Excellent Rate",
+  "good": "Good Rate",
+  "above_average": "Above Average",
+  "average": "Normal Average",
+  "below_average": "Below Average",
+  "normal_blood": "Normal blood pressure",
+  "above_average_blood": "Above Average",
+  "average_blood": "Average blood pressure"
 }

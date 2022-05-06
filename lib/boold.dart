@@ -501,6 +501,7 @@ class HomeBooldView extends State<BloodRate>
             monthDate: DateTime.now().month,
             yearTime: DateTime.now().year,
             dayDate: DateTime.now().day,
+            type2:
           ));
       Provider.of<ResultProvider>(context, listen: false).getRecord();
 

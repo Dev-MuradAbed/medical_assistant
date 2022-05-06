@@ -56,6 +56,8 @@ class DbController {
         'date INTEGER, '
         'hourTime STRING, '
         'munitTime STRING, '
+        'type1 STRING, '
+        'type2 STRING, '
         'dayDate INTEGER, '
         'yearTime STRING, '
         'monthTime STRING)',
