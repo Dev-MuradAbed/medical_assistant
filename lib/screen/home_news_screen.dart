@@ -1,11 +1,7 @@
-import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:medical_assistant/api/news_api.dart';
-import 'package:medical_assistant/models/ariticles.dart';
-
 import '../models/news.dart';
-
 import '../theme.dart';
 import 'news_details.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -67,6 +63,7 @@ class _Home_News_ScrrenState extends State<HomeNewsScreen>
                         const SizedBox(height: 10,),
                         CarouselSlider(
                           options: CarouselOptions(
+                            autoPlay: true,
                               aspectRatio: 16 / 9,
                               enlargeCenterPage: true,
                               viewportFraction: 0.8),

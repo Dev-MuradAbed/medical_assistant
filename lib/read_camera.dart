@@ -52,7 +52,6 @@ class HomeRateView extends State<PlusRate>
   @override
   void initState() {
     Provider.of<ProfileProvider>(context, listen: false).getTask();
-    Permission.camera.request();
     Provider.of<ResultProvider>(context, listen: false).getRecord();
     super.initState();
     _animationController = AnimationController(
@@ -421,10 +420,10 @@ class HomeRateView extends State<PlusRate>
             monthDate: DateTime.now().month,
             yearTime: DateTime.now().year,
             dayDate: DateTime.now().day,
-            heartRateType: Assistant.CheckStausBMP(Gendar: 'mael', Age: age, Bmp: _bpm, name: name, image: image, context: context),
+            heartRateType: Assistant.checkStausBMP(Gendar: 'mael', Age: age, Bmp: _bpm, name: name, image: image, context: context),
           ));
       Provider.of<ResultProvider>(context, listen: false).getRecord();
-      Assistant.CheckStausBMP(Gendar: gender, Age: age, Bmp: _bpm,name: name,image:  image,context: context);
+      Assistant.checkStausBMP(Gendar: gender, Age: age, Bmp: _bpm,name: name,image:  image,context: context);
 
     } catch (e) {
 

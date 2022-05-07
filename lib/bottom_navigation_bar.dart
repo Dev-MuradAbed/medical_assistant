@@ -20,27 +20,27 @@ class _BNBarState extends State<BNBar> {
   int _index = 2;
 
   final item = const [
-    Icon(Icons.person, size: 26, color: whitClr),
-    Icon(Icons.location_on, size: 26, color: whitClr),
     Icon(Icons.library_books_outlined, size: 26, color: whitClr),
+    Icon(Icons.location_on, size: 26, color: whitClr),
+    Icon(Icons.person, size: 26, color: whitClr),
     Icon(Icons.favorite, size: 26, color: whitClr),
     Icon(Icons.event_note_outlined, size: 26, color: whitClr)
   ];
-@override
+  @override
   void initState() {
     super.initState();
   }
 
-  bool visibility=false;
+  bool visibility = false;
   @override
   Widget build(BuildContext context) {
     final screens = [
-     const ProfileScreen(),
-    Search(),
-    const HomeNewsScreen(),
-     const HomeScan(),
-     const TodoHome(),
-  ];
+      const HomeNewsScreen(),
+      Search(),
+      const ProfileScreen(),
+      const HomeScan(),
+      const TodoHome(),
+    ];
     return Container(
       color: greenClr,
       child: SafeArea(
@@ -50,7 +50,6 @@ class _BNBarState extends State<BNBar> {
             backgroundColor: Colors.white,
             extendBody: true,
             body: screens[_index],
-
             bottomNavigationBar: CurvedNavigationBar(
               key: navigationKey,
               backgroundColor: Colors.transparent,
@@ -62,8 +61,6 @@ class _BNBarState extends State<BNBar> {
                 setState(() {
                   _index = index;
                 });
-
-
               },
               //  letIndexChange: ,
             ),

@@ -152,9 +152,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                 final filename =
                                                     result.files.single.name;
                                                 storage
-                                                    .uploadImage(path, filename)
-                                                    .then((value) =>
-                                                        print("Done"));
+                                                    .uploadImage(path, filename);
 
                                                 _imageUrl.value = await storage
                                                     .getImage(filename);
@@ -334,7 +332,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           .update({
         'height': height,
       });
-      profile.height = int.parse(height!).toString();
+      profile.height =height;
     }
     if (otherPhone != "") {
       await FirebaseFirestore.instance
@@ -343,7 +341,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           .update({
         'otherPhone': otherPhone,
       });
-      profile.other = int.parse(otherPhone!).toString();
+      profile.other =otherPhone;
 
     }
 
@@ -354,7 +352,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           .update({
         'phone': phone,
       });
-      profile.phone = int.parse(phone!).toString();
+      profile.phone = phone;
 
     }
     if (weight != "") {
@@ -364,7 +362,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           .update({
         'weight': weight,
       });
-      profile.wight = int.parse(weight!).toString();
+      profile.wight = weight;
 
     }
 
@@ -375,13 +373,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           .update({
         'image': image,
       });
-      profile.image = int.parse(image!).toString();
-
-
-      // print("image is update in sqlite :: ${ Provider.of<ProfileProvider>(context).listTask[0].image}");
+      profile.image = image;
     }
-    print(":: image is update in sqlite :: ${Provider.of<ProfileProvider>(context,listen: false).listTask[0].phone}");
-    print('the l${Provider.of<ProfileProvider>(context,listen: false).listTask.length}');
     Provider.of<ProfileProvider>(context,listen: false).getTask();
   }
 
@@ -394,7 +387,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           .get()
           .then((ds) async {
         try {
-          print(ds.data());
           await Provider.of<ProfileProvider>(context, listen: false).
           addTask(
               task: Profile(
@@ -411,7 +403,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             wight: ds.data()!['weight'],
           ));
         } catch (e) {
-          print("error $e");
+          debugPrint("error $e");
         }
       }).catchError((e) {});
     }
