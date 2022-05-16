@@ -373,7 +373,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
           .update({
         'image': image,
       });
-      profile.image = image;
+      //  I dont know if the under code is work or not test image update
+      setState(() {
+        profile.image = image;
+      });
     }
     Provider.of<ProfileProvider>(context,listen: false).getTask();
   }

@@ -44,7 +44,7 @@ mixin Helper {
                       'assets/images/task.svg',
                       semanticsLabel:AppLocalizations.of(context)!.task ,
                       height: 90,
-                      color: primaryClr.withOpacity(0.5),
+                      color: greenClr,
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(

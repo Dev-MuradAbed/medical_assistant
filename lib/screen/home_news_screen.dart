@@ -83,6 +83,7 @@ class _Home_News_ScrrenState extends State<HomeNewsScreen>
                                       ),
                                     ),
                                     Column(
+
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [

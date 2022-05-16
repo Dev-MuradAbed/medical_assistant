@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:medical_assistant/provider/result_provider.dart';
-import 'package:medical_assistant/read_camera.dart';
+import 'package:medical_assistant/screen/camera/heart_rate.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../boold.dart';
-import '../theme.dart';
+import 'boold.dart';
+import '../../theme.dart';
 
-import 'list_result.dart';
+import '../list_result.dart';
 
 class HomeScan extends StatefulWidget {
   const HomeScan({Key? key,}) : super(key: key);

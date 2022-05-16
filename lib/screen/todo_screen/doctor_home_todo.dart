@@ -180,17 +180,17 @@ class _DoctorHomeTodoState extends State<DoctorHomeTodo> with Helper {
         },
         height: 100,
         width: 70,
-        selectionColor: primaryClr,
+        selectionColor:greenClr,
         selectedTextColor: Colors.white,
         dateTextStyle: GoogleFonts.lato(
             textStyle: const TextStyle(
-                fontSize: 20, fontWeight: FontWeight.w600, color: Colors.grey)),
+                fontSize: 20, fontWeight: FontWeight.w600, color: Colors.white)),
         dayTextStyle: GoogleFonts.lato(
             textStyle: const TextStyle(
-                fontSize: 16, fontWeight: FontWeight.w600, color: Colors.grey)),
+                fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white)),
         monthTextStyle: GoogleFonts.lato(
             textStyle: const TextStyle(
-                fontSize: 12, fontWeight: FontWeight.w600, color: Colors.grey)),
+                fontSize: 12, fontWeight: FontWeight.w600, color: Colors.white)),
       ),
     );
   }

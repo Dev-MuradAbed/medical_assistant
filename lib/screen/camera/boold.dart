@@ -13,8 +13,8 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:wakelock/wakelock.dart';
-import 'models/result_model.dart';
-import 'models/sensorvalue.dart';
+import '../../models/result_model.dart';
+import '../../models/sensorvalue.dart';
 import 'dart:math'as math;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 

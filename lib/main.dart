@@ -24,7 +24,7 @@ import 'map/services/geolocator_service.dart';
 import 'map/services/places.dart';
 import 'provider/provider_language.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
+import 'package:dcdg/dcdg.dart';
 
 
 

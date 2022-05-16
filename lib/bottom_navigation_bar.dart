@@ -4,7 +4,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:medical_assistant/map/Screens/search.dart';
 import 'package:medical_assistant/screen/home_news_screen.dart';
 import 'package:medical_assistant/screen/profile_screen.dart';
-import 'package:medical_assistant/screen/scann_home.dart';
+import 'package:medical_assistant/screen/camera/scann_home.dart';
 import 'package:medical_assistant/screen/todo_screen/todo_home.dart';
 import 'package:medical_assistant/theme.dart';
 

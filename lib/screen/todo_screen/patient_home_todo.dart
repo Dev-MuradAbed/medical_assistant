@@ -181,17 +181,18 @@ floatingActionButtonLocation:FloatingActionButtonLocation.endTop ,
         },
         height: 100,
         width: 70,
-        selectionColor: primaryClr,
+        selectionColor: greenClr,
         selectedTextColor: Colors.white,
         dateTextStyle: GoogleFonts.lato(
             textStyle: const TextStyle(
-                fontSize: 20, fontWeight: FontWeight.w600, color: Colors.grey)),
+                fontSize: 20, fontWeight: FontWeight.w600)),
         dayTextStyle: GoogleFonts.lato(
             textStyle: const TextStyle(
-                fontSize: 16, fontWeight: FontWeight.w600, color: Colors.grey)),
+                fontSize: 16, fontWeight: FontWeight.w600
+            )),
         monthTextStyle: GoogleFonts.lato(
             textStyle: const TextStyle(
-                fontSize: 12, fontWeight: FontWeight.w600, color: Colors.grey)),
+                fontSize: 12, fontWeight: FontWeight.w600)),
       ),
     );
   }
@@ -238,7 +239,7 @@ floatingActionButtonLocation:FloatingActionButtonLocation.endTop ,
                         }),
                 _buildBottomSheet(
                     label: AppLocalizations.of(context)!.delete_task,
-                    clr: Colors.red[300]!,
+                    clr: blueClr,
                     onTap: () async {
                       Provider.of<TaskProvider>(context, listen: false)
                           .delete(task);
