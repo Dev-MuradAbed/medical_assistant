@@ -182,15 +182,16 @@ class _DoctorHomeTodoState extends State<DoctorHomeTodo> with Helper {
         width: 70,
         selectionColor:greenClr,
         selectedTextColor: Colors.white,
+
         dateTextStyle: GoogleFonts.lato(
             textStyle: const TextStyle(
-                fontSize: 20, fontWeight: FontWeight.w600, color: Colors.white)),
+                fontSize: 20, fontWeight: FontWeight.w600)),
         dayTextStyle: GoogleFonts.lato(
             textStyle: const TextStyle(
-                fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white)),
+                fontSize: 16, fontWeight: FontWeight.w600)),
         monthTextStyle: GoogleFonts.lato(
             textStyle: const TextStyle(
-                fontSize: 12, fontWeight: FontWeight.w600, color: Colors.white)),
+                fontSize: 12, fontWeight: FontWeight.w600)),
       ),
     );
   }
